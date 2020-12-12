@@ -16,7 +16,6 @@ public class Aplicatie extends Application {
     }
 
     public static void main(String[] args) {
-        System.out.println("Tudorel a fost aici");
         launch(args);
     }
 }
