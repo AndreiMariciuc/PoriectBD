@@ -15,6 +15,6 @@ import java.io.IOException;
 public class SuperAdmin {
 
     public void clickDatePersonale(MouseEvent mouseEvent) throws IOException {
-        
+
     }
 }
