@@ -20,6 +20,7 @@ public class Aplicatie extends Application {
     public static void main(String[] args) {
         System.out.println("Tudorel a fost aici");
         System.out.println("Hello andrei");
+        System.out.println("Tuddi a mai facut ceva");
         launch(args);
     }
 }
