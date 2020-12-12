@@ -4,9 +4,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-//Andrei intrat!
-//Aless intrat!
-//Tudorel
+
 public class Aplicatie extends Application {
 
     @Override
@@ -19,8 +17,6 @@ public class Aplicatie extends Application {
 
     public static void main(String[] args) {
         System.out.println("Tudorel a fost aici");
-        System.out.println("Hello andrei");
-        System.out.println("Tuddi a mai facut ceva");
         launch(args);
     }
 }
