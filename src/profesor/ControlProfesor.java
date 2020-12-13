@@ -49,7 +49,7 @@ public class ControlProfesor {
         else if(actionEvent.getSource() == deautentificareButton) {
             Parent root = FXMLLoader.load(getClass().getResource("../autentificare/autentificare.fxml"));
             Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-            currentStage.setScene(new Scene(root, Ecran.WIDTH, Ecran.HEIGHT));
+            currentStage.setScene(new Scene(root, Ecran.WIDTH, (int)(Ecran.HEIGHT / 1.5)));
             currentStage.show();
         }
     }

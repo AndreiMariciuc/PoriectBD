@@ -75,7 +75,7 @@ public class ControlAutentificare {
     public void loadScene(ActionEvent e, String caleFXML) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource(caleFXML));
         Stage currentStage = (Stage) ((Node) e.getSource()).getScene().getWindow();
-        currentStage.setScene(new Scene(root, Ecran.WIDTH, (int)(Ecran.HEIGHT / 1.5)));
+        currentStage.setScene(new Scene(root, Ecran.WIDTH, Ecran.HEIGHT));
         currentStage.show();
     }
 }
