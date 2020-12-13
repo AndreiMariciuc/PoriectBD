@@ -11,7 +11,8 @@ public class Conexiune {
     ResultSet rs = null;
     ResultSetMetaData rsmd = null;
     static Conexiune c = new Conexiune();
-    private Conexiune(){
+
+    private Conexiune() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (Exception e) {
@@ -29,42 +30,45 @@ public class Conexiune {
                 }
                 System.out.println("");
             }*/
-        } catch (Exception e ){
+        } catch (Exception e) {
             System.out.println("Erori in interogarea bazei de date!");
         }
     }
+
     public static Conexiune getConexiune() {
         return c;
     }
+
     @Override
     public void finalize() {
-        try{
+        try {
             connection.close();
         } catch (Exception e) {
             System.out.println("Nici nu a fost deschis");
         }
-        try{
+        try {
             selectStatement.close();
         } catch (Exception e) {
             System.out.println("Nici nu a fost deschis");
         }
-        try{
+        try {
             rs.close();
         } catch (Exception e) {
             System.out.println("Nici nu a fost deschis");
         }
-        try{
+        try {
             interrogationStatement.close();
         } catch (Exception e) {
             System.out.println("Nici nu a fost deschis");
         }
     }
+
     public int getUserType(String username, String parola) {
         try {
             rs = selectStatement.executeQuery("SELECT min(id_rol) FROM users WHERE username = '" + username + "' AND parola = '" + parola + "';");
             rs.next();
             return rs.getInt(1);
-        } catch (Exception e){
+        } catch (Exception e) {
             return 0;
         }
     }

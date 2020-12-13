@@ -1,4 +1,3 @@
-import bazaDate.Conexiune;
 import constante.Ecran;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -10,7 +9,7 @@ public class Aplicatie extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("autentificare/atutentificare.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("autentificare/autentificare.fxml"));
         primaryStage.setTitle("UTCN Cloudy");
         primaryStage.setScene(new Scene(root, Ecran.WIDTH, (int)(Ecran.HEIGHT / 1.5)));
         primaryStage.show();
