@@ -17,7 +17,7 @@ public class Aplicatie extends Application {
 
     public static void main(String[] args) {
         //System.out.println("Tudorel a fost aici");
-        //Conexiune c = Conexiune.getConexiune();
+//        Conexiune c = Conexiune.getConexiune();
         //System.out.println(c.getUserType("tuddi", "123"));
         //System.out.println(c.getUserType("aless", "123"));
         launch(args);
