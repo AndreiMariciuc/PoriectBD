@@ -21,6 +21,5 @@ public class Aplicatie extends Application {
         //System.out.println(c.getUserType("tuddi", "123"));
         //System.out.println(c.getUserType("aless", "123"));
         launch(args);
-        System.out.println("Aless was here");
     }
 }
