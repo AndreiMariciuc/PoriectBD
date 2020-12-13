@@ -1,5 +1,6 @@
 package profesor;
 
+import bazaDate.Conexiune;
 import constante.Ecran;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -7,6 +8,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -26,11 +28,13 @@ public class ControlProfesor {
     public Pane grupuriPane;
     public Pane programareExamenePane;
     public Button deautentificareButton;
+    public Label welcome;
 
 
     public void schimbareStare(ActionEvent actionEvent) throws IOException {
         if(actionEvent.getSource() == datePersonaleButton) {
             datePersonalePane.toFront();
+            welcome.setText("Bun venit " + Conexiune.getUser().getNume() + " " + Conexiune.getUser().getPrenume() + "!");
         } else if(actionEvent.getSource() == orarButton) {
             orarPane.toFront();
         } else if(actionEvent.getSource() == catalogButton) {
@@ -48,5 +52,9 @@ public class ControlProfesor {
             currentStage.setScene(new Scene(root, Ecran.WIDTH, Ecran.HEIGHT));
             currentStage.show();
         }
+    }
+
+    public void defaultChange() {
+        welcome.setText("Bun venit: \n" + Conexiune.getUser().getNume() + " " + Conexiune.getUser().getPrenume() + "!");
     }
 }

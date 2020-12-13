@@ -1,3 +1,4 @@
+import bazaDate.Conexiune;
 import constante.Ecran;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

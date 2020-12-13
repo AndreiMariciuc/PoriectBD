@@ -6,6 +6,7 @@ public class Conexiune {
     static final String urlAless = null;
     static final String urlTuddi = null;
     static final String urlAndrei = null;
+    static User curent;
     Connection connection = null;
     Statement selectStatement = null, interrogationStatement = null;
     ResultSet rs = null;
@@ -13,6 +14,7 @@ public class Conexiune {
     static Conexiune c = new Conexiune();
 
     private Conexiune() {
+        curent = null;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (Exception e) {
@@ -65,11 +67,35 @@ public class Conexiune {
 
     public int getUserType(String username, String parola) {
         try {
-            rs = selectStatement.executeQuery("SELECT min(id_rol) FROM users WHERE username = '" + username + "' AND parola = '" + parola + "';");
-            rs.next();
-            return rs.getInt(1);
+            curent = getDate(username, parola);
+            return curent.getIdRol();
         } catch (Exception e) {
             return 0;
         }
+    }
+    public User getDate(String username, String parola){
+        try {
+            rs = selectStatement.executeQuery("SELECT * FROM users WHERE username = '" + username + "' AND parola = '" + parola + "';");
+            rs.next();
+            User result = new User();
+            result.setIdRol(rs.getInt(2));
+            result.setIdUser(rs.getInt(1));
+            result.setCNP(rs.getString(3));
+            result.setNume(rs.getString(4));
+            result.setPrenume(rs.getString(5));
+            result.setAdresa(rs.getString(6));
+            result.setNrTelefon(rs.getString(7));
+            result.setEmail(rs.getString(8));
+            result.setIBAN(rs.getString(9));
+            result.setUsername(rs.getString(11));
+            result.setParola(rs.getString(12));
+            result.setNrContract(rs.getInt(10));
+            return result;
+        } catch (Exception e){
+            return null;
+        }
+    }
+    public static User getUser(){
+        return curent;
     }
 }
