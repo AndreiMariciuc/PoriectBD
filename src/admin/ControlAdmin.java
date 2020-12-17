@@ -35,7 +35,7 @@ public class ControlAdmin implements Initializable {
         welcomeText.setText("\t\tBun venit, " + Conexiune.getUser().getNume() + " " + Conexiune.getUser().getPrenume()
                 + "!\nAcestea sunt datele dumneavoastra personale!");
         rol.setText("Administrator");
-        rol.setFill(Paint.valueOf("#b69b7d"));
+        rol.setFill(Paint.valueOf("#61b15a"));
         tRol.setText("Rol: ");
         CNP.setText(Conexiune.getUser().getCNP());
         tCNP.setText("CNP: ");
