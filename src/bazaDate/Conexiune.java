@@ -1,5 +1,7 @@
 package bazaDate;
 
+import javafx.stage.Stage;
+
 import java.sql.*;
 
 public class Conexiune {
@@ -97,5 +99,8 @@ public class Conexiune {
     }
     public static User getUser(){
         return curent;
+    }
+    public static void resetUser() {
+        curent = null;
     }
 }

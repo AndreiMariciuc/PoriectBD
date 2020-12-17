@@ -26,10 +26,10 @@ public class ControlAutentificare {
     int state = 0;
 
     public void autentificare(ActionEvent actionEvent) throws IOException {
-        String passwordBd = "admin";
-        String userNameBd = "admin";
+        String pass = "123"; //username.getText()
+        String userName = "tuddi"; //password.getText()
         Conexiune c = Conexiune.getConexiune();
-        int rol = c.getUserType(username.getText(), password.getText());
+        int rol = c.getUserType(userName, pass);
         if (rol == 1) {
             loadScene(actionEvent, "../admin/admin.fxml");
         } else if (rol == 2) {
