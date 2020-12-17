@@ -3,6 +3,7 @@ package bazaDate;
 import javafx.stage.Stage;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class Conexiune {
     static final String urlAless = null;
@@ -75,7 +76,8 @@ public class Conexiune {
             return 0;
         }
     }
-    public User getDate(String username, String parola){
+
+    public User getDate(String username, String parola) {
         try {
             rs = selectStatement.executeQuery("SELECT * FROM users WHERE username = '" + username + "' AND parola = '" + parola + "';");
             rs.next();
@@ -93,14 +95,82 @@ public class Conexiune {
             result.setParola(rs.getString(12));
             result.setNrContract(rs.getInt(10));
             return result;
-        } catch (Exception e){
+        } catch (Exception e) {
             return null;
         }
     }
-    public static User getUser(){
+
+    public ArrayList<User> getUsersList(ArrayList<Integer> ids){
+        ArrayList<User> resultedList = new ArrayList<User>();
+        String statement = "SELECT * FROM users WHERE ";
+        for (Integer i : ids) {
+            statement += "id_rol = " + String.valueOf(i) + " OR ";
+        }
+        statement += "FALSE;";
+        try {
+            rs = selectStatement.executeQuery(statement);
+            while(rs.next()) {
+                User result = new User();
+                result.setIdRol(rs.getInt(2));
+                result.setIdUser(rs.getInt(1));
+                result.setCNP(rs.getString(3));
+                result.setNume(rs.getString(4));
+                result.setPrenume(rs.getString(5));
+                result.setAdresa(rs.getString(6));
+                result.setNrTelefon(rs.getString(7));
+                result.setEmail(rs.getString(8));
+                result.setIBAN(rs.getString(9));
+                result.setUsername(rs.getString(11));
+                result.setParola(rs.getString(12));
+                result.setNrContract(rs.getInt(10));
+                resultedList.add(result);
+            }
+            return resultedList;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public static User getUser() {
         return curent;
     }
+
     public static void resetUser() {
         curent = null;
+    }
+
+    public ArrayList<User> getResultByQuery(String query) {
+        ArrayList<User> resultedList = new ArrayList<User>();
+        try {
+            rs = selectStatement.executeQuery(query);
+            while (rs.next()) {
+                User result = new User();
+                result.setIdRol(rs.getInt(2));
+                result.setIdUser(rs.getInt(1));
+                result.setCNP(rs.getString(3));
+                result.setNume(rs.getString(4));
+                result.setPrenume(rs.getString(5));
+                result.setAdresa(rs.getString(6));
+                result.setNrTelefon(rs.getString(7));
+                result.setEmail(rs.getString(8));
+                result.setIBAN(rs.getString(9));
+                result.setUsername(rs.getString(11));
+                result.setParola(rs.getString(12));
+                result.setNrContract(rs.getInt(10));
+                resultedList.add(result);
+            }
+            return resultedList;
+        } catch (Exception ignored) {
+            return resultedList;
+        }
+    }
+
+
+    public void executareQuery(String query) {
+        try {
+            interrogationStatement.execute(query);
+        } catch (Exception e) {
+            System.out.println("nu merge....");
+        }
     }
 }

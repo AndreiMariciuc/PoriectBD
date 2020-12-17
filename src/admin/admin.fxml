@@ -2,7 +2,11 @@
 
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -20,7 +24,7 @@
                         <Cursor fx:constant="HAND" />
                     </cursor>
                 </Button>
-                <Button layoutX="6.0" layoutY="671.0" minHeight="9.0" mnemonicParsing="false" onMouseClicked="#deconectare" prefHeight="35.0" prefWidth="186.0" style="-fx-background-radius: 90; -fx-background-color: #fecac2;" text="Deconectare" textFill="#d32828">
+                <Button layoutX="6.0" layoutY="671.0" minHeight="9.0" mnemonicParsing="false" onAction="#deconectare" prefHeight="35.0" prefWidth="186.0" style="-fx-background-radius: 90; -fx-background-color: #fecac2;" text="Deconectare" textFill="#d32828">
                     <cursor>
                         <Cursor fx:constant="HAND" />
                     </cursor>
@@ -40,6 +44,19 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </ImageView>
+            <Button fx:id="modificareUtilizatori" layoutX="6.0" layoutY="169.0" mnemonicParsing="false" onMouseClicked="#fereastraGestiuneUtilizatori" prefHeight="35.0" prefWidth="186.0" style="-fx-background-radius: 90; -fx-background-color: #e2e0d4;" text="          Gestiune Utilizatori">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <ImageView fitHeight="35.0" fitWidth="35.0" layoutX="20.0" layoutY="170.0" onMouseClicked="#fereastraGestiuneUtilizatori" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/hiring.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
             </children>
             <effect>
                 <DropShadow />
@@ -52,8 +69,14 @@
             <children>
                 <Pane fx:id="datePersonale" prefHeight="720.0" prefWidth="1080.0" />
                 <Pane prefHeight="720.0" prefWidth="1080.0" />
-                <Pane prefHeight="720.0" prefWidth="1080.0" />
-                <Pane prefHeight="720.0" prefWidth="1080.0" />
+                <Pane prefHeight="720.0" prefWidth="1080.0">
+               <children>
+                  <MenuButton fx:id="meniu1" mnemonicParsing="false" prefHeight="26.0" prefWidth="200.0" style="-fx-background-color: #989da6; -fx-background-radius: 30; -fx-border-color: #000000; -fx-border-radius: 30;" text="Lista Utilizatori" textFill="WHITE">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </MenuButton>
+               </children></Pane>
                 <Pane fx:id="date_personale" prefHeight="720.0" prefWidth="1080.0" style="-fx-background-color: #e8e8e8;">
                     <children>
                         <Text fx:id="welcomeText" blendMode="SRC_ATOP" layoutX="172.0" layoutY="58.0" smooth="false" stroke="#f7070700" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
@@ -239,6 +262,126 @@
                         </Text>
                     </children>
             </Pane>
+                <Pane fx:id="gestUtilizatori" prefHeight="720.0" prefWidth="1080.0" style="-fx-background-color: #e8e8e8;">
+               <children>
+                  <Text layoutX="359.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Vizualizare Utilizatori" underline="true">
+                     <font>
+                        <Font name="System Bold" size="30.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="fieldNume_v" layoutX="516.0" layoutY="105.0" promptText="nume..." />
+                  <Text layoutX="396.0" layoutY="125.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nume:">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="396.0" layoutY="165.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Prenume:">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="fieldPrenume_v" layoutX="516.0" layoutY="145.0" promptText="prenume..." />
+                  <Text layoutX="396.0" layoutY="205.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CNP:">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="fieldCNP_v" layoutX="516.0" layoutY="185.0" promptText="CNP..." />
+                  <Button fx:id="butonCautare_v" layoutX="491.0" layoutY="278.0" mnemonicParsing="false" onMouseClicked="#butonSearchUtilizatori" style="-fx-background-color: #222c3c; -fx-border-color: #000000; -fx-background-radius: 30; -fx-border-radius: 30;" text="Cautare" textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <ChoiceBox fx:id="choiceRoluri_v" layoutX="394.0" layoutY="234.0" prefHeight="26.0" prefWidth="295.0" style="-fx-background-color: #dfdbd8; -fx-background-radius: 30; -fx-border-color: #000000; -fx-border-radius: 30;" />
+                  <ChoiceBox fx:id="resultUtilizatori_v" layoutX="224.0" layoutY="382.0" prefHeight="26.0" prefWidth="770.0" style="-fx-background-color: #dfdbd8; -fx-background-radius: 30; -fx-border-color: #000000; -fx-border-radius: 30;" />
+                  <Text fx:id="alegere_v" layoutX="71.0" layoutY="403.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Alege user:" wrappingWidth="150.4921875">
+                     <font>
+                        <Font size="22.0" />
+                     </font>
+                  </Text>
+                  <Button fx:id="butonStergereUser_v" layoutX="626.0" layoutY="430.0" mnemonicParsing="false" onMouseClicked="#stergereUser" prefHeight="33.0" prefWidth="305.0" style="-fx-background-color: #a24f5e; -fx-background-radius: 30;" text="Stergere user" textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Button fx:id="butonModificareDatePersonale_v" layoutX="156.0" layoutY="430.0" mnemonicParsing="false" onMouseClicked="#modificareDatePersonaleUser" style="-fx-background-color: #524fff; -fx-background-radius: 30;" text="Modificare date personale User" textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Text fx:id="fieldTextNume_v" layoutX="55.0" layoutY="530.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nume">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="fieldTextPrenume_v" layoutX="354.0" layoutY="530.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Prenume">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="fieldTextNrTelefon_v" layoutX="354.0" layoutY="579.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nr. Telefon">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="fieldTextEmail_v" layoutX="686.0" layoutY="529.0" strokeType="OUTSIDE" strokeWidth="0.0" text="e-mail">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="fieldTextIBAN_v" layoutX="55.0" layoutY="580.0" strokeType="OUTSIDE" strokeWidth="0.0" text="IBAN">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="fieldTextUsername_v" layoutX="355.0" layoutY="621.0" strokeType="OUTSIDE" strokeWidth="0.0" text="UserName">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="fieldTextParola_v" layoutX="53.0" layoutY="621.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Parola">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="tfieldNume_v" layoutX="120.0" layoutY="512.0" promptText="nume..." />
+                  <TextField fx:id="tfieldPrenume_v" layoutX="455.0" layoutY="511.0" promptText="prenume..." />
+                  <TextField fx:id="tfieldEmail_v" layoutX="750.0" layoutY="510.0" promptText="e-mail..." />
+                  <TextField fx:id="tfieldUsername_v" layoutX="456.0" layoutY="602.0" promptText="username..." />
+                  <TextField fx:id="tfieldIBAN_v" layoutX="120.0" layoutY="561.0" prefHeight="26.0" prefWidth="170.0" promptText="IBAN..." />
+                  <TextField fx:id="tfieldNrTelefon_v" layoutX="456.0" layoutY="560.0" promptText="numar de telefon...." />
+                  <PasswordField fx:id="tfieldParola_v" layoutX="120.0" layoutY="602.0" promptText="password..." />
+                  <Button fx:id="butonAsaRamane_v" layoutX="441.0" layoutY="646.0" mnemonicParsing="false" onMouseClicked="#confirmareModificare" style="-fx-background-color: #455954; -fx-background-radius: 30;" text="ASA RAMANE!" textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Text layoutX="345.0" layoutY="256.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rol">
+                     <font>
+                        <Font size="22.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="mesajEroareAlegereRol_v" fill="RED" layoutX="452.0" layoutY="337.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*Te rog sa selectezi un rol!" />
+                  <Text fx:id="fieldTextAdresa_v" layoutX="686.0" layoutY="576.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Adresa">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="tfieldAdresa_v" layoutX="750.0" layoutY="557.0" promptText="adresa..." />
+                  <Text fx:id="textUserNeselectat_v" fill="RED" layoutX="315.0" layoutY="703.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*Te rog sa alegi un user, altfel nu se va face nicio modificare!" />
+               </children></Pane>
             </children>
         </AnchorPane>
     </children>
