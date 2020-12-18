@@ -26,15 +26,6 @@ public class Conexiune {
         try {
             connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/aplicatie", "root", "password");
             selectStatement = connection.createStatement();
-            /*rs = selectStatement.executeQuery("SELECT * FROM users");
-            rsmd = rs.getMetaData();
-            int nColumns = rsmd.getColumnCount();
-            while (rs.next()) {
-                for (int j = 1; j < nColumns; j++) {
-                    System.out.print(rs.getString(j) + " ");
-                }
-                System.out.println("");
-            }*/
         } catch (Exception e) {
             System.out.println("Erori in interogarea bazei de date!");
         }
@@ -164,13 +155,153 @@ public class Conexiune {
             return resultedList;
         }
     }
-
-
-    public void executareQuery(String query) {
+    public ArrayList<Departamente> getDepartamente() {
+        ArrayList<Departamente> result = new ArrayList<Departamente>();
         try {
-            interrogationStatement.execute(query);
+            rs = selectStatement.executeQuery("SELECT * FROM departamente");
+            while (rs.next()) {
+                Departamente departament = new Departamente();
+                departament.setIdDepartament(rs.getInt(1));
+                departament.setCodDepartament(rs.getString(2));
+                departament.setDescriereDepartament(rs.getString(3));
+                result.add(departament);
+            }
         } catch (Exception e) {
-            System.out.println("nu merge....");
+            System.out.println(e.getMessage());
         }
+        return result;
+    }
+
+    public ArrayList<Status> getStatus() {
+        ArrayList<Status> result = new ArrayList<Status>();
+        try {
+            rs = selectStatement.executeQuery("SELECT * FROM status_activ;");
+            while(rs.next()) {
+                Status status = new Status();
+                status.setIdStatus(rs.getInt(1));
+                status.setDescriereStatus(rs.getString(2));
+                result.add(status);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return result;
+    }
+
+    public ArrayList<Cursuri> getCursuri() {
+        ArrayList<Cursuri> result = new ArrayList<Cursuri>();
+        try {
+            rs = selectStatement.executeQuery("SELECT * FROM cursuri;");
+            while(rs.next()) {
+                Cursuri curs = new Cursuri();
+                curs.setIdCurs(rs.getInt(1));
+                curs.setDenumireCurs(rs.getString(2));
+                curs.setDescriereCurs(rs.getString(3));
+                result.add(curs);
+            }
+        }catch(Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return result;
+    }
+
+    public boolean executareQuery(String query) {
+        try {
+            connection.createStatement().execute(query);
+            return true;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
+    }
+
+    public ArrayList<VedereCurs> getListaCursuri() {
+        ArrayList<VedereCurs> listaVedereCurs = new ArrayList<VedereCurs>();
+        try{
+            rs = selectStatement.executeQuery("SELECT * FROM vCursuri;");
+            while(rs.next()) {
+                VedereCurs vc = new VedereCurs();
+                vc.setIdCurs(rs.getInt(1));
+                vc.setIdCursActivitate(rs.getInt(2));
+                vc.setDenumireCurs(rs.getString(3));
+                vc.setDescriereCurs(rs.getString(4));
+                vc.setNrZiSaptamana(rs.getInt(5));
+                vc.setOraInceput(rs.getInt(6));
+                vc.setNrMaxParticipanti(rs.getInt(7));
+                vc.setNumeProf(rs.getString(8));
+                vc.setPrenumeProf(rs.getString(9));
+                listaVedereCurs.add(vc);
+            }
+        } catch (Exception e) {
+            System.out.println( "salut" + e.getMessage());
+        }
+        return listaVedereCurs;
+    }
+
+    public ArrayList<VedereStudentiLaCurs> getListaStudentiLaCurs() {
+        ArrayList<VedereStudentiLaCurs> result = new ArrayList<VedereStudentiLaCurs>();
+        try{
+            rs = selectStatement.executeQuery("SELECT * FROM vStudentiLaCurs;");
+            while (rs.next()) {
+                VedereStudentiLaCurs vsc = new VedereStudentiLaCurs();
+                vsc.setIdUser(rs.getInt(1));
+                vsc.setNumeStudent(rs.getString(2));
+                vsc.setPrenumeStudent(rs.getString(3));
+                vsc.setNrTelefon(rs.getString(4));
+                vsc.setEmail(rs.getString(5));
+                vsc.setDenumireCurs(rs.getString(6));
+                vsc.setDescriereCurs(rs.getString(7));
+                vsc.setNumeProfesor(rs.getString(8));
+                vsc.setPrenumeProfesor(rs.getString(9));
+                vsc.setIdCursActivitate(rs.getInt(10));
+                result.add(vsc);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return result;
+    }
+
+    public ArrayList<Profesor> getListaProfesori() {
+        ArrayList<Profesor> result = new ArrayList<Profesor>();
+        try {
+            rs = selectStatement.executeQuery("SELECT * FROM vProfesori;");
+            while (rs.next()) {
+                Profesor p = new Profesor();
+                p.setIdUser(rs.getInt(1));
+                p.setCNP(rs.getString(2));
+                p.setIdRol(3);
+                p.setNume(rs.getString(4));
+                p.setPrenume(rs.getString(5));
+                p.setAdresa(rs.getString(6));
+                p.setNrTelefon(rs.getString(7));
+                p.setEmail(rs.getString(8));
+                p.setIBAN(rs.getString(9));
+                p.setNrContract(rs.getInt(10));
+                p.setNrMinOre(rs.getInt(11));
+                p.setNrMaxOre(rs.getInt(12));
+                p.setIdDepartament(rs.getInt(15));
+                result.add(p);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return result;
+    }
+
+    public boolean existaProfesorAsignat(int idProf, int idCurs) {
+        boolean result = false;
+        try {
+            rs = selectStatement.executeQuery("SELECT count(*) FROM curs_activitati WHERE id_curs =" + idCurs + " AND id_prof_titular = " + idProf + ";");
+            rs.next();
+            if (rs.getInt(1) == 0) {
+                result = false;
+            } else {
+                result = true;
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return result;
     }
 }

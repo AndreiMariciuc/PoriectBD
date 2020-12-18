@@ -1,5 +1,4 @@
 package autentificare;
-
 import bazaDate.Conexiune;
 import constante.Ecran;
 import javafx.event.ActionEvent;
@@ -30,9 +29,7 @@ public class ControlAutentificare {
         String userName = "tuddi"; //password.getText()
         Conexiune c = Conexiune.getConexiune();
         int rol = c.getUserType(userName, pass);
-        if (rol == 1) {
-            loadScene(actionEvent, "../admin/admin.fxml");
-        } else if (rol == 2) {
+        if (rol == 2 || rol == 1) {
             incorect.setText("Admin");
             if (state == 1) {
                 changeState();
