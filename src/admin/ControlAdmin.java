@@ -370,7 +370,7 @@ public class ControlAdmin implements Initializable {
         ArrayList<Departamente> listaDepartamente = Conexiune.getConexiune().getDepartamente();
         for (Departamente departamente: listaDepartamente) {
             if (choiceDepartament_a.getValue().equals(departamente.toString())) {
-                return departamente.getIdDepartament();
+                return departamente.getId();
             }
         }
         return 0;

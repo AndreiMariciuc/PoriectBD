@@ -159,9 +159,9 @@ public class Conexiune {
             rs = selectStatement.executeQuery("SELECT * FROM departamente");
             while (rs.next()) {
                 Departamente departament = new Departamente();
-                departament.setIdDepartament(rs.getInt(1));
-                departament.setCodDepartament(rs.getString(2));
-                departament.setDescriereDepartament(rs.getString(3));
+                departament.setId(rs.getInt(1));
+                departament.setCod(rs.getString(2));
+                departament.setDescriere(rs.getString(3));
                 result.add(departament);
             }
         } catch (Exception e) {

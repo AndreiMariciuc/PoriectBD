@@ -1,37 +1,37 @@
 package bazaDate;
 
 public class Departamente {
-    private int idDepartament;
-    private String codDepartament, descriereDepartament;
+    private int id;
+    private String cod, descriere;
     Departamente() {
 
     }
 
-    public int getIdDepartament() {
-        return idDepartament;
+    public int getId() {
+        return id;
     }
 
-    public void setIdDepartament(int idDepartament) {
-        this.idDepartament = idDepartament;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public String getCodDepartament() {
-        return codDepartament;
+    public String getCod() {
+        return cod;
     }
 
-    public void setCodDepartament(String codDepartament) {
-        this.codDepartament = codDepartament;
+    public void setCod(String cod) {
+        this.cod = cod;
     }
 
-    public String getDescriereDepartament() {
-        return descriereDepartament;
+    public String getDescriere() {
+        return descriere;
     }
 
-    public void setDescriereDepartament(String descriereDepartament) {
-        this.descriereDepartament = descriereDepartament;
+    public void setDescriere(String descriere) {
+        this.descriere = descriere;
     }
 
     public String toString() {
-        return new String(idDepartament + " " + codDepartament + ": " + descriereDepartament);
+        return new String(id + " " + cod + ": " + descriere);
     }
 }
