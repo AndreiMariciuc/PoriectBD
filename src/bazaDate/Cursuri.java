@@ -1,35 +1,35 @@
 package bazaDate;
 
 public class Cursuri {
-    private int idCurs;
-    private String denumireCurs, descriereCurs;
+    private int id;
+    private String denumire, descriere;
 
-    public int getIdCurs() {
-        return idCurs;
+    public int getId() {
+        return id;
     }
 
-    public void setIdCurs(int idCurs) {
-        this.idCurs = idCurs;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public String getDenumireCurs() {
-        return denumireCurs;
+    public String getDenumire() {
+        return denumire;
     }
 
-    public void setDenumireCurs(String denumireCurs) {
-        this.denumireCurs = denumireCurs;
+    public void setDenumire(String denumire) {
+        this.denumire = denumire;
     }
 
-    public String getDescriereCurs() {
-        return descriereCurs;
+    public String getDescriere() {
+        return descriere;
     }
 
-    public void setDescriereCurs(String descriereCurs) {
-        this.descriereCurs = descriereCurs;
+    public void setDescriere(String descriere) {
+        this.descriere = descriere;
     }
 
     @Override
     public String toString() {
-        return new String(idCurs + ". " + denumireCurs + ": " + descriereCurs);
+        return new String(id + ". " + denumire + ": " + descriere);
     }
 }

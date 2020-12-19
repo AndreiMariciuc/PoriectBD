@@ -380,7 +380,7 @@ public class ControlAdmin implements Initializable {
         listViewStudenti_c.getItems().clear();
         ArrayList<Integer> listaIdCA = new ArrayList<Integer>();
         for (VedereCurs c: listaCursuri) {
-            if (c.getIdCurs() == choiceCurs_c.getValue().getIdCurs()) {
+            if (c.getIdCurs() == choiceCurs_c.getValue().getId()) {
                 listViewCursuri_c.getItems().add(c.toString());
                 listaIdCA.add(c.getIdCursActivitate());
                 listViewStudenti_c.getItems().add(c.toString());
@@ -407,14 +407,14 @@ public class ControlAdmin implements Initializable {
         if (choiceProfesor_ap.getValue() == null || choiceMaterie_ap.getValue() == null || !isNumber(numarOre_ap.getText())) {
             eroare_ap.setText("*Te rog sa selectezi atat un profesor cat si un curs!");
         } else {
-            if (!Conexiune.getConexiune().existaProfesorAsignat(choiceProfesor_ap.getValue().getIdUser(), choiceMaterie_ap.getValue().getIdCurs())) {
-                Conexiune.getConexiune().executareQuery("INSERT INTO curs_activitati (id_curs, id_activ, id_prof_titular, durata) VALUES (" + choiceMaterie_ap.getValue().getIdCurs() +", 1, " + choiceProfesor_ap.getValue().getIdUser() + ", " + numarOre_ap.getText() +")");
+            if (!Conexiune.getConexiune().existaProfesorAsignat(choiceProfesor_ap.getValue().getIdUser(), choiceMaterie_ap.getValue().getId())) {
+                Conexiune.getConexiune().executareQuery("INSERT INTO curs_activitati (id_curs, id_activ, id_prof_titular, durata) VALUES (" + choiceMaterie_ap.getValue().getId() +", 1, " + choiceProfesor_ap.getValue().getIdUser() + ", " + numarOre_ap.getText() +")");
                 succes1_ap.setText("*Profesorul X a fost asignat la cursul Y!");
                 succes2_ap.setText("*Ramane la latitudinea sa daca va avea nevoie de seminare si laboratoare!");
                 succes3_ap.setText("*De asemenea, tot el va stabili procentele, profesori delegati si momentul la care se tin acestea!");
                 listaCursuri = Conexiune.getConexiune().getListaCursuri();
             } else {
-                succes3_ap.setText("Profesorul pe care vreti sa il asignati la cursul de " + choiceMaterie_ap.getValue().getDenumireCurs() + " deja este asignat la acest curs!");
+                succes3_ap.setText("Profesorul pe care vreti sa il asignati la cursul de " + choiceMaterie_ap.getValue().getDenumire() + " deja este asignat la acest curs!");
             }
         }
     }

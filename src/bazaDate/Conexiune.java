@@ -1,7 +1,5 @@
 package bazaDate;
 
-import javafx.stage.Stage;
-
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -194,9 +192,9 @@ public class Conexiune {
             rs = selectStatement.executeQuery("SELECT * FROM cursuri;");
             while(rs.next()) {
                 Cursuri curs = new Cursuri();
-                curs.setIdCurs(rs.getInt(1));
-                curs.setDenumireCurs(rs.getString(2));
-                curs.setDescriereCurs(rs.getString(3));
+                curs.setId(rs.getInt(1));
+                curs.setDenumire(rs.getString(2));
+                curs.setDescriere(rs.getString(3));
                 result.add(curs);
             }
         }catch(Exception e) {
