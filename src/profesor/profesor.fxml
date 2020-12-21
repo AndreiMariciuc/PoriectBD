@@ -173,56 +173,54 @@
                         <Font size="36.0" />
                      </font>
                   </Label>
-                  <TabPane layoutX="94.0" layoutY="189.0" prefHeight="500.0" prefWidth="879.0" tabClosingPolicy="UNAVAILABLE">
+                  <TabPane layoutX="147.0" layoutY="193.0" prefHeight="500.0" prefWidth="783.0" tabClosingPolicy="UNAVAILABLE">
                     <tabs>
                       <Tab text="Activitati curs">
                         <content>
                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="470.0" prefWidth="879.0" tabClosingPolicy="UNAVAILABLE" tabMaxHeight="100.0" tabMaxWidth="150.0">
+                                    <TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="470.0" prefWidth="783.0" tabClosingPolicy="UNAVAILABLE" tabMaxHeight="100.0" tabMaxWidth="150.0">
                                       <tabs>
                                         <Tab text="Astazi">
                                           <content>
-                                            <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="440.0" prefWidth="879.0">
+                                            <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="440.0" prefWidth="783.0">
                                                    <children>
-                                                      <TableView fx:id="activitatiCurs1" prefHeight="384.0" prefWidth="879.0">
+                                                      <TableView fx:id="activitatiCurs1" prefHeight="384.0" prefWidth="783.0">
                                                           <placeholder>
                                                               <Label text="Astazi nu aveti activitati didactice" />
                                                           </placeholder>
                                                         <columns>
-                                                          <TableColumn fx:id="disciplinaColumn1" prefWidth="268.3333435058594" text="Disciplina" />
-                                                          <TableColumn fx:id="activitateColumn1" prefWidth="99.66665649414062" text="Activitate" />
-                                                            <TableColumn fx:id="perioadaColumn1" prefWidth="125.0" text="Perioada" />
-                                                            <TableColumn fx:id="ziSaptamanaColumn1" prefWidth="119.0" text="Zi a saptamanii" />
-                                                            <TableColumn fx:id="procentColumn1" prefWidth="73.0" text="Procent" />
-                                                            <TableColumn fx:id="oraInceputColumn1" minWidth="30.0" prefWidth="107.3333740234375" resizable="false" text="Ora inceput" />
-                                                            <TableColumn fx:id="durataColumn1" prefWidth="69.0" text="Durata(h)" />
+                                                          <TableColumn fx:id="disciplinaColumn1" prefWidth="268.0" text="Disciplina" />
+                                                          <TableColumn fx:id="activitateColumn1" prefWidth="115.0" text="Activitate" />
+                                                            <TableColumn fx:id="perioadaColumn1" prefWidth="132.0" text="Perioada" />
+                                                            <TableColumn fx:id="ziSaptamanaColumn1" prefWidth="100.0" text="Zi a saptamanii" />
+                                                            <TableColumn fx:id="oraInceputColumn1" minWidth="30.0" resizable="false" text="Ora inceput" />
+                                                            <TableColumn fx:id="durataColumn1" prefWidth="70.0" text="Durata (h)" />
                                                         </columns>
                                                       </TableView>
-                                                      <Button fx:id="descarcareButon1" layoutX="396.0" layoutY="401.0" mnemonicParsing="false" onAction="#descarcaLista" text="Descarca lista" />
+                                                      <Button fx:id="descarcareButon1" layoutX="348.0" layoutY="401.0" mnemonicParsing="false" onAction="#descarcaLista" text="Descarca lista" />
                                                    </children>
                                                 </AnchorPane>
                                           </content>
                                         </Tab>
                                         <Tab text="Toate activitatile">
                                           <content>
-                                            <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="440.0" prefWidth="879.0">
+                                            <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="440.0" prefWidth="783.0">
                                                    <children>
-                                                      <TableView fx:id="activitatiCurs2" prefHeight="384.0" prefWidth="879.0">
+                                                      <TableView fx:id="activitatiCurs2" prefHeight="384.0" prefWidth="783.0">
                                                          <placeholder>
                                                             <Label text="Nu ati programat nicio activitate didactica" />
                                                          </placeholder>
                                                          <columns>
-                                                            <TableColumn fx:id="disciplinaColumn2" prefWidth="268.3333435058594" text="Disciplina" />
-                                                            <TableColumn fx:id="activitateColumn2" prefWidth="99.66665649414062" text="Activitate" />
-                                                            <TableColumn fx:id="perioadaColumn2" prefWidth="125.0" text="Perioada" />
-                                                            <TableColumn fx:id="ziSaptamanaColumn2" prefWidth="119.0" text="Zi a saptamanii" />
-                                                            <TableColumn fx:id="procentColumn2" prefWidth="73.0" text="Procent" />
-                                                            <TableColumn fx:id="oraInceputColumn2" minWidth="30.0" prefWidth="107.3333740234375" resizable="false" text="Ora inceput" />
-                                                            <TableColumn fx:id="durataColumn2" prefWidth="69.0" text="Durata(h)" />
+                                                            <TableColumn fx:id="disciplinaColumn2" prefWidth="268.0" text="Disciplina" />
+                                                            <TableColumn fx:id="activitateColumn2" prefWidth="115.0" text="Activitate" />
+                                                            <TableColumn fx:id="perioadaColumn2" prefWidth="132.0" text="Perioada" />
+                                                            <TableColumn fx:id="ziSaptamanaColumn2" prefWidth="100.0" text="Zi a saptamanii" />
+                                                            <TableColumn fx:id="oraInceputColumn2" minWidth="30.0" resizable="false" text="Ora inceput" />
+                                                            <TableColumn fx:id="durataColumn2" prefWidth="70.0" text="Durata (h)" />
                                                          </columns>
                                                       </TableView>
-                                                      <Button fx:id="descarcareButon2" layoutX="396.0" layoutY="401.0" mnemonicParsing="false" onAction="#descarcaLista" text="Descarca lista" />
+                                                      <Button fx:id="descarcareButon2" layoutX="348.0" layoutY="401.0" mnemonicParsing="false" onAction="#descarcaLista" text="Descarca lista" />
                                                    </children>
                                                 </AnchorPane>
                                           </content>
@@ -237,52 +235,46 @@
                         <content>
                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="470.0" prefWidth="879.0" tabClosingPolicy="UNAVAILABLE" tabMaxHeight="100.0" tabMaxWidth="150.0">
+                                    <TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="470.0" prefWidth="783.0" tabClosingPolicy="UNAVAILABLE" tabMaxHeight="100.0" tabMaxWidth="150.0">
                                        <tabs>
                                           <Tab text="Astazi">
                                              <content>
-                                                <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="440.0" prefWidth="879.0">
+                                                <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="440.0" prefWidth="783.0">
                                                    <children>
-                                                      <TableView fx:id="activitatiGrupe1" prefHeight="384.0" prefWidth="879.0">
+                                                      <TableView fx:id="activitatiGrupe1" prefHeight="384.0" prefWidth="783.0">
                                                          <placeholder>
                                                             <Label text="Astazi nu aveti activitati de grup" />
                                                          </placeholder>
                                                          <columns>
-                                                            <TableColumn fx:id="grupaColumn1" prefWidth="75.0" text="Grupa" />
-                                                            <TableColumn fx:id="minParticipantiColumn1" prefWidth="114.0" text="Minim participanti" />
-                                                            <TableColumn fx:id="nrCrtParticipantiColumn1" prefWidth="133.0" text="Nr curent participanti" />
-                                                            <TableColumn fx:id="dataColumn1" prefWidth="87.0" text="Data" />
-                                                            <TableColumn fx:id="oraColumn1" prefWidth="56.0" text="Ora" />
-                                                            <TableColumn fx:id="durataActivColumn1" prefWidth="69.0" text="Durata (h)" />
-                                                            <TableColumn fx:id="startProgramareColumn1" prefWidth="163.0" text="Start programare" />
-                                                            <TableColumn fx:id="deadlineColumn1" prefWidth="163.0" text="Deadline" />
+                                                            <TableColumn fx:id="grupaColumn1" prefWidth="125.0" text="Grupa" />
+                                                            <TableColumn fx:id="disciplinaGrupColumn1" prefWidth="320.0" text="Disciplina" />
+                                                            <TableColumn fx:id="dataColumn1" prefWidth="150.0" text="Data" />
+                                                            <TableColumn fx:id="oraColumn1" prefWidth="90.0" text="Ora inceput" />
+                                                            <TableColumn fx:id="durataActivColumn1" text="Durata (h)" />
                                                          </columns>
                                                       </TableView>
-                                                      <Button fx:id="descarcareButon3" layoutX="396.0" layoutY="401.0" mnemonicParsing="false" text="Descarca lista" />
+                                                      <Button fx:id="descarcareButon3" layoutX="348.0" layoutY="401.0" mnemonicParsing="false" onAction="#descarcaLista" text="Descarca lista" />
                                                    </children>
                                                 </AnchorPane>
                                              </content>
                                           </Tab>
                                           <Tab text="Toate activitatile">
                                              <content>
-                                                <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="387.0" prefWidth="925.0">
+                                                <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="440.0" prefWidth="783.0">
                                                    <children>
-                                                      <TableView fx:id="activitatiGrupe2" prefHeight="384.0" prefWidth="879.0">
+                                                      <TableView fx:id="activitatiGrupe2" prefHeight="384.0" prefWidth="783.0">
                                                          <placeholder>
-                                                            <Label text="Astazi nu aveti activitati de grup" />
+                                                            <Label text="Nu v-ati inscris in nicio activitate de grup" />
                                                          </placeholder>
                                                          <columns>
-                                                            <TableColumn fx:id="grupaColumn2" prefWidth="75.0" text="Grupa" />
-                                                            <TableColumn fx:id="minParticipantiColumn2" prefWidth="114.0" text="Minim participanti" />
-                                                            <TableColumn fx:id="nrCrtParticipantiColumn2" prefWidth="133.0" text="Nr curent participanti" />
-                                                            <TableColumn fx:id="dataColumn2" prefWidth="87.0" text="Data" />
-                                                            <TableColumn fx:id="oraColumn2" prefWidth="56.0" text="Ora" />
-                                                            <TableColumn fx:id="durataActivColumn2" prefWidth="69.0" text="Durata (h)" />
-                                                            <TableColumn fx:id="startProgramareColumn2" prefWidth="163.0" text="Start programare" />
-                                                            <TableColumn fx:id="deadlineColumn2" prefWidth="163.0" text="Deadline" />
+                                                            <TableColumn fx:id="grupaColumn2" prefWidth="125.0" text="Grupa" />
+                                                            <TableColumn fx:id="disciplinaGrupColumn2" prefWidth="320.0" text="Disciplina" />
+                                                            <TableColumn fx:id="dataColumn2" prefWidth="150.0" text="Data" />
+                                                            <TableColumn fx:id="oraColumn2" prefWidth="90.0" text="Ora inceput" />
+                                                            <TableColumn fx:id="durataActivColumn2" text="Durata (h)" />
                                                          </columns>
                                                       </TableView>
-                                                      <Button fx:id="descarcareButon4" layoutX="396.0" layoutY="401.0" mnemonicParsing="false" text="Descarca lista" />
+                                                      <Button fx:id="descarcareButon4" layoutX="348.0" layoutY="401.0" mnemonicParsing="false" onAction="#descarcaLista" text="Descarca lista" />
                                                    </children>
                                                 </AnchorPane>
                                              </content>

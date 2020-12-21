@@ -5,35 +5,25 @@ import java.util.Date;
 
 public class ActivitateGrupa {
     private int grupa;
-    private int nrMinParticipanti;
-    private int nrCurentParticipanti;
+    private String disciplina;
     private Date data;
     private int ora;
     private int durata;
-    private LocalDateTime startProgramare;
-    private LocalDateTime deadline;
 
-    public ActivitateGrupa(int grupa, int nrMinParticipanti, int nrCurentParticipanti, Date data, int ora, int durata, LocalDateTime startProgramare, LocalDateTime deadline) {
+    public ActivitateGrupa(int grupa, String disciplina, Date data, int ora, int durata) {
         this.grupa = grupa;
-        this.nrMinParticipanti = nrMinParticipanti;
-        this.nrCurentParticipanti = nrCurentParticipanti;
+        this.disciplina = disciplina;
         this.data = data;
         this.ora = ora;
         this.durata = durata;
-        this.startProgramare = startProgramare;
-        this.deadline = deadline;
     }
 
     public int getGrupa() {
         return grupa;
     }
 
-    public int getNrMinParticipanti() {
-        return nrMinParticipanti;
-    }
-
-    public int getNrCurentParticipanti() {
-        return nrCurentParticipanti;
+    public String getDisciplina() {
+        return disciplina;
     }
 
     public Date getData() {
@@ -48,24 +38,12 @@ public class ActivitateGrupa {
         return durata;
     }
 
-    public LocalDateTime getStartProgramare() {
-        return startProgramare;
-    }
-
-    public LocalDateTime getDeadline() {
-        return deadline;
-    }
-
     public void setGrupa(int grupa) {
         this.grupa = grupa;
     }
 
-    public void setNrMinParticipanti(int nrMinParticipanti) {
-        this.nrMinParticipanti = nrMinParticipanti;
-    }
-
-    public void setNrCurentParticipanti(int nrCurentParticipanti) {
-        this.nrCurentParticipanti = nrCurentParticipanti;
+    public void setDisciplina(String disciplina) {
+        this.disciplina = disciplina;
     }
 
     public void setData(Date data) {
@@ -78,13 +56,5 @@ public class ActivitateGrupa {
 
     public void setDurata(int durata) {
         this.durata = durata;
-    }
-
-    public void setStartProgramare(LocalDateTime startProgramare) {
-        this.startProgramare = startProgramare;
-    }
-
-    public void setDeadline(LocalDateTime deadline) {
-        this.deadline = deadline;
     }
 }
