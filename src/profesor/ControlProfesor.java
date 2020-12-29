@@ -650,9 +650,13 @@ public class ControlProfesor implements Initializable {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
             LocalDateTime data1=LocalDateTime.parse(rs.getString("data_desfasurare"),formatter);
             int durata1=rs.getInt("durata");
-            int diff = Math.abs(data.getMinute()-data1.getMinute());
-            if (diff<durata || diff<durata1)
-                return true;
+            int zi = data.getDayOfYear();
+            int zi1 = data1.getDayOfYear();
+            if (zi == zi1){
+                int diff = Math.abs(data.getHour()-data1.getHour())*60;
+                if (diff<durata && diff<durata1)
+                    return true;
+            }
         }
         return false;
     }
@@ -718,12 +722,12 @@ public class ControlProfesor implements Initializable {
         if (careProf.equals("dumneavoastra"))
             id_prof_delegat = user.getIdUser();
         else{
-            String numeProf = profDelegatField1.getText();
-            if (!cautaProfesor(numeProf)){
+            String cnpProf = profDelegatField1.getText();
+            if (!cautaProfesor(cnpProf)){
                 profInvalid.setVisible(true);
                 return;
             }
-            id_prof_delegat = numeUserToIdUser(numeProf);
+            id_prof_delegat = cnpUserToIdUser(cnpProf);
         }
         if (suprapuneActivitate(perioada,nr_zi_sapt,ora,durata,id_prof_delegat))
             eroareProgram.setVisible(true);
@@ -760,12 +764,12 @@ public class ControlProfesor implements Initializable {
         if (careProf.equals("dumneavoastra"))
             id_prof_delegat = user.getIdUser();
         else{
-            String numeProf = profDelegatField2.getText();
-            if (!cautaProfesor(numeProf)){
+            String cnpProf = profDelegatField2.getText();
+            if (!cautaProfesor(cnpProf)){
                 profInvalid.setVisible(true);
                 return;
             }
-            id_prof_delegat = numeUserToIdUser(numeProf);
+            id_prof_delegat = cnpUserToIdUser(cnpProf);
         }
         if (suprapuneActivitate(perioada,nr_zi_sapt,ora,durata,id_prof_delegat))
             eroareProgram.setVisible(true);
@@ -1017,12 +1021,12 @@ public class ControlProfesor implements Initializable {
         if (profDelegatFilter3.getValue().equals("dumneavoastra"))
             id_prof_delegat = user.getIdUser();
         else {
-            String numeProf = profDelegatField3.getText();
-            if (!cautaProfesor(numeProf)){
+            String cnpProf = profDelegatField3.getText();
+            if (!cautaProfesor(cnpProf)){
                 profInvalid1.setVisible(true);
                 return;
             }
-            id_prof_delegat = numeUserToIdUser(numeProf);
+            id_prof_delegat = cnpUserToIdUser(cnpProf);
         }
         if (suprapuneActivitate2(data,durata,id_prof_delegat)){
             eroareProgram1.setVisible(true);

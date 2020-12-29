@@ -91,6 +91,15 @@ public class Functii {
         return id_user;
     }
 
+    public static int cnpUserToIdUser (String cnpUser) throws SQLException{
+        PreparedStatement s = conexiune.prepareStatement("select id_user from users where cnp = '"+cnpUser+"'");
+        ResultSet rs=s.executeQuery();
+        int id_user = -1;
+        while(rs.next())
+            id_user = rs.getInt("id_user");
+        return id_user;
+    }
+
     public static float pondereActiv(int id_curs,int id_activitate) throws SQLException {
         PreparedStatement s = conexiune.prepareStatement("select procent from curs_activitati where id_curs = "+id_curs+" and id_activ = "+id_activitate);
         ResultSet rs=s.executeQuery();
