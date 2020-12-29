@@ -1,45 +1,100 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.effect.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="student.ControlStudent">
    <children>
-      <AnchorPane depthTest="ENABLE" prefHeight="720.0" prefWidth="200.0" style="-fx-border-color: #fff;">
+      <AnchorPane depthTest="ENABLE" prefHeight="720.0" prefWidth="200.0" style="-fx-background-color: #A6A6A6;">
          <children>
-            <Button fx:id="datePersonaleButton" layoutX="7.0" layoutY="120.0" mnemonicParsing="false" onAction="#schimbaStari" prefHeight="40.0" prefWidth="185.0" style="-fx-border-radius: 90;" text="date personale">
+            <Button fx:id="datePersonaleButton" layoutX="6.0" layoutY="125.0" mnemonicParsing="false" onAction="#schimbaStari" prefHeight="35.0" prefWidth="186.0" style="-fx-background-radius: 90; -fx-background-color: #e2e0d4;" text="         Date personale" textAlignment="RIGHT">
                <cursor>
-                  <Cursor fx:constant="DEFAULT" />
+                  <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button fx:id="orarButton" layoutX="7.0" layoutY="169.0" mnemonicParsing="false" onAction="#schimbaStari" prefHeight="40.0" prefWidth="185.0" style="-fx-border-radius: 90;" text="orar zi curenta">
+            <Button fx:id="deautentificareButton" layoutX="6.0" layoutY="671.0" minHeight="9.0" mnemonicParsing="false" onAction="#schimbaStari" prefHeight="35.0" prefWidth="186.0" style="-fx-background-radius: 90; -fx-background-color: #fecac2;" text="Deconectare" textFill="#d32828">
                <cursor>
-                  <Cursor fx:constant="DEFAULT" />
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Button>
+            <Label fx:id="welcome" blendMode="SRC_ATOP" layoutX="14.0" layoutY="37.0" text="Bun venit x-ulescu" textOverrun="CLIP">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font></Label>
+            <ImageView fitHeight="35.0" fitWidth="40.0" layoutX="24.0" layoutY="123.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/date.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+            <Button fx:id="orarButton" layoutX="6.0" layoutY="169.0" mnemonicParsing="false" onAction="#schimbaStari" prefHeight="35.0" prefWidth="186.0" style="-fx-background-radius: 90; -fx-background-color: #e2e0d4;" text="Orar">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button fx:id="carnetbutton" layoutX="7.0" layoutY="215.0" mnemonicParsing="false" onAction="#schimbaStari" prefHeight="40.0" prefWidth="185.0" style="-fx-border-radius: 90;" text="carnet">
+            <ImageView fitHeight="35.0" fitWidth="35.0" layoutX="20.0" layoutY="170.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/hiring.png" />
+               </image>
                <cursor>
-                  <Cursor fx:constant="DEFAULT" />
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+            <Button fx:id="carnetButton" layoutX="6.0" layoutY="213.0" mnemonicParsing="false" onAction="#schimbaStari" prefHeight="36.0" prefWidth="186.0" style="-fx-background-color: #e2e0d4; -fx-background-radius: 90;" text="Carnet">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button fx:id="gestionareCursuriButton" layoutX="7.0" layoutY="262.0" mnemonicParsing="false" onAction="#schimbaStari" prefHeight="40.0" prefWidth="185.0" style="-fx-border-radius: 90;" text="gestionare cursuri">
+            <ImageView fitHeight="31.0" fitWidth="35.0" layoutX="20.0" layoutY="217.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/approved.png" />
+               </image>
                <cursor>
-                  <Cursor fx:constant="DEFAULT" />
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+            <Button fx:id="inscriereCursuriButton" layoutX="6.0" layoutY="258.0" mnemonicParsing="false" onAction="#schimbaStari" prefHeight="36.0" prefWidth="186.0" style="-fx-background-color: #e2e0d4; -fx-background-radius: 90;" text="Inscriere Curs">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button fx:id="grupuriButton" layoutX="7.0" layoutY="309.0" mnemonicParsing="false" onAction="#schimbaStari" prefHeight="40.0" prefWidth="185.0" style="-fx-border-radius: 90;" text="grupuri">
+            <ImageView fitHeight="28.0" fitWidth="35.0" layoutX="24.0" layoutY="264.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/search.png" />
+               </image>
                <cursor>
-                  <Cursor fx:constant="DEFAULT" />
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+            <Button fx:id="grupuriButton" layoutX="8.0" layoutY="304.0" mnemonicParsing="false" onAction="#schimbaStari" prefHeight="36.0" prefWidth="186.0" style="-fx-background-color: #e2e0d4; -fx-background-radius: 90;" text="Grupuri">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button fx:id="deautentificareButton" layoutX="6.0" layoutY="666.0" minHeight="9.0" mnemonicParsing="false" onAction="#schimbaStari" prefHeight="40.0" prefWidth="186.0" style="-fx-border-radius: 90;" text="deautentificare">
+            <ImageView fitHeight="28.0" fitWidth="35.0" layoutX="26.0" layoutY="310.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/website.png" />
+               </image>
                <cursor>
-                  <Cursor fx:constant="DEFAULT" />
+                  <Cursor fx:constant="HAND" />
                </cursor>
-            </Button>
-            <Label layoutX="44.0" layoutY="36.0" text="Bun venit x-ulescu" textOverrun="CLIP" />
+            </ImageView>
          </children>
          <effect>
             <DropShadow />
@@ -50,11 +105,295 @@
             <DropShadow />
          </effect>
          <children>
-            <Pane fx:id="orarPane" prefHeight="720.0" prefWidth="1080.0" style="-fx-background-color: #1ca;" />
-            <Pane fx:id="carnetPane" prefHeight="720.0" prefWidth="1080.0" style="-fx-background-color: #fea;" />
-            <Pane fx:id="gestionareCursuriPane" prefHeight="720.0" prefWidth="1080.0" style="-fx-background-color: #e2a;" />
-            <Pane fx:id="grupuriPane" prefHeight="720.0" prefWidth="1080.0" style="-fx-background-color: #1f2;" />
-            <Pane fx:id="datePersonalePane" prefHeight="720.0" prefWidth="1080.0" style="-fx-background-color: #1ef;" />
+            <Pane fx:id="grupuriPane" prefHeight="720.0" prefWidth="1080.0" style="-fx-background-color: #e8e8e8;">
+               <children>
+                  <Text layoutX="407.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="grupuri" underline="true">
+                     <font>
+                        <Font name="System Bold" size="30.0" />
+                     </font>
+                  </Text>
+               </children></Pane>
+            <Pane fx:id="carnetPane" layoutX="10.0" layoutY="10.0" prefHeight="720.0" prefWidth="1080.0" style="-fx-background-color: #e8e8e8;">
+               <children>
+                  <Text layoutX="344.0" layoutY="64.0" strokeType="OUTSIDE" strokeWidth="0.0" text="carnet" underline="true">
+                     <font>
+                        <Font name="System Bold" size="30.0" />
+                     </font>
+                  </Text>
+               </children>
+            </Pane>
+            <Pane fx:id="datePersonalePane" prefHeight="720.0" prefWidth="1080.0" style="-fx-background-color: #e8e8e8;">
+               <children>
+                  <Text fx:id="tstatusField" blendMode="SRC_ATOP" layoutX="77.0" layoutY="489.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Text>
+                  <Text fx:id="welcomeText" blendMode="SRC_ATOP" layoutX="172.0" layoutY="58.0" smooth="false" stroke="#f7070700" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                     <font>
+                        <Font size="30.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="anStudiu" blendMode="SRC_ATOP" layoutX="227.0" layoutY="511.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Text>
+                  <Text fx:id="CNP" blendMode="SRC_ATOP" layoutX="227.0" layoutY="244.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Text>
+                  <Text fx:id="nume" blendMode="SRC_ATOP" layoutX="227.0" layoutY="269.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Text>
+                  <Text fx:id="prenume" blendMode="SRC_ATOP" layoutX="227.0" layoutY="294.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Text>
+                  <Text fx:id="adresa" blendMode="SRC_ATOP" layoutX="227.0" layoutY="319.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Text>
+                  <Text fx:id="nrTel" blendMode="SRC_ATOP" layoutX="227.0" layoutY="344.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Text>
+                  <Text fx:id="email" blendMode="SRC_ATOP" layoutX="227.0" layoutY="369.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Text>
+                  <Text fx:id="IBAN" blendMode="SRC_ATOP" layoutX="227.0" layoutY="394.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Text>
+                  <Text fx:id="nrContract" blendMode="SRC_ATOP" layoutX="227.0" layoutY="419.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Text>
+                  <Text fx:id="username" blendMode="SRC_ATOP" layoutX="227.0" layoutY="444.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Text>
+                  <Text fx:id="parola" blendMode="SRC_ATOP" layoutX="227.0" layoutY="469.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Text>
+                  <Text fx:id="tAnStudiu" blendMode="SRC_ATOP" layoutX="77.0" layoutY="512.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Text>
+                  <Text fx:id="tCNP" blendMode="SRC_ATOP" layoutX="77.0" layoutY="244.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Text>
+                  <Text fx:id="tNume" blendMode="SRC_ATOP" layoutX="77.0" layoutY="269.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Text>
+                  <Text fx:id="tPrenume" blendMode="SRC_ATOP" layoutX="77.0" layoutY="294.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Text>
+                  <Text fx:id="tAdresa" blendMode="SRC_ATOP" layoutX="77.0" layoutY="319.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Text>
+                  <Text fx:id="tNrTel" blendMode="SRC_ATOP" layoutX="77.0" layoutY="344.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Text>
+                  <Text fx:id="tEmail" blendMode="SRC_ATOP" layoutX="77.0" layoutY="369.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Text>
+                  <Text fx:id="tIBAN" blendMode="SRC_ATOP" layoutX="77.0" layoutY="394.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Text>
+                  <Text fx:id="tNrContract" blendMode="SRC_ATOP" layoutX="77.0" layoutY="419.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Text>
+                  <Text fx:id="tUsername" blendMode="SRC_ATOP" layoutX="77.0" layoutY="444.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Text>
+                  <Text fx:id="tParola" blendMode="SRC_ATOP" layoutX="77.0" layoutY="469.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Text>
+                  <Text fx:id="statusField" blendMode="SRC_ATOP" layoutX="227.0" layoutY="488.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Text>
+               </children>
+            </Pane>
+            <Pane fx:id="orarPane" prefHeight="720.0" prefWidth="1080.0" style="-fx-background-color: #e8e8e8;">
+               <children>
+                  <Text layoutX="344.0" layoutY="64.0" strokeType="OUTSIDE" strokeWidth="0.0" text="orar" underline="true">
+                     <font>
+                        <Font name="System Bold" size="30.0" />
+                     </font>
+                  </Text>
+               </children>
+            </Pane>
+            <Pane fx:id="inscriereCursuriPane" prefHeight="720.0" prefWidth="1080.0" style="-fx-background-color: #e8e8e8;">
+               <children>
+                  <TabPane prefHeight="720.0" prefWidth="1080.0" tabClosingPolicy="UNAVAILABLE">
+                    <tabs>
+                      <Tab text="Renunțare cursuri">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-radius: 90;">
+                                 <children>
+                                    <Text layoutX="349.0" layoutY="153.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Renunță la cursuri" underline="true">
+                                       <font>
+                                          <Font name="System Bold" size="30.0" />
+                                       </font>
+                                    </Text>
+                                    <Button fx:id="renuntaCursButton" layoutX="406.0" layoutY="473.0" minHeight="9.0" mnemonicParsing="false" onAction="#renuntaCurs" prefHeight="35.0" prefWidth="186.0" style="-fx-background-radius: 90; -fx-background-color: #fecac2;" text="Renunță" textFill="#d32828">
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font>
+                                    </Button>
+                                    <ComboBox fx:id="cursurileStudentului" layoutX="315.0" layoutY="306.0" prefHeight="30.0" prefWidth="370.0" promptText="Alege un curs la care vrei să renunți" style="-fx-background-radius: 90;" />
+                                    <Text fx:id="mesajSuccesRenuntare" layoutX="406.0" layoutY="412.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="268.8000244140625" />
+                                 </children>
+                              </AnchorPane>
+                        </content>
+                      </Tab>
+                      <Tab text="Înscriere cursuri">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="261.0" prefWidth="606.0">
+                                 <children>
+                                    <Text layoutX="353.0" layoutY="61.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Înscrie-te la un curs" underline="true">
+                                       <font>
+                                          <Font name="System Bold" size="30.0" />
+                                       </font>
+                                    </Text>
+                                    <ComboBox fx:id="boxSeminar" layoutX="353.0" layoutY="307.0" prefHeight="28.0" prefWidth="342.0" promptText="Când vrei să faci seminarul?" style="-fx-background-radius: 90;" />
+                                    <ComboBox fx:id="cursuriDisponibile" layoutX="353.0" layoutY="102.0" onAction="#seAlegeCursul" prefHeight="28.0" prefWidth="303.0" promptText="Alege un curs disponibil" style="-fx-background-radius: 90;" />
+                                    <Button fx:id="inscrirereCursButton" layoutX="406.0" layoutY="474.0" minHeight="9.0" mnemonicParsing="false" onAction="#inscriereCurs" prefHeight="35.0" prefWidth="186.0" style="-fx-background-radius: 90; -fx-background-color: #fecac2;" text="Înscrie-te" textFill="#d32828">
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font>
+                                    </Button>
+                                    <Text layoutX="417.0" layoutY="184.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Porfesorul titular disponibil:" />
+                                    <Text fx:id="profesorTitular" layoutX="417.0" layoutY="200.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="186.39999999999998" />
+                                    <ComboBox fx:id="boxLaborator" layoutX="761.0" layoutY="307.0" prefHeight="28.0" prefWidth="303.0" promptText="Când vrei să faci laboratorul?" style="-fx-background-radius: 90;" />
+                                    <ComboBox fx:id="boxCursuri" layoutX="14.0" layoutY="307.0" prefHeight="29.0" prefWidth="303.0" promptText="Când vrei să faci cursul?" style="-fx-background-radius: 90;" />
+                                    <Text layoutX="110.0" layoutY="286.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Activitatea de curs" />
+                                    <Text layoutX="424.0" layoutY="286.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Activitatea de seminar" />
+                                    <Text layoutX="843.0" layoutY="287.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Activitatea de laborator" />
+                                    <Text fx:id="mesajSuccesInscriere" layoutX="424.0" layoutY="436.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+                                 </children>
+                              </AnchorPane>
+                        </content>
+                      </Tab>
+                    </tabs>
+                  </TabPane>
+               </children>
+            </Pane>
          </children>
       </AnchorPane>
    </children>
