@@ -5,9 +5,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import bazaDate.*;
 
-import java.util.Calendar;
+import java.time.LocalDateTime;
 
 public class Aplicatie extends Application {
 
