@@ -825,7 +825,7 @@ public class ControlProfesor implements Initializable {
 
             PreparedStatement s3 = conexiune.prepareStatement("select * from studenti_activitati where id_student = "+id_student
                     + " and id_activitate in (select id_ca from curs_activitati where id_curs = "+id_curs
-                    + ") and data_nota between '"+dataInceput+"' and '"+dataSfarsit+"'");
+                    + ") and data_notare between '"+dataInceput+"' and '"+dataSfarsit+"'");
             ResultSet rs3 = s3.executeQuery();
             while(rs3.next()){
                 int activitate = rs3.getInt("id_activitate");
