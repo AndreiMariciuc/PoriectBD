@@ -2,16 +2,54 @@ package bazaDate;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class Student extends User {
     private int idStatus, nrOre, anStudiu;
     private int idProfTitular;
     private ArrayList<String> denumireCursuri;
     private HashMap<String, Integer> activitatiCurente;
+    private List<Calendar> toateActivitati;
+    private List<Calendar> aziActivitati;
+    private List<Carnet> notePartiale;
+    private List<Carnet> noteFinale;
+
 
     public Student() {
         denumireCursuri = new ArrayList<>();
         activitatiCurente = new HashMap<>();
+    }
+
+    public List<Calendar> getToateActivitati() {
+        return toateActivitati;
+    }
+
+    public void setToateActivitati(List<Calendar> toateActivitati) {
+        this.toateActivitati = toateActivitati;
+    }
+
+    public List<Calendar> getAziActivitati() {
+        return aziActivitati;
+    }
+
+    public void setAziActivitati(List<Calendar> aziActivitati) {
+        this.aziActivitati = aziActivitati;
+    }
+
+    public List<Carnet> getNotePartiale() {
+        return notePartiale;
+    }
+
+    public void setNotePartiale(List<Carnet> notePartiale) {
+        this.notePartiale = notePartiale;
+    }
+
+    public List<Carnet> getNoteFinale() {
+        return noteFinale;
+    }
+
+    public void setNoteFinale(List<Carnet> noteFinale) {
+        this.noteFinale = noteFinale;
     }
 
     public void clearMap() {

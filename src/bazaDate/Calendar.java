@@ -62,6 +62,6 @@ public class Calendar {
 
     @Override
     public String toString() {
-        return  disciplina + ", " + activitate + ", " + perioada + ", " + zi + ", " + ora + ", " + durata + ", " + numeProfesor ;
+        return disciplina + ", " + activitate + ", " + perioada + ", " + zi + ", " + ora + ", " + durata + ", " + numeProfesor;
     }
 }

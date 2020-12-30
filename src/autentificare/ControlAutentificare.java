@@ -26,11 +26,9 @@ public class ControlAutentificare {
 
     public void autentificare(ActionEvent actionEvent) throws IOException {
         String pass = "123";//username.getText()
-        String userName = "aless"; //password.getText()
+        String userName = "andrei"; //password.getText()
         Conexiune c = Conexiune.getConexiune();
-        int rol = c.getUserType(username.getText(), password.getText());
-        System.out.println(rol);
-        System.out.println(Conexiune.getUser().getNume());
+        int rol = c.getUserType(username.getText()/*userName*/, /*pass*/password.getText());
         if (rol == 2 || rol == 1) {
             incorect.setText("Admin");
             if (state == 1) {

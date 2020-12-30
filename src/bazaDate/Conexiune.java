@@ -1,7 +1,12 @@
 package bazaDate;
 
 import java.sql.*;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 
 public class Conexiune {
     static final String urlAless = null;
@@ -109,8 +114,9 @@ public class Conexiune {
             }
             return result;
         } catch (Exception e) {
-            return null;
+            System.out.println("blabla!");
         }
+        return null;
     }
 
     public ArrayList<String> getCursuriDisponibile(int idStud) {
@@ -427,7 +433,7 @@ public class Conexiune {
         try {
             rs = selectStatement.executeQuery("call cursuriStudent(" + idStud + ");");
             ArrayList<String> result = new ArrayList<>();
-            while(rs.next())
+            while (rs.next())
                 result.add(rs.getString(1));
             return result;
         } catch (SQLException e) {
@@ -442,6 +448,100 @@ public class Conexiune {
             selectStatement.executeUpdate(statement);
         } catch (SQLException e) {
             System.out.println("nu merge ceva cand executi sql statement!");
+        }
+    }
+
+    public void calendar() {
+        try {
+            List<Calendar> toateActivitatile = new ArrayList<>();
+            List<Calendar> activitatiAzi = new ArrayList<>();
+            ArrayList<String> zile = new ArrayList<>() {
+                {
+                    add("nimic");
+                    add("luni");
+                    add("marti");
+                    add("miercuri");
+                    add("joi");
+                    add("vineri");
+                    add("sambata");
+                    add("duminica");
+                }
+            };
+
+
+            rs = selectStatement.executeQuery("call calendarToate(" + curent.getIdUser() + ");");
+            while (rs.next()) {
+                Calendar c = new Calendar();
+                c.setDisciplina(rs.getString(1));
+                c.setActivitate(rs.getString(2));
+                c.setPerioada(rs.getString(3));
+                c.setZi(zile.get(rs.getInt(4)));
+                c.setOra(rs.getInt(5));
+                c.setDurata(rs.getInt(6));
+                c.setNumeProfesor(rs.getString(7));
+                toateActivitatile.add(c);
+            }
+
+            ((Student) curent).setToateActivitati(toateActivitatile);
+
+            rs = selectStatement.executeQuery("call calendar(" + curent.getIdUser() + ");");
+            while (rs.next()) {
+                Calendar c = new Calendar();
+                if (rs.getInt(4) == LocalDateTime.now().getDayOfWeek().getValue()) {
+                    c.setDisciplina(rs.getString(1));
+                    c.setActivitate(rs.getString(2));
+                    c.setPerioada(rs.getString(3));
+                    c.setZi(zile.get(rs.getInt(4)));
+                    c.setOra(rs.getInt(5));
+                    c.setDurata(rs.getInt(6));
+                    c.setNumeProfesor(rs.getString(7));
+                    activitatiAzi.add(c);
+                }
+            }
+
+            ((Student) curent).setAziActivitati(activitatiAzi);
+
+        } catch (SQLException e) {
+            System.out.println("uita te la metoda Calendar!");
+        }
+    }
+
+
+    public void carnet() {
+        try {
+            List<Carnet> notePartial = new ArrayList<>();
+            List<Carnet> noteFinal = new ArrayList<>();
+
+            rs = selectStatement.executeQuery("call notePartiale(" + curent.getIdUser() + ");");
+            while (rs.next()) {
+                Carnet c = new Carnet();
+                c.setDisciplina(rs.getString(1));
+                c.setActivitate(rs.getString(2));
+                c.setNumeProfesor(rs.getString(3));
+                if (rs.getInt(5) != 0) {
+                    c.setData(rs.getDate(4));
+                    c.setNota(String.valueOf(rs.getDouble(5)));
+                } else {
+                    c.setData(null);
+                    c.setNota("fara nota");
+                }
+                c.setProcent(rs.getInt(6));
+                notePartial.add(c);
+            }
+
+            rs = selectStatement.executeQuery("call noteFinale(" + curent.getIdUser() + ");");
+            while (rs.next()) {
+                Carnet c = new Carnet();
+                c.setDisciplina(rs.getString(1));
+                c.setNumeProfesor(rs.getString(2));
+                c.setNota(String.valueOf(rs.getString(3)));
+                noteFinal.add(c);
+            }
+
+            ((Student) curent).setNoteFinale(noteFinal);
+            ((Student) curent).setNotePartiale(notePartial);
+        } catch (SQLException e) {
+            System.out.println("uita te la metoda Carnet!");
         }
     }
 }

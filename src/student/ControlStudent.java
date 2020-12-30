@@ -1,23 +1,29 @@
 package student;
 
-import bazaDate.ActivitateStudent;
+import bazaDate.Calendar;
+import bazaDate.Carnet;
 import bazaDate.Conexiune;
 import bazaDate.Student;
 import constante.Ecran;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URL;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -36,12 +42,93 @@ public class ControlStudent implements Initializable {
     public ComboBox<String> boxSeminar, boxCursuri, boxLaborator;
     public Button renuntaCursButton;
     public ComboBox<String> cursurileStudentului;
+    //orar
+    public TableView<Calendar> tabelToateActivitatile;
+    public TableColumn<Calendar, String> coloanaDisciplinaToate;
+    public TableColumn<Calendar, String> coloanaActivitateToate;
+    public TableColumn<Calendar, String> coloanaPerioadaToate;
+    public TableColumn<Calendar, String> coloanaZiToate;
+    public TableColumn<Calendar, Integer> coloanaOraToate;
+    public TableColumn<Calendar, Integer> coloanaDurataToate;
+    public TableColumn<Calendar, String> colanaProfesorToate;
+
+    public TableView<Calendar> tabelAziActivitatile;
+    public TableColumn<Calendar, String> coloanaDisciplinaAzi;
+    public TableColumn<Calendar, String> coloanaActivitateAzi;
+    public TableColumn<Calendar, String> coloanaPerioadaAzi;
+    public TableColumn<Calendar, String> coloanaZiAzi;
+    public TableColumn<Calendar, Integer> coloanaOraAzi;
+    public TableColumn<Calendar, Integer> coloanaDurataAzi;
+    public TableColumn<Calendar, String> colanaProfesorAzi;
+    public Button bsaveToate, bsaveAzi;
+    // carnet
+    public TableView<Carnet> notePartial;
+    public TableColumn<Carnet, String> coloanaDisciplinaPartial;
+    public TableColumn<Carnet, String> coloanaActivitatePartial;
+    public TableColumn<Carnet, String> coloanaProfesorPartial;
+    public TableColumn<Carnet, Date> coloanadDataPartial;
+    public TableColumn<Carnet, String> coloanaNotaPartial;
+    public TableColumn<Carnet, Integer> coloanaProcentPartial;
+
+    public TableView<Carnet> noteFinal;
+    public TableColumn<Carnet, String> coloanaDisciplinaFinal;
+    public TableColumn<Carnet, String> coloanaProfesorFinal;
+    public TableColumn<Carnet, String> coloanaNotaFinal;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         /** init DATE PERSONALE **/
         initDatePersonale();
         initInscrieriCursuri();
+        initCalendar();
+        initCarnet();
+    }
+
+    private void initCarnet() {
+        coloanaDisciplinaPartial.setCellValueFactory(new PropertyValueFactory<Carnet, String>("disciplina"));
+        coloanaActivitatePartial.setCellValueFactory(new PropertyValueFactory<Carnet, String>("activitate"));
+        coloanaProfesorPartial.setCellValueFactory(new PropertyValueFactory<Carnet, String>("numeProfesor"));
+        coloanadDataPartial.setCellValueFactory(new PropertyValueFactory<Carnet, Date>("data"));
+        coloanaNotaPartial.setCellValueFactory(new PropertyValueFactory<Carnet, String>("nota"));
+        coloanaProcentPartial.setCellValueFactory(new PropertyValueFactory<Carnet, Integer>("procent"));
+
+        coloanaDisciplinaFinal.setCellValueFactory(new PropertyValueFactory<Carnet, String>("disciplina"));
+        coloanaProfesorFinal.setCellValueFactory(new PropertyValueFactory<Carnet, String>("numeProfesor"));
+        coloanaNotaFinal.setCellValueFactory(new PropertyValueFactory<Carnet, String>("nota"));
+
+        refreshCarnet();
+    }
+
+    private void refreshCarnet() {
+        Conexiune.getConexiune().carnet();
+        noteFinal.getItems().setAll(((Student) Conexiune.getUser()).getNoteFinale());
+        notePartial.getItems().setAll(((Student) Conexiune.getUser()).getNotePartiale());
+    }
+
+    private void initCalendar() {
+        coloanaDisciplinaToate.setCellValueFactory(new PropertyValueFactory<Calendar, String>("disciplina"));
+        coloanaActivitateToate.setCellValueFactory(new PropertyValueFactory<Calendar, String>("activitate"));
+        coloanaPerioadaToate.setCellValueFactory(new PropertyValueFactory<Calendar, String>("perioada"));
+        coloanaZiToate.setCellValueFactory(new PropertyValueFactory<Calendar, String>("zi"));
+        coloanaOraToate.setCellValueFactory(new PropertyValueFactory<Calendar, Integer>("ora"));
+        coloanaDurataToate.setCellValueFactory(new PropertyValueFactory<Calendar, Integer>("durata"));
+        colanaProfesorToate.setCellValueFactory(new PropertyValueFactory<Calendar, String>("numeProfesor"));
+
+        coloanaDisciplinaAzi.setCellValueFactory(new PropertyValueFactory<Calendar, String>("disciplina"));
+        coloanaActivitateAzi.setCellValueFactory(new PropertyValueFactory<Calendar, String>("activitate"));
+        coloanaPerioadaAzi.setCellValueFactory(new PropertyValueFactory<Calendar, String>("perioada"));
+        coloanaZiAzi.setCellValueFactory(new PropertyValueFactory<Calendar, String>("zi"));
+        coloanaOraAzi.setCellValueFactory(new PropertyValueFactory<Calendar, Integer>("ora"));
+        coloanaDurataAzi.setCellValueFactory(new PropertyValueFactory<Calendar, Integer>("durata"));
+        colanaProfesorAzi.setCellValueFactory(new PropertyValueFactory<Calendar, String>("numeProfesor"));
+
+        refreshCalendar();
+    }
+
+    private void refreshCalendar() {
+        Conexiune.getConexiune().calendar();
+        tabelToateActivitatile.getItems().setAll(((Student) Conexiune.getUser()).getToateActivitati());
+        tabelAziActivitatile.getItems().setAll(((Student) Conexiune.getUser()).getAziActivitati());
     }
 
     private void initInscrieriCursuri() {
@@ -155,35 +242,83 @@ public class ControlStudent implements Initializable {
             activ2 = ((Student) Conexiune.getUser()).getActivitatiCurente().get(boxSeminar.getValue());
             activ3 = ((Student) Conexiune.getUser()).getActivitatiCurente().get(boxLaborator.getValue());
             if (activ1 != null) {
-                Conexiune.getConexiune().executeSQL("call insertActivitateStudent("+ idStud + ", "+ activ1 + ");");
-
-                if (activ2 != null) {
-                    Conexiune.getConexiune().executeSQL("call insertActivitateStudent("+ idStud + ", " + activ2 + ");");
+                if (activ3 != null)
+                    Conexiune.getConexiune().executeSQL("call insertActivitateStudent(" + idStud + ", " + activ3 + ");");
+                else if (boxLaborator.getItems().size() > 0) {
+                    mesajSuccesInscriere.setText("Alege un lab!");
+                    return;
                 }
 
-                if (activ3 != null) {
-                    Conexiune.getConexiune().executeSQL("call insertActivitateStudent("+ idStud + ", " + activ3 + ");");
+                if (activ2 != null)
+                    Conexiune.getConexiune().executeSQL("call insertActivitateStudent(" + idStud + ", " + activ2 + ");");
+                else if (boxSeminar.getItems().size() > 0) {
+                    mesajSuccesInscriere.setText("Alege un seminar!");
+                    return;
                 }
 
+                Conexiune.getConexiune().executeSQL("call insertActivitateStudent(" + idStud + ", " + activ1 + ");");
                 mesajSuccesInscriere.setText("Te-ai inscris cu succes!");
                 //reimprospatez conexiunile
                 initInscrieriCursuri();
                 initFail();
-            } else {
-                mesajSuccesInscriere.setText("O problema cu tehnica, revino mai tarziu, ne cerem scuze!");
-            }
-        } else {
-            mesajSuccesInscriere.setText("Din pacate nu te poti inscrie, verifica fisa de inscriere!");
-        }
+                refreshCalendar();
+                refreshCarnet();
+            } else
+                mesajSuccesInscriere.setText("Nu ai selectat cursul!");
+        } else
+            mesajSuccesInscriere.setText("Nu gasim profesor disponibil, revio mai tarziu!!");
     }
 
     public void renuntaCurs(ActionEvent actionEvent) {
         String descriere = cursurileStudentului.getValue();
-        if(descriere != null) {
+        if (descriere != null) {
             Conexiune.getConexiune().executeSQL("call renuntaCurs(" + Conexiune.getUser().getIdUser() + ",'" + cursurileStudentului.getValue() + "');");
             mesajSuccesRenuntare.setText("Ai renuntat la cursul " + descriere);
             initInscrieriCursuri();
+            refreshCalendar();
+            refreshCarnet();
         } else
             mesajSuccesRenuntare.setText("Nu ai selectat nimic!");
+    }
+
+    private FileChooser getFileChooser() {
+        FileChooser fileChooser = new FileChooser();
+        FileChooser.ExtensionFilter ext = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
+        return fileChooser;
+    }
+
+    private void saveFile(String result, File file) {
+        try {
+            PrintWriter printWriter = new PrintWriter(file);
+            printWriter.println(result);
+            printWriter.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("save file!");
+        }
+    }
+
+    public void saveListe(ActionEvent e) {
+        if (bsaveToate == e.getSource()) {
+            Stage s = (Stage) (((Node) (e.getSource())).getScene().getWindow());
+            File file = getFileChooser().showOpenDialog(s);
+            if (file != null) {
+                String result = "";
+                for (Calendar c : ((Student) Conexiune.getUser()).getToateActivitati())
+                    result += c + "\n";
+                saveFile(result, file);
+            } else
+                System.out.println("nu am fisier!");
+
+        } else if (bsaveAzi == e.getSource()) {
+            Stage s = (Stage) (((Node) (e.getSource())).getScene().getWindow());
+            File file = getFileChooser().showOpenDialog(s);
+            if (file != null) {
+                String result = "";
+                for (Calendar c : ((Student) Conexiune.getUser()).getAziActivitati())
+                    result += c + "\n";
+                saveFile(result, file);
+            } else
+                System.out.println("nu am fisier");
+        }
     }
 }

@@ -6,6 +6,8 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -113,15 +115,6 @@
                      </font>
                   </Text>
                </children></Pane>
-            <Pane fx:id="carnetPane" layoutX="10.0" layoutY="10.0" prefHeight="720.0" prefWidth="1080.0" style="-fx-background-color: #e8e8e8;">
-               <children>
-                  <Text layoutX="344.0" layoutY="64.0" strokeType="OUTSIDE" strokeWidth="0.0" text="carnet" underline="true">
-                     <font>
-                        <Font name="System Bold" size="30.0" />
-                     </font>
-                  </Text>
-               </children>
-            </Pane>
             <Pane fx:id="datePersonalePane" prefHeight="720.0" prefWidth="1080.0" style="-fx-background-color: #e8e8e8;">
                <children>
                   <Text fx:id="tstatusField" blendMode="SRC_ATOP" layoutX="77.0" layoutY="489.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
@@ -323,15 +316,6 @@
                   </Text>
                </children>
             </Pane>
-            <Pane fx:id="orarPane" prefHeight="720.0" prefWidth="1080.0" style="-fx-background-color: #e8e8e8;">
-               <children>
-                  <Text layoutX="344.0" layoutY="64.0" strokeType="OUTSIDE" strokeWidth="0.0" text="orar" underline="true">
-                     <font>
-                        <Font name="System Bold" size="30.0" />
-                     </font>
-                  </Text>
-               </children>
-            </Pane>
             <Pane fx:id="inscriereCursuriPane" prefHeight="720.0" prefWidth="1080.0" style="-fx-background-color: #e8e8e8;">
                <children>
                   <TabPane prefHeight="720.0" prefWidth="1080.0" tabClosingPolicy="UNAVAILABLE">
@@ -386,6 +370,114 @@
                                     <Text layoutX="424.0" layoutY="286.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Activitatea de seminar" />
                                     <Text layoutX="843.0" layoutY="287.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Activitatea de laborator" />
                                     <Text fx:id="mesajSuccesInscriere" layoutX="424.0" layoutY="436.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+                                 </children>
+                              </AnchorPane>
+                        </content>
+                      </Tab>
+                    </tabs>
+                  </TabPane>
+               </children>
+            </Pane>
+            <Pane fx:id="orarPane" prefHeight="720.0" prefWidth="1080.0" style="-fx-background-color: #e8e8e8;">
+               <children>
+                  <TabPane prefHeight="720.0" prefWidth="1080.0" tabClosingPolicy="UNAVAILABLE">
+                    <tabs>
+                      <Tab text="Toate activitățile">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="660.0" prefWidth="972.0">
+                                 <children>
+                                    <Button fx:id="bsaveToate" layoutX="879.0" layoutY="610.0" minHeight="9.0" mnemonicParsing="false" onAction="#saveListe" prefHeight="35.0" prefWidth="186.0" style="-fx-background-radius: 90; -fx-background-color: #fecac2;" text="Descarcă listă" textFill="#d32828">
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font>
+                                    </Button>
+                                    <TableView fx:id="tabelToateActivitatile" prefHeight="674.0" prefWidth="874.0">
+                                      <columns>
+                                        <TableColumn fx:id="coloanaDisciplinaToate" prefWidth="182.39996337890625" text="Disciplina" />
+                                        <TableColumn fx:id="coloanaActivitateToate" prefWidth="112.800048828125" text="Activitate" />
+                                          <TableColumn fx:id="coloanaPerioadaToate" prefWidth="91.19992065429688" text="Perioada" />
+                                          <TableColumn fx:id="coloanaZiToate" prefWidth="97.60003662109375" text="Zi" />
+                                          <TableColumn fx:id="coloanaOraToate" prefWidth="124.800048828125" text="Ora" />
+                                          <TableColumn fx:id="coloanaDurataToate" prefWidth="124.79998779296875" text="Durata" />
+                                          <TableColumn fx:id="colanaProfesorToate" prefWidth="142.39990234375" text="Profesor" />
+                                      </columns>
+                                    </TableView>
+                                 </children>
+                              </AnchorPane>
+                        </content>
+                      </Tab>
+                      <Tab text="Astăzi">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <Button fx:id="bsaveAzi" layoutX="879.0" layoutY="610.0" minHeight="9.0" mnemonicParsing="false" onAction="#saveListe" prefHeight="35.0" prefWidth="186.0" style="-fx-background-radius: 90; -fx-background-color: #fecac2;" text="Descarcă listă" textFill="#d32828">
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font>
+                                    </Button>
+                                    <TableView fx:id="tabelAziActivitatile" prefHeight="677.0" prefWidth="874.0">
+                                       <columns>
+                                          <TableColumn fx:id="coloanaDisciplinaAzi" prefWidth="192.79998779296875" text="Disciplina" />
+                                          <TableColumn fx:id="coloanaActivitateAzi" prefWidth="102.4000244140625" text="Activitate" />
+                                          <TableColumn fx:id="coloanaPerioadaAzi" prefWidth="91.19992065429688" text="Perioada" />
+                                          <TableColumn fx:id="coloanaZiAzi" prefWidth="97.60003662109375" text="Zi" />
+                                          <TableColumn fx:id="coloanaOraAzi" prefWidth="124.800048828125" text="Ora" />
+                                          <TableColumn fx:id="coloanaDurataAzi" prefWidth="124.79998779296875" text="Durata" />
+                                          <TableColumn fx:id="colanaProfesorAzi" prefWidth="142.39990234375" text="Profesor" />
+                                       </columns>
+                                    </TableView>
+                                 </children>
+                              </AnchorPane>
+                        </content>
+                      </Tab>
+                    </tabs>
+                  </TabPane>
+               </children>
+            </Pane>
+            <Pane fx:id="carnetPane" prefHeight="720.0" prefWidth="1080.0" style="-fx-background-color: #e8e8e8;">
+               <children>
+                  <TabPane prefHeight="722.0" prefWidth="1082.0" tabClosingPolicy="UNAVAILABLE">
+                    <tabs>
+                      <Tab text="Note parțiale">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="140.0" prefWidth="589.0">
+                                 <children>
+                                    <TableView fx:id="notePartial" prefHeight="722.0" prefWidth="710.0">
+                                      <columns>
+                                        <TableColumn fx:id="coloanaDisciplinaPartial" prefWidth="160.7999725341797" text="Disciplina" />
+                                        <TableColumn fx:id="coloanaActivitatePartial" prefWidth="123.20001220703125" text="Activitatea" />
+                                          <TableColumn fx:id="coloanaProfesorPartial" prefWidth="104.0" text="Profesor" />
+                                          <TableColumn fx:id="coloanadDataPartial" prefWidth="105.60003662109375" text="Data" />
+                                          <TableColumn fx:id="coloanaNotaPartial" prefWidth="88.0" text="Nota" />
+                                          <TableColumn fx:id="coloanaProcentPartial" prefWidth="92.79998779296875" text="Procent" />
+                                      </columns>
+                                    </TableView>
+                                 </children>
+                              </AnchorPane>
+                        </content>
+                      </Tab>
+                      <Tab text="Note finale">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <TableView fx:id="noteFinal" layoutX="269.0" layoutY="153.0" prefHeight="463.0" prefWidth="558.0">
+                                      <columns>
+                                        <TableColumn fx:id="coloanaDisciplinaFinal" prefWidth="186.39993286132812" text="Disciplina" />
+                                        <TableColumn fx:id="coloanaProfesorFinal" minWidth="0.0" prefWidth="214.4000244140625" text="Profesor titular" />
+                                          <TableColumn fx:id="coloanaNotaFinal" prefWidth="159.199951171875" text="Nota finala" />
+                                      </columns>
+                                    </TableView>
+                                    <Text layoutX="437.0" layoutY="92.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Carnet de note" underline="true">
+                                       <font>
+                                          <Font name="System Bold" size="30.0" />
+                                       </font>
+                                    </Text>
                                  </children>
                               </AnchorPane>
                         </content>
