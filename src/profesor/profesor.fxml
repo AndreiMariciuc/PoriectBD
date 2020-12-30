@@ -1,21 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.effect.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="profesor.ControlProfesor">
-    <children>
-        <AnchorPane depthTest="ENABLE" onMouseEntered="#defaultChange" onMouseMoved="#defaultChange" prefHeight="720.0" prefWidth="200.0" style="-fx-border-color: #fff;">
-            <children>
+    
+        <AnchorPane depthTest="ENABLE" layoutY="1.0" onMouseEntered="#defaultChange" onMouseMoved="#defaultChange" prefHeight="720.0" prefWidth="200.0" style="-fx-border-color: #fff;">
+            
                 <Button fx:id="datePersonaleButton" layoutX="7.0" layoutY="120.0" mnemonicParsing="false" onAction="#schimbareStare" prefHeight="40.0" prefWidth="185.0" style="-fx-border-radius: 90;" text="date personale">
                     <cursor>
                         <Cursor fx:constant="DEFAULT" />
                     </cursor>
                 </Button>
-                <Button fx:id="orarButton" layoutX="7.0" layoutY="169.0" mnemonicParsing="false" onAction="#schimbareStare" prefHeight="40.0" prefWidth="185.0" style="-fx-border-radius: 90;" text="orar zi curenta">
+                <Button fx:id="orarButton" layoutX="7.0" layoutY="169.0" mnemonicParsing="false" onAction="#schimbareStare" prefHeight="40.0" prefWidth="185.0" style="-fx-border-radius: 90;" text="orar">
                     <cursor>
                         <Cursor fx:constant="DEFAULT" />
                     </cursor>
@@ -25,7 +36,7 @@
                         <Cursor fx:constant="DEFAULT" />
                     </cursor>
                 </Button>
-                <Button fx:id="programareCursuriButton" layoutX="7.0" layoutY="262.0" mnemonicParsing="false" onAction="#schimbareStare" prefHeight="40.0" prefWidth="185.0" style="-fx-border-radius: 90;" text="programare cursuri">
+                <Button fx:id="programareCursuriButton" layoutX="7.0" layoutY="262.0" mnemonicParsing="false" onAction="#schimbareStare" prefHeight="40.0" prefWidth="185.0" style="-fx-border-radius: 90;" text="gestionare cursuri">
                     <cursor>
                         <Cursor fx:constant="DEFAULT" />
                     </cursor>
@@ -46,7 +57,8 @@
                   <Cursor fx:constant="DEFAULT" />
                </cursor>
             </Button>
-            </children>
+      <Button fx:id="refresh" layoutX="71.0" layoutY="524.0" mnemonicParsing="false" onAction="#refresh" text="Refresh" />
+            
             <effect>
                 <DropShadow />
             </effect>
@@ -55,28 +67,14 @@
             <effect>
                 <DropShadow />
             </effect>
-            <children>
-                <Pane fx:id="catalogPane" prefHeight="720.0" prefWidth="1080.0" style="-fx-background-color: #ff9900;" />
-                <Pane fx:id="programareCursuriPane" prefHeight="720.0" prefWidth="1080.0" style="-fx-background-color: #aac;" />
-                <Pane fx:id="grupuriPane" prefHeight="720.0" prefWidth="1080.0" style="-fx-background-color: #aff;" />
-                <Pane fx:id="programareExamenePane" prefHeight="720.0" prefWidth="1080.0" style="-fx-background-color: #f1f;" />
-                <Pane fx:id="orarPane" prefHeight="720.0" prefWidth="1080.0" style="-fx-background-color: #fea;">
-               <children>
-                  <Label layoutX="446.0" layoutY="101.0" text="Ora zi curenta">
-                     <font>
-                        <Font size="36.0" />
-                     </font>
-                  </Label>
-               </children>
-            </Pane>
             <Pane fx:id="datePersonalePane" onMouseEntered="#defaultChange" prefHeight="720.0" prefWidth="1080.0" style="-fx-background-color: #fea;">
-               <children>
+               
                   <Label layoutX="436.0" layoutY="100.0" text="Date personale">
                      <font>
                         <Font size="36.0" />
                      </font>
                   </Label>
-                  <Label layoutX="261.0" layoutY="216.0" text="CNP">
+                  <Label layoutX="263.0" layoutY="213.0" text="CNP">
                      <font>
                         <Font size="24.0" />
                      </font>
@@ -116,49 +114,548 @@
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <TextField layoutX="416.0" layoutY="209.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="42.0" prefWidth="400.0">
+                  <TextField fx:id="cnpText" editable="false" layoutX="416.0" layoutY="209.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="42.0" prefWidth="450.0">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </TextField>
-                  <TextField layoutX="416.0" layoutY="251.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="42.0" prefWidth="400.0">
+                  <TextField fx:id="numeText" editable="false" layoutX="416.0" layoutY="251.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="42.0" prefWidth="450.0">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </TextField>
-                  <TextField layoutX="416.0" layoutY="293.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="42.0" prefWidth="400.0">
+                  <TextField fx:id="prenumeText" editable="false" layoutX="416.0" layoutY="293.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="42.0" prefWidth="450.0">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </TextField>
-                  <TextField layoutX="416.0" layoutY="335.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="42.0" prefWidth="400.0">
+                  <TextField fx:id="adresaText" editable="false" layoutX="416.0" layoutY="335.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="42.0" prefWidth="450.0">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </TextField>
-                  <TextField layoutX="416.0" layoutY="377.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="42.0" prefWidth="400.0">
+                  <TextField fx:id="nrTelefonText" editable="false" layoutX="416.0" layoutY="377.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="42.0" prefWidth="450.0">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </TextField>
-                  <TextField layoutX="416.0" layoutY="503.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="42.0" prefWidth="400.0">
+                  <TextField fx:id="nrContractText" editable="false" layoutX="416.0" layoutY="503.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="42.0" prefWidth="450.0">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </TextField>
-                  <TextField layoutX="416.0" layoutY="461.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="42.0" prefWidth="400.0">
+                  <TextField fx:id="ibanText" editable="false" layoutX="416.0" layoutY="461.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="42.0" prefWidth="450.0">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </TextField>
-                  <TextField layoutX="416.0" layoutY="419.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="42.0" prefWidth="400.0">
+                  <TextField fx:id="emailText" editable="false" layoutX="416.0" layoutY="419.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="42.0" prefWidth="450.0">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </TextField>
-               </children>
+               
             </Pane>
-            </children>
+                <Pane fx:id="programareCursuriPane" prefHeight="720.0" prefWidth="1080.0" style="-fx-background-color: #fea;">
+               
+                  <Label layoutX="395.0" layoutY="103.0" text="Gestionare cursuri">
+                     <font>
+                        <Font size="36.0" />
+                     </font>
+                  </Label>
+                  <TabPane layoutX="368.0" layoutY="272.0" prefHeight="314.0" prefWidth="342.0" tabClosingPolicy="UNAVAILABLE">
+                    <tabs>
+                      <Tab text="Curs">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #fff;">
+                        <children>
+                           <Label layoutX="14.0" layoutY="14.0" text="Perioada">
+                              <font>
+                                 <Font size="18.0" />
+                              </font>
+                           </Label>
+                           <ChoiceBox fx:id="perioadaFilter1" layoutX="174.0" layoutY="15.0" prefWidth="150.0" />
+                           <Label layoutX="14.0" layoutY="74.0" text="Pondere">
+                              <font>
+                                 <Font size="18.0" />
+                              </font>
+                           </Label>
+                           <Label layoutX="14.0" layoutY="134.0" text="Durata">
+                              <font>
+                                 <Font size="18.0" />
+                              </font>
+                           </Label>
+                           <Spinner fx:id="pondereSpinner1" editable="true" layoutX="174.0" layoutY="75.0" />
+                           <ChoiceBox fx:id="durataFilter1" layoutX="174.0" layoutY="135.0" prefWidth="150.0" />
+                           <Label layoutX="14.0" layoutY="44.0" text="Zi a saptamanii">
+                              <font>
+                                 <Font size="18.0" />
+                              </font>
+                           </Label>
+                           <ChoiceBox fx:id="ziFilter1" layoutX="174.0" layoutY="45.0" prefWidth="150.0" />
+                           <Label layoutX="14.0" layoutY="104.0" text="Ora">
+                              <font>
+                                 <Font size="18.0" />
+                              </font>
+                           </Label>
+                           <Spinner fx:id="oraSpinner1" editable="true" layoutX="174.0" layoutY="105.0" />
+                           <Label layoutX="15.0" layoutY="164.0" text="Maxim participanti">
+                              <font>
+                                 <Font size="18.0" />
+                              </font>
+                           </Label>
+                           <Spinner fx:id="maxParticipantiSpinner1" editable="true" layoutX="174.0" layoutY="165.0" />
+                           <CheckBox fx:id="seminarCheckBox" layoutX="19.0" layoutY="206.0" mnemonicParsing="false" onAction="#enableDisable" text="Seminar">
+                              <font>
+                                 <Font size="18.0" />
+                              </font>
+                           </CheckBox>
+                           <CheckBox fx:id="laboratorCheckBox" layoutX="19.0" layoutY="236.0" mnemonicParsing="false" onAction="#enableDisable" text="Laborator">
+                              <font>
+                                 <Font size="18.0" />
+                              </font>
+                           </CheckBox>
+                           <Button fx:id="programeazaCurs" layoutX="194.0" layoutY="221.0" mnemonicParsing="false" onAction="#programareCurs" text="Programeaza curs" />
+                        </children></AnchorPane>
+                        </content>
+                      </Tab>
+               <Tab fx:id="seminarTab" text="Seminar">
+                  <content>
+                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #fff;">
+                        <children>
+                           <Label layoutX="14.0" layoutY="14.0" text="Perioada">
+                              <font>
+                                 <Font size="18.0" />
+                              </font>
+                           </Label>
+                           <ChoiceBox fx:id="perioadaFilter2" layoutX="174.0" layoutY="15.0" prefWidth="150.0" />
+                           <Label layoutX="14.0" layoutY="74.0" text="Pondere">
+                              <font>
+                                 <Font size="18.0" />
+                              </font>
+                           </Label>
+                           <Label layoutX="14.0" layoutY="134.0" text="Durata">
+                              <font>
+                                 <Font size="18.0" />
+                              </font>
+                           </Label>
+                           <Spinner fx:id="pondereSpinner2" editable="true" layoutX="174.0" layoutY="75.0" />
+                           <ChoiceBox fx:id="durataFilter2" layoutX="174.0" layoutY="135.0" prefWidth="150.0" />
+                           <Label layoutX="14.0" layoutY="44.0" text="Zi a saptamanii">
+                              <font>
+                                 <Font size="18.0" />
+                              </font>
+                           </Label>
+                           <ChoiceBox fx:id="ziFilter2" layoutX="174.0" layoutY="45.0" prefWidth="150.0" />
+                           <Label layoutX="14.0" layoutY="104.0" text="Ora">
+                              <font>
+                                 <Font size="18.0" />
+                              </font>
+                           </Label>
+                           <Spinner fx:id="oraSpinner2" editable="true" layoutX="174.0" layoutY="105.0" />
+                           <Label layoutX="15.0" layoutY="164.0" text="Maxim participanti">
+                              <font>
+                                 <Font size="18.0" />
+                              </font>
+                           </Label>
+                           <Spinner fx:id="maxParticipantiSpinner2" editable="true" layoutX="174.0" layoutY="165.0" />
+                           <Button fx:id="programeazaSeminar" layoutX="109.0" layoutY="255.0" mnemonicParsing="false" onAction="#programareSeminar" text="Programeaza seminar" />
+                           <Label layoutX="15.0" layoutY="194.0" text="Profesor delegat">
+                              <font>
+                                 <Font size="18.0" />
+                              </font>
+                           </Label>
+                           <ChoiceBox fx:id="profDelegatFilter1" layoutX="174.0" layoutY="195.0" prefWidth="150.0" />
+                           <TextField fx:id="profDelegatField1" layoutX="174.0" layoutY="225.0" promptText="Alegeti un profesor" />
+                        </children>
+                     </AnchorPane>
+                  </content>
+               </Tab>
+               <Tab fx:id="laboratorTab" text="Laborator">
+                  <content>
+                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #fff;">
+                        <children>
+                           <Label layoutX="14.0" layoutY="14.0" text="Perioada">
+                              <font>
+                                 <Font size="18.0" />
+                              </font>
+                           </Label>
+                           <ChoiceBox fx:id="perioadaFilter3" layoutX="174.0" layoutY="15.0" prefWidth="150.0" />
+                           <Label layoutX="14.0" layoutY="74.0" text="Pondere">
+                              <font>
+                                 <Font size="18.0" />
+                              </font>
+                           </Label>
+                           <Label layoutX="14.0" layoutY="134.0" text="Durata">
+                              <font>
+                                 <Font size="18.0" />
+                              </font>
+                           </Label>
+                           <Spinner fx:id="pondereSpinner3" editable="true" layoutX="174.0" layoutY="75.0" />
+                           <ChoiceBox fx:id="durataFilter3" layoutX="174.0" layoutY="135.0" prefWidth="150.0" />
+                           <Label layoutX="14.0" layoutY="44.0" text="Zi a saptamanii">
+                              <font>
+                                 <Font size="18.0" />
+                              </font>
+                           </Label>
+                           <ChoiceBox fx:id="ziFilter3" layoutX="174.0" layoutY="45.0" prefWidth="150.0" />
+                           <Label layoutX="14.0" layoutY="104.0" text="Ora">
+                              <font>
+                                 <Font size="18.0" />
+                              </font>
+                           </Label>
+                           <Spinner fx:id="oraSpinner3" editable="true" layoutX="174.0" layoutY="105.0" />
+                           <Label layoutX="15.0" layoutY="164.0" text="Maxim participanti">
+                              <font>
+                                 <Font size="18.0" />
+                              </font>
+                           </Label>
+                           <Spinner fx:id="maxParticipantiSpinner3" editable="true" layoutX="174.0" layoutY="165.0" />
+                           <Button fx:id="programeazaLaborator" layoutX="109.0" layoutY="255.0" mnemonicParsing="false" onAction="#programareLaborator" text="Programeaza laborator" />
+                           <Label layoutX="15.0" layoutY="194.0" text="Profesor delegat">
+                              <font>
+                                 <Font size="18.0" />
+                              </font>
+                           </Label>
+                           <ChoiceBox fx:id="profDelegatFilter2" layoutX="174.0" layoutY="195.0" prefWidth="150.0" />
+                           <TextField fx:id="profDelegatField2" layoutX="174.0" layoutY="225.0" promptText="Alegeti un profesor" />
+                        </children>
+                     </AnchorPane>
+                  </content>
+               </Tab>
+                    </tabs>
+                  </TabPane>
+                  <ChoiceBox fx:id="cursFilter2" layoutX="431.0" layoutY="228.0" prefWidth="216.0" />
+                  <Button fx:id="selectCurs" layoutX="664.0" layoutY="228.0" mnemonicParsing="false" onAction="#filtrareCurs2" text="Selectati curs" />
+                  <Label layoutX="388.0" layoutY="227.0" text="Curs">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+         <Label fx:id="eroarePondere" layoutX="472.0" layoutY="596.0" text="Pondere invalida" textFill="RED">
+            <font>
+               <Font size="18.0" />
+            </font>
+         </Label>
+         <Label fx:id="eroareProgram" layoutX="320.0" layoutY="596.0" text="Aveti deja programata o alta activitate la ora respectiva" textFill="RED">
+            <font>
+               <Font size="18.0" />
+            </font>
+         </Label>
+         <Label fx:id="programareReusita" layoutX="380.0" layoutY="596.0" text="Activitatea a fost programata cu succes!" textFill="#15ff00">
+            <font>
+               <Font size="18.0" />
+            </font>
+         </Label>
+         <Label fx:id="profInvalid" layoutX="479.0" layoutY="596.0" text="Profesor invalid" textFill="RED">
+            <font>
+               <Font size="18.0" />
+            </font>
+         </Label>
+               </Pane>
+                <Pane fx:id="catalogPane" prefHeight="720.0" prefWidth="1080.0" style="-fx-background-color: #fea;">
+               
+                   
+                  <Label layoutX="484.0" layoutY="103.0" text="Catalog">
+                     <font>
+                        <Font size="36.0" />
+                     </font>
+                  </Label>
+                  <ChoiceBox fx:id="cursFilter" layoutX="327.0" layoutY="187.0" prefHeight="25.0" prefWidth="216.0" />
+                  <Label layoutX="189.0" layoutY="190.0" prefHeight="19.0" prefWidth="138.0" text="Alegeti o disciplina:">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <TableView fx:id="catalog" layoutX="149.0" layoutY="251.0" prefHeight="384.0" prefWidth="792.0">
+                      <placeholder>
+                          <Label text="Nu aveti studenti inscrisi la acest curs" />
+                      </placeholder>
+                    <columns>
+                      <TableColumn fx:id="numeStudentColumn" prefWidth="200.0" text="Nume student" />
+                        <TableColumn fx:id="disciplinaNotaColumn" prefWidth="200.0" text="Disciplina" />
+                        <TableColumn fx:id="seminarColumn" prefWidth="75.0" text="Seminar" />
+                        <TableColumn fx:id="laboratorColumn" prefWidth="75.0" text="Laborator" />
+                        <TableColumn fx:id="examenColumn" prefWidth="75.0" text="Examen" />
+                        <TableColumn fx:id="notaColumn" prefWidth="75.0" text="Nota" />
+                        <TableColumn fx:id="anColumn" prefWidth="75.0" text="An univ." />
+                    </columns>
+                  </TableView>
+                  <Button fx:id="descarcareButon5" layoutX="496.0" layoutY="654.0" mnemonicParsing="false" onAction="#descarcaLista" text="Descarcati lista" />
+                  <Button fx:id="afisareNoteButton" layoutX="814.0" layoutY="187.0" mnemonicParsing="false" onAction="#filtrareCurs" text="Afisati note" />
+                  <Label layoutX="566.0" layoutY="190.0" prefHeight="20.0" prefWidth="154.0" text="Alegeti anul universitar:">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <ChoiceBox fx:id="anFilter" layoutX="728.0" layoutY="187.0" prefHeight="25.0" prefWidth="65.0" />
+               
+            </Pane>
+            
+                <Pane fx:id="grupuriPane" prefHeight="720.0" prefWidth="1080.0" style="-fx-background-color: #fea;">
+         <children>
+            <Label layoutX="400.0" layoutY="103.0" text="Grupuri de studiu">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+            <Label layoutX="99.0" layoutY="213.0" text="Curs: ">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <ChoiceBox fx:id="cursFilter3" layoutX="154.0" layoutY="214.0" prefWidth="216.0" />
+            <Label layoutX="490.0" layoutY="213.0" text="Grup asociat cursului:">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <ChoiceBox fx:id="grupFilter" layoutX="678.0" layoutY="214.0" prefWidth="150.0" />
+            <TableView fx:id="studentiGrupa" layoutX="74.0" layoutY="272.0" prefHeight="384.0" prefWidth="931.0">
+                <placeholder>
+                    <Label text="Nu sunt studenti inscrisi in acest grup" />
+                </placeholder>
+              <columns>
+                <TableColumn fx:id="studentColumn" prefWidth="250.0" text="Nume student" />
+                  <TableColumn fx:id="adresaColumn" prefWidth="250.0" text="Adresa" />
+                  <TableColumn fx:id="emailColumn" prefWidth="250.0" text="Email" />
+                  <TableColumn fx:id="nrTelColumn" prefWidth="75.0" text="Nr. telefon" />
+                <TableColumn fx:id="adminColumn" prefWidth="90.0" />
+              </columns>
+            </TableView>
+            <Button fx:id="cursButton" layoutX="390.0" layoutY="214.0" mnemonicParsing="false" onAction="#filtrareCurs3" text="Selectati curs" />
+            <Button fx:id="grupButton" layoutX="847.0" layoutY="214.0" mnemonicParsing="false" onAction="#filtrareGrup" text="Selectati grup" />
+         </children></Pane>
+                <Pane fx:id="orarPane" prefHeight="720.0" prefWidth="1080.0" style="-fx-background-color: #fea;">
+               
+                  <Label layoutX="498.0" layoutY="64.0" prefHeight="53.0" prefWidth="81.0" text="Orar">
+                     <font>
+                        <Font size="36.0" />
+                     </font>
+                  </Label>
+                  <TabPane layoutX="147.0" layoutY="163.0" prefHeight="500.0" prefWidth="783.0" tabClosingPolicy="UNAVAILABLE">
+                    <tabs>
+                      <Tab text="Activitati curs">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 
+                                    <TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="470.0" prefWidth="783.0" tabClosingPolicy="UNAVAILABLE" tabMaxHeight="100.0" tabMaxWidth="150.0">
+                                      <tabs>
+                                        <Tab text="Astazi">
+                                          <content>
+                                            <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="440.0" prefWidth="783.0">
+                                                   
+                                                      <TableView fx:id="activitatiCurs1" prefHeight="384.0" prefWidth="783.0">
+                                                          <placeholder>
+                                                              <Label text="Astazi nu aveti activitati didactice" />
+                                                          </placeholder>
+                                                        <columns>
+                                                          <TableColumn fx:id="disciplinaColumn1" prefWidth="268.0" text="Disciplina" />
+                                                          <TableColumn fx:id="activitateColumn1" prefWidth="115.0" text="Activitate" />
+                                                            <TableColumn fx:id="perioadaColumn1" prefWidth="132.0" text="Perioada" />
+                                                            <TableColumn fx:id="ziSaptamanaColumn1" prefWidth="100.0" text="Zi a saptamanii" />
+                                                            <TableColumn fx:id="oraInceputColumn1" minWidth="30.0" resizable="false" text="Ora inceput" />
+                                                            <TableColumn fx:id="durataColumn1" prefWidth="70.0" text="Durata (h)" />
+                                                        </columns>
+                                                      </TableView>
+                                                      <Button fx:id="descarcareButon1" layoutX="344.0" layoutY="401.0" mnemonicParsing="false" onAction="#descarcaLista" text="Descarcati lista" />
+                                                   
+                                                </AnchorPane>
+                                          </content>
+                                        </Tab>
+                                        <Tab text="Toate activitatile">
+                                          <content>
+                                            <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="440.0" prefWidth="783.0">
+                                                   
+                                                      <TableView fx:id="activitatiCurs2" prefHeight="384.0" prefWidth="783.0">
+                                                         <placeholder>
+                                                            <Label text="Nu ati programat nicio activitate didactica" />
+                                                         </placeholder>
+                                                         <columns>
+                                                            <TableColumn fx:id="disciplinaColumn2" prefWidth="268.0" text="Disciplina" />
+                                                            <TableColumn fx:id="activitateColumn2" prefWidth="115.0" text="Activitate" />
+                                                            <TableColumn fx:id="perioadaColumn2" prefWidth="132.0" text="Perioada" />
+                                                            <TableColumn fx:id="ziSaptamanaColumn2" prefWidth="100.0" text="Zi a saptamanii" />
+                                                            <TableColumn fx:id="oraInceputColumn2" minWidth="30.0" resizable="false" text="Ora inceput" />
+                                                            <TableColumn fx:id="durataColumn2" prefWidth="70.0" text="Durata (h)" />
+                                                         </columns>
+                                                      </TableView>
+                                                      <Button fx:id="descarcareButon2" layoutX="344.0" layoutY="401.0" mnemonicParsing="false" onAction="#descarcaLista" text="Descarcati lista" />
+                                                   
+                                                </AnchorPane>
+                                          </content>
+                                        </Tab>
+                                      </tabs>
+                                    </TabPane>
+                                 
+                              </AnchorPane>
+                        </content>
+                      </Tab>
+                      <Tab text="Activitati grupe">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 
+                                    <TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="470.0" prefWidth="783.0" tabClosingPolicy="UNAVAILABLE" tabMaxHeight="100.0" tabMaxWidth="150.0">
+                                       <tabs>
+                                          <Tab text="Astazi">
+                                             <content>
+                                                <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="440.0" prefWidth="783.0">
+                                                   
+                                                      <TableView fx:id="activitatiGrupe1" prefHeight="384.0" prefWidth="783.0">
+                                                         <placeholder>
+                                                            <Label text="Astazi nu aveti activitati de grup" />
+                                                         </placeholder>
+                                                         <columns>
+                                                            <TableColumn fx:id="grupaColumn1" prefWidth="125.0" text="Grupa" />
+                                                            <TableColumn fx:id="disciplinaGrupColumn1" prefWidth="320.0" text="Disciplina" />
+                                                            <TableColumn fx:id="dataColumn1" prefWidth="150.0" text="Data" />
+                                                            <TableColumn fx:id="oraColumn1" prefWidth="90.0" text="Ora inceput" />
+                                                            <TableColumn fx:id="durataActivColumn1" text="Durata (h)" />
+                                                         </columns>
+                                                      </TableView>
+                                                      <Button fx:id="descarcareButon3" layoutX="344.0" layoutY="401.0" mnemonicParsing="false" onAction="#descarcaLista" text="Descarcati lista" />
+                                                   
+                                                </AnchorPane>
+                                             </content>
+                                          </Tab>
+                                          <Tab text="Toate activitatile">
+                                             <content>
+                                                <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="440.0" prefWidth="783.0">
+                                                   
+                                                      <TableView fx:id="activitatiGrupe2" prefHeight="384.0" prefWidth="783.0">
+                                                         <placeholder>
+                                                            <Label text="Nu v-ati inscris in nicio activitate de grup" />
+                                                         </placeholder>
+                                                         <columns>
+                                                            <TableColumn fx:id="grupaColumn2" prefWidth="125.0" text="Grupa" />
+                                                            <TableColumn fx:id="disciplinaGrupColumn2" prefWidth="320.0" text="Disciplina" />
+                                                            <TableColumn fx:id="dataColumn2" prefWidth="150.0" text="Data" />
+                                                            <TableColumn fx:id="oraColumn2" prefWidth="90.0" text="Ora inceput" />
+                                                            <TableColumn fx:id="durataActivColumn2" text="Durata (h)" />
+                                                         </columns>
+                                                      </TableView>
+                                                      <Button fx:id="descarcareButon4" layoutX="344.0" layoutY="401.0" mnemonicParsing="false" onAction="#descarcaLista" text="Descarcati lista" />
+                                                   
+                                                </AnchorPane>
+                                             </content>
+                                          </Tab>
+                                       </tabs>
+                                    </TabPane>
+                                 
+                              </AnchorPane>
+                        </content>
+                      </Tab>
+                    </tabs>
+                  </TabPane>
+               
+            </Pane>
+                <Pane fx:id="programareExamenePane" prefHeight="720.0" prefWidth="1080.0" style="-fx-background-color: #fea;">
+         <children>
+            <TabPane layoutX="446.0" layoutY="191.0" prefHeight="466.0" prefWidth="532.0" tabClosingPolicy="UNAVAILABLE">
+              <tabs>
+                <Tab text="Astazi">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <TableView fx:id="exameneAstazi" prefHeight="391.0" prefWidth="532.0">
+                                <columns>
+                                  <TableColumn fx:id="disciplinaColumn3" prefWidth="216.0" text="Disciplina" />
+                                  <TableColumn fx:id="tipExamenColumn" prefWidth="75.0" text="Tip examen" />
+                                    <TableColumn fx:id="dataExamenColumn" prefWidth="150.0" text="Data" />
+                                    <TableColumn fx:id="durataExamColumn" prefWidth="75.0" text="Durata(min)" />
+                                </columns>
+                              </TableView>
+                              <Button fx:id="descarcareButon6" layoutX="222.0" layoutY="411.0" mnemonicParsing="false" onAction="#descarcaLista" text="Descarca lista" />
+                           </children>
+                        </AnchorPane>
+                  </content>
+                </Tab>
+                <Tab text="Toate examenele">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <TableView fx:id="exameneAll" prefHeight="391.0" prefWidth="532.0">
+                                 <columns>
+                                    <TableColumn fx:id="disciplinaColumn4" prefWidth="216.0" text="Disciplina" />
+                                    <TableColumn fx:id="tipExamenColumn1" prefWidth="75.0" text="Tip examen" />
+                                    <TableColumn fx:id="dataExamenColumn1" prefWidth="150.0" text="Data" />
+                                    <TableColumn fx:id="durataExamColumn1" prefWidth="75.0" text="Durata(min)" />
+                                 </columns>
+                              </TableView>
+                              <Button fx:id="descarcareButon7" layoutX="222.0" layoutY="411.0" mnemonicParsing="false" onAction="#descarcaLista" text="Descarca lista" />
+                           </children>
+                        </AnchorPane>
+                  </content>
+                </Tab>
+              </tabs>
+            </TabPane>
+            <Label layoutX="370.0" layoutY="103.0" text="Programare examene">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+            <Label layoutX="74.0" layoutY="211.0" text="Curs: ">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <ChoiceBox fx:id="cursFilter4" layoutX="214.0" layoutY="212.0" prefWidth="216.0" />
+            <Label layoutX="74.0" layoutY="241.0" text="Tip examen:">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <ChoiceBox fx:id="tipExamenFilter" layoutX="214.0" layoutY="242.0" prefHeight="25.0" prefWidth="216.0" />
+            <DatePicker fx:id="dataExamen" layoutX="214.0" layoutY="272.0" prefHeight="25.0" prefWidth="216.0" />
+            <Label layoutX="74.0" layoutY="271.0" text="Data">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="74.0" layoutY="301.0" text="Ora">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Spinner fx:id="oraSpinner4" editable="true" layoutX="214.0" layoutY="302.0" prefHeight="25.0" prefWidth="216.0" />
+            <Label layoutX="74.0" layoutY="361.0" text="Profesor delegat">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <TextField fx:id="profDelegatField3" layoutX="214.0" layoutY="392.0" prefHeight="25.0" prefWidth="216.0" promptText="Selectati un profesor" />
+            <Button fx:id="cursButton1" layoutX="139.0" layoutY="212.0" mnemonicParsing="false" onAction="#filtrareCurs4" text="Selectati" />
+            <Button fx:id="programeazaExamen" layoutX="231.0" layoutY="429.0" mnemonicParsing="false" onAction="#programareExamen" text="Programati examen" />
+            <ChoiceBox fx:id="profDelegatFilter3" layoutX="214.0" layoutY="362.0" prefHeight="25.0" prefWidth="216.0" />
+            <Label layoutX="74.0" layoutY="331.0" text="Durata (min)">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Spinner fx:id="durataSpinner4" editable="true" layoutX="214.0" layoutY="332.0" prefHeight="25.0" prefWidth="216.0" />
+            <Label fx:id="programareReusita1" layoutX="378.0" layoutY="665.0" prefHeight="27.0" prefWidth="326.0" text="Activitatea a fost programata cu succes!" textFill="#15ff00">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="profInvalid1" layoutX="479.0" layoutY="665.0" text="Profesor invalid" textFill="RED">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="eroareProgram1" layoutX="322.0" layoutY="665.0" text="Aveti deja programata o alta activitate la ora respectiva" textFill="RED">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="dataDepasita" layoutX="489.0" layoutY="665.0" text="Data invalida" textFill="RED">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+            
         </AnchorPane>
-    </children>
+    
 </AnchorPane>

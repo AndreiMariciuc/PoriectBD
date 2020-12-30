@@ -8,7 +8,7 @@ public class Conexiune {
     static final String urlTuddi = null;
     static final String urlAndrei = null;
     static User curent;
-    Connection connection = null;
+    public static Connection connection = null;
     Statement selectStatement = null, interrogationStatement = null;
     ResultSet rs = null;
     ResultSetMetaData rsmd = null;
