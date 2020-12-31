@@ -6,6 +6,7 @@
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
@@ -391,41 +392,6 @@
                   <ChoiceBox fx:id="anFilter" layoutX="728.0" layoutY="187.0" prefHeight="25.0" prefWidth="65.0" />
                
             </Pane>
-            
-                <Pane fx:id="grupuriPane" prefHeight="720.0" prefWidth="1080.0" style="-fx-background-color: #fea;">
-         <children>
-            <Label layoutX="400.0" layoutY="103.0" text="Grupuri de studiu">
-               <font>
-                  <Font size="36.0" />
-               </font>
-            </Label>
-            <Label layoutX="99.0" layoutY="213.0" text="Curs: ">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Label>
-            <ChoiceBox fx:id="cursFilter3" layoutX="154.0" layoutY="214.0" prefWidth="216.0" />
-            <Label layoutX="490.0" layoutY="213.0" text="Grup asociat cursului:">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Label>
-            <ChoiceBox fx:id="grupFilter" layoutX="678.0" layoutY="214.0" prefWidth="150.0" />
-            <TableView fx:id="studentiGrupa" layoutX="74.0" layoutY="272.0" prefHeight="384.0" prefWidth="931.0">
-                <placeholder>
-                    <Label text="Nu sunt studenti inscrisi in acest grup" />
-                </placeholder>
-              <columns>
-                <TableColumn fx:id="studentColumn" prefWidth="250.0" text="Nume student" />
-                  <TableColumn fx:id="adresaColumn" prefWidth="250.0" text="Adresa" />
-                  <TableColumn fx:id="emailColumn" prefWidth="250.0" text="Email" />
-                  <TableColumn fx:id="nrTelColumn" prefWidth="75.0" text="Nr. telefon" />
-                <TableColumn fx:id="adminColumn" prefWidth="90.0" />
-              </columns>
-            </TableView>
-            <Button fx:id="cursButton" layoutX="390.0" layoutY="214.0" mnemonicParsing="false" onAction="#filtrareCurs3" text="Selectati curs" />
-            <Button fx:id="grupButton" layoutX="847.0" layoutY="214.0" mnemonicParsing="false" onAction="#filtrareGrup" text="Selectati grup" />
-         </children></Pane>
                 <Pane fx:id="orarPane" prefHeight="720.0" prefWidth="1080.0" style="-fx-background-color: #fea;">
                
                   <Label layoutX="498.0" layoutY="64.0" prefHeight="53.0" prefWidth="81.0" text="Orar">
@@ -655,6 +621,30 @@
             </Label>
          </children>
       </Pane>
+            
+                <Pane fx:id="grupuriPane" prefHeight="720.0" prefWidth="1080.0" style="-fx-background-color: #fea;">
+         <children>
+            <Label layoutX="400.0" layoutY="103.0" text="Grupuri de studiu">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+            <Label layoutX="99.0" layoutY="213.0" text="Curs: ">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <ChoiceBox fx:id="cursFilter3" layoutX="154.0" layoutY="214.0" prefWidth="216.0" />
+            <Label layoutX="490.0" layoutY="213.0" text="Grup asociat cursului:">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <ChoiceBox fx:id="grupFilter" layoutX="678.0" layoutY="214.0" prefWidth="150.0" />
+            <Button fx:id="cursButton" layoutX="390.0" layoutY="214.0" mnemonicParsing="false" onAction="#filtrareCurs3" text="Selectati curs" />
+            <Button fx:id="grupButton" layoutX="847.0" layoutY="214.0" mnemonicParsing="false" onAction="#filtrareGrup" text="Selectati grup" />
+            <ListView fx:id="chat" layoutX="322.0" layoutY="278.0" prefHeight="400.0" prefWidth="437.0" />
+         </children></Pane>
             
         </AnchorPane>
     

@@ -160,12 +160,6 @@ public class ControlProfesor implements Initializable {
     public Button cursButton;
     public ChoiceBox<Integer> grupFilter;
     public Button grupButton;
-    public TableView<StudentGrupa> studentiGrupa;
-    public TableColumn<StudentGrupa, String> studentColumn;
-    public TableColumn<StudentGrupa, String> adresaColumn;
-    public TableColumn<StudentGrupa, String> emailColumn;
-    public TableColumn<StudentGrupa, String> nrTelColumn;
-    public TableColumn<StudentGrupa, String> adminColumn;
 
     // Programare examene
     public ChoiceBox<String> cursFilter4;
@@ -194,6 +188,7 @@ public class ControlProfesor implements Initializable {
     public TableColumn<Examen,String> tipExamenColumn1;
     public TableColumn<Examen,String> dataExamenColumn1;
     public TableColumn<Examen,Integer> durataExamColumn1;
+    public ListView<String> chat;
 
     Connection conexiune = Conexiune.getConexiune().connection;
     User user = Conexiune.getConexiune().getUser();
@@ -812,20 +807,12 @@ public class ControlProfesor implements Initializable {
         ResultSet rs1 = s1.executeQuery();
         while(rs1.next()){
             int id_student = rs1.getInt("id_student");
-
-            PreparedStatement s2 = conexiune.prepareStatement("select * from users where id_user = "+id_student);
-            ResultSet rs2 = s2.executeQuery();
-            String nume="";
-            String prenume="";
-            while(rs2.next()) {
-                nume = rs2.getString("nume");
-                prenume = rs2.getString("prenume");
-            }
+            String numeStudent = idUserToNumeUser(id_student);
             int notaSeminar=0, notaLaborator=0, notaExamen=0;
 
             PreparedStatement s3 = conexiune.prepareStatement("select * from studenti_activitati where id_student = "+id_student
                     + " and id_activitate in (select id_ca from curs_activitati where id_curs = "+id_curs
-                    + ") and data_nota between '"+dataInceput+"' and '"+dataSfarsit+"'");
+                    + ") and data_notare between '"+dataInceput+"' and '"+dataSfarsit+"'");
             ResultSet rs3 = s3.executeQuery();
             while(rs3.next()){
                 int activitate = rs3.getInt("id_activitate");
@@ -843,7 +830,7 @@ public class ControlProfesor implements Initializable {
                 }
             }
 
-            Nota nota = new Nota(nume+" "+prenume, cursSel,notaSeminar,notaLaborator,notaExamen,anSel);
+            Nota nota = new Nota(numeStudent, cursSel,notaSeminar,notaLaborator,notaExamen,anSel);
             catalog.getItems().add(nota);
         }
     }
@@ -925,40 +912,16 @@ public class ControlProfesor implements Initializable {
 
     public void filtrareGrup() throws SQLException{
         int id_grupa = grupFilter.getValue();
-        studentColumn.setCellValueFactory(new PropertyValueFactory<>("nume"));
-        adresaColumn.setCellValueFactory(new PropertyValueFactory<>("adresa"));
-        emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
-        nrTelColumn.setCellValueFactory(new PropertyValueFactory<>("nrTel"));
-        adminColumn.setCellValueFactory(new PropertyValueFactory<>("admin"));
-        studentiGrupa.setItems(FXCollections.observableArrayList());
-
-        int id_admin = -1;
-        PreparedStatement s = conexiune.prepareStatement("select id_admin_grupa from grupe where id_grupa = " + id_grupa);
+        chat.setItems(FXCollections.observableArrayList());
+        PreparedStatement s = conexiune.prepareStatement("select * from mesaje_grupe where id_grupa = " + id_grupa);
         ResultSet rs = s.executeQuery();
-        while(rs.next())
-            id_admin = rs.getInt("id_admin_grupa");
-
-        PreparedStatement s1 = conexiune.prepareStatement
-        ("select id_student from studenti_grupe where id_grupa = "+id_grupa);
-        ResultSet rs1=s1.executeQuery();
-        while(rs1.next()){
-            int id_stud = rs1.getInt("id_student");
-            String nume="";
-            String adresa="";
-            String nrTel="";
-            String email="";
-            PreparedStatement s2 = conexiune.prepareStatement("select * from users where id_user = "+id_stud);
-            ResultSet rs2 = s2.executeQuery();
-            while(rs2.next()){
-                nume = rs2.getString("nume")+" "+rs2.getString("prenume");
-                adresa = rs2.getString("adresa");
-                nrTel = rs2.getString("nr_tel");
-                email = rs2.getString("email");
-            }
-            String admin="";
-            if (id_stud == id_admin)
-                admin="administrator";
-            studentiGrupa.getItems().add(new StudentGrupa(nume,adresa,email,nrTel,admin));
+        while(rs.next()){
+            String destinatar = idUserToNumeUser(rs.getInt("id_from"));
+            String subiect = rs.getString("subiect");
+            String mesaj = rs.getString("continut_mesaj");
+            String data = rs.getString("timp_primire");
+            String mesaj1 = "De la "+destinatar+"\nSubiect: "+subiect+"\nMesaj: "+mesaj+"\nTrimis pe "+data;
+            chat.getItems().add(mesaj1);
         }
     }
 

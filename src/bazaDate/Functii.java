@@ -91,6 +91,15 @@ public class Functii {
         return id_user;
     }
 
+    public static String idUserToNumeUser (int id_user) throws SQLException{
+        PreparedStatement s = conexiune.prepareStatement("select concat(nume,' ',prenume) from users where id_user = "+id_user);
+        ResultSet rs=s.executeQuery();
+        String nume="";
+        while(rs.next())
+            nume=rs.getString(1);
+        return nume;
+    }
+
     public static int cnpUserToIdUser (String cnpUser) throws SQLException{
         PreparedStatement s = conexiune.prepareStatement("select id_user from users where cnp = '"+cnpUser+"'");
         ResultSet rs=s.executeQuery();
