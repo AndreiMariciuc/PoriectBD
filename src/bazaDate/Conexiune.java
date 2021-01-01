@@ -506,7 +506,6 @@ public class Conexiune {
         }
     }
 
-
     public void carnet() {
         try {
             List<Carnet> notePartial = new ArrayList<>();
@@ -638,7 +637,7 @@ public class Conexiune {
     public void sendMessage(int pidGrupa, String subiect, String continutMesaj, int programare) {
         //PROCEDURE pTrimiteMesaj(IN pid_grupa INT, IN pid_from INT, IN psubiect VARCHAR(32), IN ptext TEXT, IN pprogramare TINYINT)
         try {
-            selectStatement.executeQuery("call pTrimiteMesaj(" + pidGrupa + ", " + curent.getIdUser() + ", " + subiect + ", " + continutMesaj + ", " + programare + ");");
+            selectStatement.executeQuery("call pTrimiteMesaj(" + pidGrupa + ", " + curent.getIdUser() + ", '" + subiect + "', '" + continutMesaj + "', " + programare + ");");
         } catch (SQLException throwables) {
             System.out.println(throwables.getMessage());
             //throwables.printStackTrace();
@@ -658,4 +657,66 @@ public class Conexiune {
         }
     }
 
+    public void creareGrupa(int pidCurs) {
+        try {
+            // pCreareGrupa(IN pid_student INT, IN pid_curs INT)
+            selectStatement.executeQuery("call pCreareGrupa(" + curent.getIdUser() + ", " + pidCurs + ");");
+        } catch (SQLException throwables) {
+            System.out.println(throwables.getMessage());
+            //throwables.printStackTrace();
+        }
+    }
+
+    public ArrayList<Grupe> getGrupeLaCareNuE() {
+        ArrayList<Grupe> grupe = new ArrayList<Grupe>();
+        try {
+            rs = selectStatement.executeQuery("call pGetGrupeBune(" + curent.getIdUser() + ");");
+            while (rs.next()) {
+                Grupe grupa = new Grupe();
+                grupa.setIdGrupa(rs.getInt(1));
+                grupa.setNumeAdmin(rs.getString(2));
+                grupa.setPrenumeAdmin(rs.getString(3));
+                grupa.setDenumireMaterie(rs.getString(4));
+                grupa.setDescriereMaterie(rs.getString(5));
+                if (rs.getInt(6) == 0) {
+                    grupa.setNumeProfesor(null);
+                    grupa.setPrenumeProfesor(null);
+                } else {
+                    String statement = new String("SELECT nume, prenume FROM vGetProfById WHERE id_profesor = " + rs.getInt(6) + ";");
+                    ResultSet resultTemp = connection.createStatement().executeQuery(statement);
+                    resultTemp.next();
+                    grupa.setNumeProfesor(resultTemp.getString(1));
+                    grupa.setPrenumeProfesor(resultTemp.getString(2));
+                }
+                grupe.add(grupa);
+            }
+        } catch (SQLException throwables) {
+            System.out.println(throwables.getMessage());
+            //throwables.printStackTrace();
+        }
+        return grupe;
+    }
+
+    public boolean inscriereInGrupa(int pid_grupa) {
+        String statement = new String("call pJoinLaGrupa(" + curent.getIdUser() + ", " + pid_grupa + ");");
+        try{
+            rs = selectStatement.executeQuery(statement);
+            rs.next();
+            return rs.getBoolean(1);
+        } catch (SQLException throwables) {
+            System.out.println(throwables.getMessage());
+            //throwables.printStackTrace();
+        }
+        return false;
+    }
+
+    public void renuntareLaGrupa(int pid_grupa) {
+        try{
+            // pRenuntaLaGrupa (IN pid_student INT, IN pid_grupa INT)
+            selectStatement.executeUpdate("call pRenuntaLaGrupa(" + curent.getIdUser() + ", " + pid_grupa + ");");
+        } catch (SQLException throwables) {
+            System.out.println(throwables);
+            //throwables.printStackTrace();
+        }
+    }
 }

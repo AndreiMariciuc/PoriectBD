@@ -11,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -80,6 +81,10 @@ public class ControlStudent implements Initializable {
         initCalendar();
         initCarnet();
         incarcareGrupe();
+        textSucces_tms.setText("");
+        adaugareCursuri();
+        adaugareGrupeBune();
+        adaugareGrupeBune();
     }
 
     private void initCarnet() {
@@ -328,9 +333,15 @@ public class ControlStudent implements Initializable {
     public TextArea textAreaGrupuri_vg;
     public void incarcareGrupe() {
         choiceBoxGrupur_vg.getItems().clear();
+        choiceBoxGrupuri_tmg.getItems().clear();
+        choiceBoxGrupuri_ag.getItems().clear();
+        grupeLaCareEste_irg.getItems().clear();
         ArrayList<Grupe> grupe = Conexiune.getConexiune().getGrupeStudent();
         for (Grupe grupa: grupe) {
             choiceBoxGrupur_vg.getItems().add(grupa);
+            choiceBoxGrupuri_ag.getItems().add(grupa);
+            choiceBoxGrupuri_tmg.getItems().add(grupa);
+            grupeLaCareEste_irg.getItems().add(grupa);
         }
     }
 
@@ -358,5 +369,90 @@ public class ControlStudent implements Initializable {
     public void incaUnul() {
         Conexiune.getConexiune().participare(choiceBoxMesaje_vg.getValue().getProgramare());
         butonParticipareActivitate_vg.setDisable(true);
+    }
+
+    public TextField textFieldSubiect_tmg;
+    public TextArea textFieldMesaj_tmg;
+    public Text textSucces_tms;
+    public void trimiteMesaj() {
+        if (choiceBoxGrupuri_tmg.getValue() != null) {
+            String subiect = textFieldSubiect_tmg.getText();
+            if (subiect.length() >= 256) {
+                subiect = subiect.substring(0, 255);
+            }
+            //(int pidGrupa, String subiect, String continutMesaj, int programare)
+            Conexiune.getConexiune().sendMessage(choiceBoxGrupuri_tmg.getValue().getIdGrupa(), subiect, textFieldMesaj_tmg.getText(), 0);
+            renuntareTrimitereMesaj();
+            textSucces_tms.setText("*Mesaj Trimis cu succes!");
+        }
+    }
+
+    public void renuntareTrimitereMesaj() {
+        textFieldSubiect_tmg.setText("");
+        textFieldMesaj_tmg.setText("");
+        textSucces_tms.setText("*Mesajul a fost anulat!");
+    }
+
+    public ChoiceBox<Cursuri> choiceBoxMaterii_cg;
+    public Text textSuccesCreareGrupa;
+
+    private void adaugareCursuri() {
+        textSuccesCreareGrupa.setText("");
+        ArrayList<Cursuri> cursuri = Conexiune.getConexiune().getCursuri();
+        choiceBoxMaterii_cg.getItems().clear();
+        for (Cursuri curs: cursuri) {
+            choiceBoxMaterii_cg.getItems().add(curs);
+        }
+    }
+
+    public void creareGrupa() {
+        if (choiceBoxMaterii_cg.getValue() != null) {
+            Conexiune.getConexiune().creareGrupa(choiceBoxMaterii_cg.getValue().getId());
+            textSuccesCreareGrupa.setText("Grupa creata cu succes pentru materia " + choiceBoxMaterii_cg.getValue().getDescriere() + "!");
+        }
+    }
+
+    public ChoiceBox<Grupe> choiceBoxGrupuriBune_ig;
+    public void adaugareGrupeBune() {
+        textSuccesInscriereGrupa_ig.setText("");
+        choiceBoxGrupuriBune_ig.getItems().clear();
+        ArrayList<Grupe> grupe = Conexiune.getConexiune().getGrupeLaCareNuE();
+        System.out.println(grupe);
+        for (Grupe grupa: grupe) {
+            choiceBoxGrupuriBune_ig.getItems().add(grupa);
+        }
+    }
+
+    public Text textSuccesInscriereGrupa_ig;
+    public void inscriereInGrupa() {
+        if (choiceBoxGrupuriBune_ig.getValue() != null) {
+            if (Conexiune.getConexiune().inscriereInGrupa(choiceBoxGrupuriBune_ig.getValue().getIdGrupa())) {
+                textSuccesInscriereGrupa_ig.fillProperty().setValue(Paint.valueOf("#00AA00"));
+                textSuccesInscriereGrupa_ig.setText("*Felicitari te-ai inscris in grupa: " + choiceBoxGrupuriBune_ig.getValue());
+            } else {
+                textSuccesInscriereGrupa_ig.fillProperty().setValue(Paint.valueOf("#AA0000"));
+                textSuccesInscriereGrupa_ig.setText("Din pacate nu te-ai putut inscrie! Posibil sa fie prea multi studenti in aceasta grupa!");
+            }
+            refresh();
+        }
+    }
+
+    public ChoiceBox<Grupe> grupeLaCareEste_irg;
+    public Text textSuccesRenuntareGrupa_irg;
+
+    public void refresh() {
+        incarcareGrupe();
+        adaugareGrupeBune();
+        textSuccesInscriereGrupa_ig.setText("");
+        textSuccesRenuntareGrupa_irg.setText("");
+    }
+
+    public void renuntareGrupa() {
+        if (grupeLaCareEste_irg.getValue() != null) {
+            String despreGrupa = grupeLaCareEste_irg.getValue().toString();
+            Conexiune.getConexiune().renuntareLaGrupa(grupeLaCareEste_irg.getValue().getIdGrupa());
+            textSuccesRenuntareGrupa_irg.setText("Ai renuntat la grupa " + despreGrupa);
+            refresh();
+        }
     }
 }

@@ -483,7 +483,7 @@
             </Pane>
             <Pane fx:id="grupuriPane" prefHeight="720.0" prefWidth="1080.0" style="-fx-background-color: #e8e8e8;">
                <children>
-                  <Text layoutX="485.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Grupuri" underline="true">
+                  <Text layoutX="-2.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Grupuri" textAlignment="CENTER" underline="true" wrappingWidth="1082.0">
                      <font>
                         <Font name="System Bold" size="30.0" />
                      </font>
@@ -502,13 +502,13 @@
                                     </Text>
                                     <TextArea fx:id="textAreaGrupuri_vg" editable="false" layoutX="384.0" layoutY="89.0" prefHeight="496.0" prefWidth="667.0" />
                                     <Button layoutX="886.0" layoutY="37.0" mnemonicParsing="false" onMouseClicked="#inserareMesaje" text="Afisare Mesaje!" />
-                                    <ChoiceBox fx:id="choiceBoxMesaje_vg" layoutX="39.0" layoutY="89.0" prefHeight="25.0" prefWidth="333.0" />
                                     <Pane layoutX="14.0" layoutY="62.0" onMouseEntered="#vizualizareMesaj" prefHeight="28.0" prefWidth="1037.0" />
                                     <Pane layoutX="14.0" layoutY="126.0" onMouseEntered="#vizualizareMesaj" prefHeight="473.0" prefWidth="1037.0">
                                        <children>
                                           <Button fx:id="butonParticipareActivitate_vg" disable="true" layoutX="932.0" layoutY="401.0" mnemonicParsing="false" onMouseClicked="#incaUnul" text="Participa!" />
                                        </children>
                                     </Pane>
+                                    <ChoiceBox fx:id="choiceBoxMesaje_vg" layoutX="33.0" layoutY="90.0" prefHeight="25.0" prefWidth="333.0" />
                                  </children>
                               </AnchorPane>
                         </content>
@@ -523,8 +523,8 @@
                                           <Font size="22.0" />
                                        </font>
                                     </Text>
-                                    <TextField layoutX="167.0" layoutY="110.0" prefHeight="31.0" prefWidth="407.0" />
-                                    <TextArea layoutX="95.0" layoutY="180.0" prefHeight="285.0" prefWidth="487.0" />
+                                    <TextField fx:id="textFieldSubiect_tmg" layoutX="167.0" layoutY="110.0" prefHeight="31.0" prefWidth="407.0" />
+                                    <TextArea fx:id="textFieldMesaj_tmg" layoutX="95.0" layoutY="180.0" prefHeight="285.0" prefWidth="487.0" />
                                     <Text layoutX="95.0" layoutY="132.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Subiect">
                                        <font>
                                           <Font size="18.0" />
@@ -535,16 +535,21 @@
                                           <Font size="20.0" />
                                        </font>
                                     </Text>
-                                    <Button layoutX="371.0" layoutY="508.0" mnemonicParsing="false" text="Renuntare">
+                                    <Button layoutX="371.0" layoutY="508.0" mnemonicParsing="false" onMouseClicked="#renuntareTrimitereMesaj" text="Renuntare">
                                        <font>
                                           <Font size="15.0" />
                                        </font>
                                     </Button>
-                                    <Button layoutX="500.0" layoutY="508.0" mnemonicParsing="false" text="Trimitere">
+                                    <Button layoutX="500.0" layoutY="508.0" mnemonicParsing="false" onMouseClicked="#trimiteMesaj" text="Trimitere">
                                        <font>
                                           <Font size="15.0" />
                                        </font>
                                     </Button>
+                                    <Text fx:id="textSucces_tms" fill="#00e116" layoutX="714.0" layoutY="329.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*Mesaj Trimis cu succes!">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Text>
                                  </children>
                               </AnchorPane>
                         </content>
@@ -572,12 +577,63 @@
                         </Tab>
                         <Tab text="Creare Grupa">
                           <content>
-                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #e8e8e8;" />
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #e8e8e8;">
+                                 <children>
+                                    <ChoiceBox fx:id="choiceBoxMaterii_cg" layoutX="155.0" layoutY="50.0" prefHeight="25.0" prefWidth="539.0" />
+                                    <Text layoutX="52.0" layoutY="71.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Materie">
+                                       <font>
+                                          <Font size="25.0" />
+                                       </font>
+                                    </Text>
+                                    <Button layoutX="605.0" layoutY="155.0" mnemonicParsing="false" onMouseClicked="#creareGrupa" text="Creare grupa!" />
+                                    <Text fx:id="textSuccesCreareGrupa" fill="#40ff00" layoutX="292.0" layoutY="133.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*Grupa a fost creata cu succes!">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Text>
+                                 </children></AnchorPane>
                           </content>
                         </Tab>
-                        <Tab text="Programari">
+                        <Tab text="Inscriere/Renuntare la grupa">
                           <content>
-                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #e8e8e8;" />
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #e8e8e8;">
+                                 <children>
+                                    <Text layoutX="61.0" layoutY="117.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Grupuri disponibile">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Text>
+                                    <ChoiceBox fx:id="choiceBoxGrupuriBune_ig" layoutX="223.0" layoutY="97.0" prefHeight="25.0" prefWidth="510.0" />
+                                    <Button layoutX="621.0" layoutY="193.0" mnemonicParsing="false" onMouseClicked="#inscriereInGrupa" text="Inscriete in grupa!" />
+                                    <Text fx:id="textSuccesInscriereGrupa_ig" fill="#00fc1d" layoutX="61.0" layoutY="174.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*Felicitari te-ai inscris in grupa: ">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Text>
+                                    <Button layoutX="511.0" layoutY="23.0" mnemonicParsing="false" onMouseClicked="#refresh" text="Refresh!" />
+                                    <Text layoutX="14.0" layoutY="87.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Inscriere la o grupa noua">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Text>
+                                    <Text layoutX="25.0" layoutY="283.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Renuntare la grupe">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Text>
+                                    <Text layoutX="80.0" layoutY="313.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Grupuri la care esti">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Text>
+                                    <ChoiceBox fx:id="grupeLaCareEste_irg" layoutX="243.0" layoutY="294.0" prefHeight="25.0" prefWidth="491.0" />
+                                    <Text fx:id="textSuccesRenuntareGrupa_irg" fill="#fa0000" layoutX="61.0" layoutY="358.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*Felicitari te-ai inscris in grupa: ">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Text>
+                                    <Button layoutX="617.0" layoutY="390.0" mnemonicParsing="false" onMouseClicked="#renuntareGrupa" text="Renuntare la grupa!" />
+                                 </children></AnchorPane>
                           </content>
                         </Tab>
                     </tabs>
