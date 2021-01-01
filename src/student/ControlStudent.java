@@ -1,9 +1,6 @@
 package student;
 
-import bazaDate.Calendar;
-import bazaDate.Carnet;
-import bazaDate.Conexiune;
-import bazaDate.Student;
+import bazaDate.*;
 import constante.Ecran;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -82,6 +79,7 @@ public class ControlStudent implements Initializable {
         initInscrieriCursuri();
         initCalendar();
         initCarnet();
+        incarcareGrupe();
     }
 
     private void initCarnet() {
@@ -320,5 +318,45 @@ public class ControlStudent implements Initializable {
             } else
                 System.out.println("nu am fisier");
         }
+    }
+    
+    /*
+        Grupe
+     */
+    public ChoiceBox<Grupe> choiceBoxGrupur_vg, choiceBoxGrupuri_tmg, choiceBoxGrupuri_ag;
+    public ChoiceBox<Mesaj> choiceBoxMesaje_vg;
+    public TextArea textAreaGrupuri_vg;
+    public void incarcareGrupe() {
+        choiceBoxGrupur_vg.getItems().clear();
+        ArrayList<Grupe> grupe = Conexiune.getConexiune().getGrupeStudent();
+        for (Grupe grupa: grupe) {
+            choiceBoxGrupur_vg.getItems().add(grupa);
+        }
+    }
+
+    public void inserareMesaje() {
+        if (choiceBoxGrupur_vg.getValue() != null) {
+            choiceBoxMesaje_vg.getItems().clear();
+            ArrayList<Mesaj> mesaje = Conexiune.getConexiune().getMesaje(choiceBoxGrupur_vg.getValue().getIdGrupa());
+            for (Mesaj mesaj: mesaje) {
+                choiceBoxMesaje_vg.getItems().add(mesaj);
+            }
+            butonParticipareActivitate_vg.setDisable(true);
+        }
+    }
+    public Button butonParticipareActivitate_vg;
+    public void vizualizareMesaj() {
+        if (choiceBoxMesaje_vg.getValue() != null){
+            textAreaGrupuri_vg.setText(choiceBoxMesaje_vg.getValue().getWholeMsg());
+            if (choiceBoxMesaje_vg.getValue().getProgramare() != 0) {
+                butonParticipareActivitate_vg.setDisable(false);
+            } else {
+                butonParticipareActivitate_vg.setDisable(true);
+            }
+        }
+    }
+    public void incaUnul() {
+        Conexiune.getConexiune().participare(choiceBoxMesaje_vg.getValue().getProgramare());
+        butonParticipareActivitate_vg.setDisable(true);
     }
 }

@@ -2,12 +2,15 @@
 
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -84,7 +87,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </ImageView>
-            <Button fx:id="grupuriButton" layoutX="8.0" layoutY="304.0" mnemonicParsing="false" onAction="#schimbaStari" prefHeight="36.0" prefWidth="186.0" style="-fx-background-color: #e2e0d4; -fx-background-radius: 90;" text="Grupuri">
+            <Button fx:id="grupuriButton" layoutX="8.0" layoutY="304.0" mnemonicParsing="false" onAction="#schimbaStari" onMouseClicked="#incarcareGrupe" prefHeight="36.0" prefWidth="186.0" style="-fx-background-color: #e2e0d4; -fx-background-radius: 90;" text="Grupuri">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -107,14 +110,6 @@
             <DropShadow />
          </effect>
          <children>
-            <Pane fx:id="grupuriPane" prefHeight="720.0" prefWidth="1080.0" style="-fx-background-color: #e8e8e8;">
-               <children>
-                  <Text layoutX="407.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="grupuri" underline="true">
-                     <font>
-                        <Font name="System Bold" size="30.0" />
-                     </font>
-                  </Text>
-               </children></Pane>
             <Pane fx:id="datePersonalePane" prefHeight="720.0" prefWidth="1080.0" style="-fx-background-color: #e8e8e8;">
                <children>
                   <Text fx:id="tstatusField" blendMode="SRC_ATOP" layoutX="77.0" layoutY="489.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
@@ -319,10 +314,10 @@
             <Pane fx:id="inscriereCursuriPane" prefHeight="720.0" prefWidth="1080.0" style="-fx-background-color: #e8e8e8;">
                <children>
                   <TabPane prefHeight="720.0" prefWidth="1080.0" tabClosingPolicy="UNAVAILABLE">
-                    <tabs>
-                      <Tab text="Renunțare cursuri">
-                        <content>
-                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-radius: 90;">
+                     <tabs>
+                        <Tab text="Renunțare cursuri">
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-radius: 90;">
                                  <children>
                                     <Text layoutX="349.0" layoutY="153.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Renunță la cursuri" underline="true">
                                        <font>
@@ -341,11 +336,11 @@
                                     <Text fx:id="mesajSuccesRenuntare" layoutX="406.0" layoutY="412.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="268.8000244140625" />
                                  </children>
                               </AnchorPane>
-                        </content>
-                      </Tab>
-                      <Tab text="Înscriere cursuri">
-                        <content>
-                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="261.0" prefWidth="606.0">
+                           </content>
+                        </Tab>
+                        <Tab text="Înscriere cursuri">
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="261.0" prefWidth="606.0">
                                  <children>
                                     <Text layoutX="353.0" layoutY="61.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Înscrie-te la un curs" underline="true">
                                        <font>
@@ -372,19 +367,19 @@
                                     <Text fx:id="mesajSuccesInscriere" layoutX="424.0" layoutY="436.0" strokeType="OUTSIDE" strokeWidth="0.0" />
                                  </children>
                               </AnchorPane>
-                        </content>
-                      </Tab>
-                    </tabs>
+                           </content>
+                        </Tab>
+                     </tabs>
                   </TabPane>
                </children>
             </Pane>
             <Pane fx:id="orarPane" prefHeight="720.0" prefWidth="1080.0" style="-fx-background-color: #e8e8e8;">
                <children>
                   <TabPane prefHeight="720.0" prefWidth="1080.0" tabClosingPolicy="UNAVAILABLE">
-                    <tabs>
-                      <Tab text="Toate activitățile">
-                        <content>
-                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="660.0" prefWidth="972.0">
+                     <tabs>
+                        <Tab text="Toate activitățile">
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="660.0" prefWidth="972.0">
                                  <children>
                                     <Button fx:id="bsaveToate" layoutX="879.0" layoutY="610.0" minHeight="9.0" mnemonicParsing="false" onAction="#saveListe" prefHeight="35.0" prefWidth="186.0" style="-fx-background-radius: 90; -fx-background-color: #fecac2;" text="Descarcă listă" textFill="#d32828">
                                        <cursor>
@@ -395,23 +390,23 @@
                                        </font>
                                     </Button>
                                     <TableView fx:id="tabelToateActivitatile" prefHeight="674.0" prefWidth="874.0">
-                                      <columns>
-                                        <TableColumn fx:id="coloanaDisciplinaToate" prefWidth="182.39996337890625" text="Disciplina" />
-                                        <TableColumn fx:id="coloanaActivitateToate" prefWidth="112.800048828125" text="Activitate" />
+                                       <columns>
+                                          <TableColumn fx:id="coloanaDisciplinaToate" prefWidth="182.39996337890625" text="Disciplina" />
+                                          <TableColumn fx:id="coloanaActivitateToate" prefWidth="112.800048828125" text="Activitate" />
                                           <TableColumn fx:id="coloanaPerioadaToate" prefWidth="91.19992065429688" text="Perioada" />
                                           <TableColumn fx:id="coloanaZiToate" prefWidth="97.60003662109375" text="Zi" />
                                           <TableColumn fx:id="coloanaOraToate" prefWidth="124.800048828125" text="Ora" />
                                           <TableColumn fx:id="coloanaDurataToate" prefWidth="124.79998779296875" text="Durata" />
                                           <TableColumn fx:id="colanaProfesorToate" prefWidth="142.39990234375" text="Profesor" />
-                                      </columns>
+                                       </columns>
                                     </TableView>
                                  </children>
                               </AnchorPane>
-                        </content>
-                      </Tab>
-                      <Tab text="Astăzi">
-                        <content>
-                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           </content>
+                        </Tab>
+                        <Tab text="Astăzi">
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
                                     <Button fx:id="bsaveAzi" layoutX="879.0" layoutY="610.0" minHeight="9.0" mnemonicParsing="false" onAction="#saveListe" prefHeight="35.0" prefWidth="186.0" style="-fx-background-radius: 90; -fx-background-color: #fecac2;" text="Descarcă listă" textFill="#d32828">
                                        <cursor>
@@ -434,44 +429,44 @@
                                     </TableView>
                                  </children>
                               </AnchorPane>
-                        </content>
-                      </Tab>
-                    </tabs>
+                           </content>
+                        </Tab>
+                     </tabs>
                   </TabPane>
                </children>
             </Pane>
             <Pane fx:id="carnetPane" prefHeight="720.0" prefWidth="1080.0" style="-fx-background-color: #e8e8e8;">
                <children>
                   <TabPane prefHeight="722.0" prefWidth="1082.0" tabClosingPolicy="UNAVAILABLE">
-                    <tabs>
-                      <Tab text="Note parțiale">
-                        <content>
-                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="140.0" prefWidth="589.0">
+                     <tabs>
+                        <Tab text="Note parțiale">
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="140.0" prefWidth="589.0">
                                  <children>
                                     <TableView fx:id="notePartial" prefHeight="722.0" prefWidth="710.0">
-                                      <columns>
-                                        <TableColumn fx:id="coloanaDisciplinaPartial" prefWidth="160.7999725341797" text="Disciplina" />
-                                        <TableColumn fx:id="coloanaActivitatePartial" prefWidth="123.20001220703125" text="Activitatea" />
+                                       <columns>
+                                          <TableColumn fx:id="coloanaDisciplinaPartial" prefWidth="160.7999725341797" text="Disciplina" />
+                                          <TableColumn fx:id="coloanaActivitatePartial" prefWidth="123.20001220703125" text="Activitatea" />
                                           <TableColumn fx:id="coloanaProfesorPartial" prefWidth="104.0" text="Profesor" />
                                           <TableColumn fx:id="coloanadDataPartial" prefWidth="105.60003662109375" text="Data" />
                                           <TableColumn fx:id="coloanaNotaPartial" prefWidth="88.0" text="Nota" />
                                           <TableColumn fx:id="coloanaProcentPartial" prefWidth="92.79998779296875" text="Procent" />
-                                      </columns>
+                                       </columns>
                                     </TableView>
                                  </children>
                               </AnchorPane>
-                        </content>
-                      </Tab>
-                      <Tab text="Note finale">
-                        <content>
-                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           </content>
+                        </Tab>
+                        <Tab text="Note finale">
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
                                     <TableView fx:id="noteFinal" layoutX="269.0" layoutY="153.0" prefHeight="463.0" prefWidth="558.0">
-                                      <columns>
-                                        <TableColumn fx:id="coloanaDisciplinaFinal" prefWidth="186.39993286132812" text="Disciplina" />
-                                        <TableColumn fx:id="coloanaProfesorFinal" minWidth="0.0" prefWidth="214.4000244140625" text="Profesor titular" />
+                                       <columns>
+                                          <TableColumn fx:id="coloanaDisciplinaFinal" prefWidth="186.39993286132812" text="Disciplina" />
+                                          <TableColumn fx:id="coloanaProfesorFinal" minWidth="0.0" prefWidth="214.4000244140625" text="Profesor titular" />
                                           <TableColumn fx:id="coloanaNotaFinal" prefWidth="159.199951171875" text="Nota finala" />
-                                      </columns>
+                                       </columns>
                                     </TableView>
                                     <Text layoutX="437.0" layoutY="92.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Carnet de note" underline="true">
                                        <font>
@@ -480,12 +475,114 @@
                                     </Text>
                                  </children>
                               </AnchorPane>
-                        </content>
-                      </Tab>
-                    </tabs>
+                           </content>
+                        </Tab>
+                     </tabs>
                   </TabPane>
                </children>
             </Pane>
+            <Pane fx:id="grupuriPane" prefHeight="720.0" prefWidth="1080.0" style="-fx-background-color: #e8e8e8;">
+               <children>
+                  <Text layoutX="485.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Grupuri" underline="true">
+                     <font>
+                        <Font name="System Bold" size="30.0" />
+                     </font>
+                  </Text>
+                  <TabPane layoutX="-1.0" layoutY="88.0" prefHeight="633.0" prefWidth="1080.0" tabClosingPolicy="UNAVAILABLE">
+                    <tabs>
+                      <Tab text="Vizualizare Grupa">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #e8e8e8;">
+                                 <children>
+                                    <ChoiceBox fx:id="choiceBoxGrupur_vg" layoutX="176.0" layoutY="37.0" prefHeight="25.0" prefWidth="668.0" />
+                                    <Text layoutX="33.0" layoutY="59.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Alege grupa:">
+                                       <font>
+                                          <Font size="22.0" />
+                                       </font>
+                                    </Text>
+                                    <TextArea fx:id="textAreaGrupuri_vg" editable="false" layoutX="384.0" layoutY="89.0" prefHeight="496.0" prefWidth="667.0" />
+                                    <Button layoutX="886.0" layoutY="37.0" mnemonicParsing="false" onMouseClicked="#inserareMesaje" text="Afisare Mesaje!" />
+                                    <ChoiceBox fx:id="choiceBoxMesaje_vg" layoutX="39.0" layoutY="89.0" prefHeight="25.0" prefWidth="333.0" />
+                                    <Pane layoutX="14.0" layoutY="62.0" onMouseEntered="#vizualizareMesaj" prefHeight="28.0" prefWidth="1037.0" />
+                                    <Pane layoutX="14.0" layoutY="126.0" onMouseEntered="#vizualizareMesaj" prefHeight="473.0" prefWidth="1037.0">
+                                       <children>
+                                          <Button fx:id="butonParticipareActivitate_vg" disable="true" layoutX="932.0" layoutY="401.0" mnemonicParsing="false" onMouseClicked="#incaUnul" text="Participa!" />
+                                       </children>
+                                    </Pane>
+                                 </children>
+                              </AnchorPane>
+                        </content>
+                      </Tab>
+                      <Tab text="Trimite mesaje">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #e8e8e8;">
+                                 <children>
+                                    <ChoiceBox fx:id="choiceBoxGrupuri_tmg" layoutX="176.0" layoutY="37.0" prefHeight="25.0" prefWidth="668.0" />
+                                    <Text layoutX="33.0" layoutY="59.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Alege grupa:">
+                                       <font>
+                                          <Font size="22.0" />
+                                       </font>
+                                    </Text>
+                                    <TextField layoutX="167.0" layoutY="110.0" prefHeight="31.0" prefWidth="407.0" />
+                                    <TextArea layoutX="95.0" layoutY="180.0" prefHeight="285.0" prefWidth="487.0" />
+                                    <Text layoutX="95.0" layoutY="132.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Subiect">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Text>
+                                    <Text layoutX="95.0" layoutY="174.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mesaj">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Text>
+                                    <Button layoutX="371.0" layoutY="508.0" mnemonicParsing="false" text="Renuntare">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font>
+                                    </Button>
+                                    <Button layoutX="500.0" layoutY="508.0" mnemonicParsing="false" text="Trimitere">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font>
+                                    </Button>
+                                 </children>
+                              </AnchorPane>
+                        </content>
+                      </Tab>
+                        <Tab text="Administrare Grupa">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #e8e8e8;">
+                                 <children>
+                                    <ChoiceBox fx:id="choiceBoxGrupuri_ag" layoutX="176.0" layoutY="37.0" prefHeight="25.0" prefWidth="668.0" />
+                                    <Text layoutX="39.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Alege grupa:">
+                                       <font>
+                                          <Font size="22.0" />
+                                       </font>
+                                    </Text>
+                                    <ChoiceBox layoutX="176.0" layoutY="73.0" prefHeight="25.0" prefWidth="668.0" />
+                                    <Text layoutX="80.0" layoutY="94.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Profesor">
+                                       <font>
+                                          <Font size="22.0" />
+                                       </font>
+                                    </Text>
+                                    <Button layoutX="838.0" layoutY="513.0" mnemonicParsing="false" text="Modifica" />
+                                 </children>
+                              </AnchorPane>
+                          </content>
+                        </Tab>
+                        <Tab text="Creare Grupa">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #e8e8e8;" />
+                          </content>
+                        </Tab>
+                        <Tab text="Programari">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #e8e8e8;" />
+                          </content>
+                        </Tab>
+                    </tabs>
+                  </TabPane>
+               </children></Pane>
          </children>
       </AnchorPane>
    </children>
