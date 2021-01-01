@@ -1,0 +1,1455 @@
+DROP DATABASE IF EXISTS aplicatie;
+CREATE DATABASE aplicatie;
+USE aplicatie;
+
+DROP TABLE IF EXISTS roluri;
+CREATE TABLE roluri (
+  id_rol INT NOT NULL AUTO_INCREMENT,
+  descriere_rol VARCHAR(16) NOT NULL,
+  PRIMARY KEY (id_rol),
+  UNIQUE INDEX id_rol_UNIQUE (id_rol ASC) VISIBLE);
+
+DROP TABLE IF EXISTS an_universitar;
+CREATE TABLE an_universitar (
+  id_an_universitar INT NOT NULL,
+  semestru INT NOT NULL,
+  data_inceput DATE NOT NULL,
+  data_sfarsit DATE NOT NULL,
+  an_inceput YEAR NOT NULL,
+  PRIMARY KEY (id_an_universitar),
+  UNIQUE INDEX id_an_universitar_UNIQUE (id_an_universitar ASC) VISIBLE);
+
+DROP TABLE IF EXISTS perioade;
+CREATE TABLE perioade (
+  id_perioada INT NOT NULL,
+  descriere VARCHAR(32) NOT NULL,
+  PRIMARY KEY (id_perioada),
+  UNIQUE INDEX id_perioada_UNIQUE (id_perioada ASC) VISIBLE);
+
+DROP TABLE IF EXISTS zile;
+CREATE TABLE zile (
+  id_zi INT NOT NULL AUTO_INCREMENT,
+  zi VARCHAR(16) NOT NULL,
+  PRIMARY KEY (id_zi),
+  UNIQUE INDEX id_zi_UNIQUE (id_zi ASC) VISIBLE);
+
+  DROP TABLE IF EXISTS activitati;
+  CREATE TABLE activitati (
+  id_activitate INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  denumire_activitate VARCHAR(32) NULL,
+  nr_max_participanti INT NULL,
+  PRIMARY KEY (id_activitate),
+  UNIQUE INDEX id_activitate_UNIQUE (id_activitate ASC) VISIBLE);
+
+DROP TABLE IF EXISTS departamente;
+CREATE TABLE departamente (
+  id_departament INT NOT NULL,
+  cod_departament VARCHAR(8) NOT NULL,
+  descriere_departament VARCHAR(32) NOT NULL,
+  PRIMARY KEY (id_departament));
+
+DROP TABLE IF EXISTS cursuri;
+CREATE TABLE cursuri (
+  id_curs INT NOT NULL,
+  denumire VARCHAR(32) NOT NULL,
+  descriere VARCHAR(128) NOT NULL DEFAULT '',
+  PRIMARY KEY (id_curs));
+
+DROP table IF EXISTS users;
+CREATE TABLE users (
+  id_user INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  id_rol INT NULL,
+  CNP CHAR(13) NOT NULL,
+  nume VARCHAR(64) NOT NULL,
+  prenume VARCHAR(64) NOT NULL,
+  adresa VARCHAR(128) NULL,
+  nr_tel CHAR(10) NULL,
+  email VARCHAR(64) NOT NULL,
+  IBAN VARCHAR(34) NOT NULL,
+  nr_contract INT NULL,
+  username VARCHAR(32) NOT NULL,
+  parola VARCHAR(32) NOT NULL,
+  PRIMARY KEY (id_user),
+  UNIQUE INDEX id_user_UNIQUE (id_user ASC) VISIBLE,
+  UNIQUE INDEX CNP_UNIQUE (CNP ASC) VISIBLE,
+  UNIQUE INDEX username_UNIQUE (username ASC) VISIBLE,
+  INDEX id_rol_idx (id_rol ASC) VISIBLE,
+  CONSTRAINT id_rol
+    FOREIGN KEY (id_rol)
+    REFERENCES aplicatie.roluri (id_rol)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+DROP TABLE IF EXISTS status_activ;
+CREATE TABLE status_activ (
+  id_status INT NOT NULL,
+  Descriere VARCHAR(16) NOT NULL,
+  PRIMARY KEY (id_status));
+
+DROP TABLE IF EXISTS studenti;
+CREATE TABLE studenti (
+  id_student INT UNSIGNED NOT NULL,
+  nr_ore INT NOT NULL DEFAULT 6,
+  an_studiu INT NOT NULL DEFAULT 1,
+  id_status INT NOT NULL DEFAULT 0,
+  PRIMARY KEY (id_student),
+  UNIQUE INDEX id_student_UNIQUE (id_student ASC) VISIBLE,
+  INDEX id_status_activ_idx (id_status ASC) VISIBLE,
+  CONSTRAINT id_status_activ
+    FOREIGN KEY (id_status)
+    REFERENCES aplicatie.status_activ (id_status)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT id_user_stud
+    FOREIGN KEY (id_student)
+    REFERENCES aplicatie.users (id_user)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+DROP TABLE IF EXISTS profesori;
+CREATE TABLE profesori (
+  id_profesor INT UNSIGNED NOT NULL,
+  nr_min_ore INT NOT NULL DEFAULT 8,
+  nr_max_ore INT NOT NULL DEFAULT 32,
+  id_departament INT NULL,
+  PRIMARY KEY (id_profesor),
+  UNIQUE INDEX id_profesor_UNIQUE (id_profesor ASC) VISIBLE,
+  INDEX id_departament_idx (id_departament ASC) VISIBLE,
+  CONSTRAINT id_user_prof
+    FOREIGN KEY (id_profesor)
+    REFERENCES users (id_user)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT id_departament
+    FOREIGN KEY (id_departament)
+    REFERENCES departamente (id_departament)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+DROP TABLE IF EXISTS curs_activitati;
+CREATE TABLE curs_activitati (
+  id_ca INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  id_curs INT NOT NULL,
+  id_activ INT UNSIGNED NOT NULL,
+  perioada INT,
+  nr_zi_sapt INT,
+  procent INT,
+  id_prof_titular INT UNSIGNED,
+  id_prof_delegat INT UNSIGNED,
+  ora_inceput int,
+  durata INT NOT NULL DEFAULT 1,
+  nr_max_participanti int,
+  PRIMARY KEY (id_ca),
+  UNIQUE INDEX id_ca_UNIQUE (id_ca ASC) VISIBLE,
+  INDEX id_curs_idx (id_curs ASC) VISIBLE,
+  INDEX id_activ_idx (id_activ ASC) VISIBLE,
+  INDEX perioada_idx (perioada ASC) VISIBLE,
+  INDEX nr_zi_saptamana_idx (nr_zi_sapt ASC) VISIBLE,
+  INDEX id_prof_apartinator_idx (id_prof_titular ASC) VISIBLE,
+  CONSTRAINT prof_delegat
+	FOREIGN KEY (id_prof_delegat)
+    REFERENCES aplicatie.profesori (id_profesor)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT id_curs
+    FOREIGN KEY (id_curs)
+    REFERENCES aplicatie.cursuri (id_curs)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT id_activ
+    FOREIGN KEY (id_activ)
+    REFERENCES aplicatie.activitati (id_activitate)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT perioada
+    FOREIGN KEY (perioada)
+    REFERENCES aplicatie.perioade (id_perioada)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT nr_zi_saptamana
+    FOREIGN KEY (nr_zi_sapt)
+    REFERENCES aplicatie.zile (id_zi)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT id_profesor_titular
+    FOREIGN KEY (id_prof_titular)
+    REFERENCES aplicatie.profesori (id_profesor)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+DROP TABLE IF EXISTS studenti_activitati;
+CREATE TABLE studenti_activitati (
+  id_student INT UNSIGNED NOT NULL,
+  id_activitate INT UNSIGNED NOT NULL,
+  nota INT,
+  data_notare       date,
+  INDEX id_activitate_idx (id_activitate ASC) VISIBLE,
+  INDEX id_student_idx (id_student ASC) VISIBLE,
+  CONSTRAINT id_student
+    FOREIGN KEY (id_student)
+    REFERENCES aplicatie.studenti (id_student)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT id_activitate
+    FOREIGN KEY (id_activitate)
+    REFERENCES aplicatie.curs_activitati (id_ca)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+DROP TABLE IF EXISTS grupe;
+CREATE TABLE grupe (
+  id_grupa INT NOT NULL,
+  id_curs INT NULL,
+  id_admin_grupa INT UNSIGNED NOT NULL,
+  id_profesor_raspunzator INT UNSIGNED, -- poate fi null deoarece o grupa de aprofundare poate sa nu aiba profesor
+  nr_max_particip INT NOT NULL DEFAULT 30,
+  PRIMARY KEY (id_grupa),
+  INDEX id_curs_idx (id_curs ASC) VISIBLE,
+  INDEX id_admin_grupa_idx (id_admin_grupa ASC) VISIBLE,
+  CONSTRAINT id_cursG
+    FOREIGN KEY (id_curs)
+    REFERENCES cursuri (id_curs)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+CONSTRAINT prof_raspunzator
+    FOREIGN KEY (id_profesor_raspunzator)
+    REFERENCES profesori (id_profesor)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT id_admin_grupa
+    FOREIGN KEY (id_admin_grupa)
+    REFERENCES studenti (id_student)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+DROP TABLE IF EXISTS programari_activitati_grupe;
+CREATE TABLE programari_activitati_grupe (
+  id_activitate_grupa INT NOT NULL,
+  id_grupa INT NOT NULL,
+  nr_minim INT NOT NULL DEFAULT 5,
+  numar_curent_participanti INT NOT NULL DEFAULT 0,
+  data_activitate_grupa DATE,
+  ora_activitate INT,
+  durata_activitate INT,
+  start_programare DATETIME NOT NULL,
+  deadline DATETIME NOT NULL,
+  PRIMARY KEY (id_activitate_grupa),
+  INDEX id_grupa_idx (id_grupa ASC) VISIBLE,
+  CONSTRAINT id_grupa
+    FOREIGN KEY (id_grupa)
+    REFERENCES aplicatie.grupe (id_grupa)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+DROP TABLE IF EXISTS studenti_grupe;
+CREATE TABLE studenti_grupe (
+  id_student INT UNSIGNED NOT NULL,
+  id_grupa INT NOT NULL,
+  INDEX id_stud_idx (id_student ASC) VISIBLE,
+  INDEX id_gr_idx (id_grupa ASC) VISIBLE,
+  CONSTRAINT id_stud
+    FOREIGN KEY (id_student)
+    REFERENCES aplicatie.studenti (id_student)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT id_gr
+    FOREIGN KEY (id_grupa)
+    REFERENCES aplicatie.grupe (id_grupa)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+DROP TABLE IF EXISTS mesaje_grupe;
+CREATE TABLE aplicatie.mesaje_grupe (
+  id_from INT UNSIGNED NOT NULL,
+  id_grupa INT NOT NULL,
+  subiect INT NOT NULL,
+  text INT NULL,
+  timp_primire TIMESTAMP NOT NULL DEFAULT NOW(),
+  programare TINYINT NOT NULL DEFAULT 0,
+  PRIMARY KEY (id_from),
+  INDEX id_gr_msg_idx (id_grupa ASC) VISIBLE,
+  CONSTRAINT id_gr_msg
+    FOREIGN KEY (id_grupa)
+    REFERENCES grupe (id_grupa)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT id_from
+    FOREIGN KEY (id_from)
+    REFERENCES studenti (id_student)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+DROP TABLE IF EXISTS mesaje;
+CREATE TABLE mesaje (
+  id_from INT UNSIGNED NOT NULL,
+  id_to INT UNSIGNED NOT NULL,
+  subiect VARCHAR(32) NOT NULL,
+  mesaj TEXT NULL,
+  timp_primire TIMESTAMP NOT NULL DEFAULT NOW(),
+  INDEX id_from_msg_idx (id_from ASC) VISIBLE,
+  INDEX id_to_msg_idx (id_to ASC) VISIBLE,
+  CONSTRAINT id_from_msg
+    FOREIGN KEY (id_from)
+    REFERENCES users (id_user)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT id_to_msg
+    FOREIGN KEY (id_to)
+    REFERENCES users (id_user)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+DROP TABLE IF EXISTS examinari;
+CREATE TABLE examinari (
+  id_examinari INT NOT NULL,
+  id_tip_examinare INT UNSIGNED NOT NULL,
+  data_desfasurare DATETIME NOT NULL,
+  durata INT NOT NULL DEFAULT 1,
+  id_activ_curs INT UNSIGNED NOT NULL,
+  PRIMARY KEY (id_examinari),
+  INDEX tip_examinare_idx (id_tip_examinare ASC) VISIBLE,
+  INDEX activitate_curs_idx (id_activ_curs ASC) VISIBLE,
+  CONSTRAINT tip_examinare
+    FOREIGN KEY (id_tip_examinare)
+    REFERENCES activitati (id_activitate)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT activitate_curs
+    FOREIGN KEY (id_activ_curs)
+    REFERENCES curs_activitati (id_ca)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+
+USE aplicatie;
+
+DROP INDEX index_user ON users;
+CREATE INDEX index_user
+ON users (username, parola);
+
+
+USE aplicatie;
+INSERT INTO roluri VALUES (1, "super-admin"), (2, "admin"), (3, "profesor"), (4, "student");
+INSERT INTO status_activ VALUES (1, "BUGET"), (2, "TAXA");
+INSERT INTO perioade VALUES (0, "saptamana para"), (1, "saptamana impara"), (2, "saptamanal");
+INSERT INTO zile VALUES (1, "Luni"), (2, "Marti"), (3, "Miercuri"), (4, "Joi"), (5, "Vineri"), (6, "Sambata"), (7, "Duminica");
+INSERT INTO activitati VALUES (1, "curs", 150), (2, "seminar", 30), (3, "laborator", 15), (4, "examen", NULL), (5, "colocviu", NULL);
+SELECT * FROM roluri;
+SELECT * FROM status_activ;
+SELECT * FROM perioade;
+SELECT * FROM zile;
+SELECT * FROM activitati;
+INSERT INTO departamente VALUES (1, "CS", "Stiinta Calculatoarelor"), (2, "MATH", "Matematica"), (3, "PHYS", "Fizica"), (4, "PSHY", "Pshihologie si Stiinta Educatiei"), (5, "IE", "Inginerie Electrica");
+SELECT * FROM departamente;
+
+
+USE aplicatie;
+
+
+
+DROP VIEW IF EXISTS vStudenti;
+CREATE VIEW vStudenti AS
+SELECT u.id_user, s.id_student, u.CNP, r.descriere_rol, u.nume, u.prenume, u.adresa, u.nr_tel, u.email, u.IBAN, u.nr_contract, s.an_studiu, s.nr_ore, sa.descriere
+    FROM users u JOIN studenti s JOIN roluri r JOIN status_activ sa ON u.id_user = s.id_student AND u.id_rol = r.id_rol AND sa.id_status = s.id_status;
+
+
+
+SELECT * FROM vStudenti;
+
+
+
+DROP VIEW IF EXISTS vProfesori;
+CREATE VIEW vProfesori AS
+SELECT profesori.id_profesor, CNP, descriere_rol, nume, prenume, adresa, nr_tel, email, IBAN, nr_contract, nr_min_ore, nr_max_ore, cod_departament, descriere_departament, profesori.id_departament
+    FROM users JOIN profesori JOIN roluri JOIN departamente ON users.id_user = profesori.id_profesor AND roluri.id_rol = users.id_rol AND departamente.id_departament = profesori.id_departament;
+
+
+
+SELECT * FROM vProfesori;
+
+
+
+DROP VIEW IF EXISTS vNote;
+CREATE VIEW vNote AS
+SELECT ca.id_ca, ca.id_curs, s.id_student as 'id_student', sa.nota as 'nota', c.denumire as 'denumire_materie', ca.procent as 'procent', a.denumire_activitate as 'tip_activitate', u.nume as 'nume_prof', u.prenume as 'prenume_prof'
+FROM studenti_activitati sa JOIN curs_activitati ca JOIN activitati a JOIN studenti s JOIN cursuri c JOIN users u
+ON s.id_student = sa.id_student AND sa.id_activitate = a.id_activitate AND c.id_curs = ca.id_curs AND id_user = ca.id_prof_titular;
+-- util pentru notari daca ii dam cu un WHERE id_ca sa coincida cu cele ale profesorului de curs, ii pot filtra dupa curs si sa le dea note
+-- se mai poate folosi si la grupuri, cautam studentii inscrisi la denumire_materie = ... si ii sugeram pentru grupul format
+SELECT * FROM vNote;
+
+
+
+-- view amplu al cursului
+DROP VIEW IF EXISTS vCursuri;
+CREATE VIEW vCursuri AS
+SELECT c.id_curs, ca.id_ca, c.denumire as 'denumire_curs', c.descriere as 'descriere_curs', ca.nr_zi_sapt, ca.ora_inceput, a.nr_max_participanti, u.nume, u.prenume
+FROM curs_activitati ca JOIN activitati a JOIN users u JOIN cursuri c
+ON ca.id_curs = c.id_curs AND ca.id_activ = a.id_activitate AND ca.id_prof_titular = u.id_user
+WHERE a.id_activitate = 1; -- cautam dupa cursuri
+
+
+
+SELECT * FROM vCursuri;
+
+
+
+-- view studenti asignati la un anumit curs
+DROP VIEW IF EXISTS vStudentiLaCurs;
+CREATE VIEW vStudentiLaCurs AS
+SELECT u.id_user, u.nume as 'nume_student', u.prenume as 'prenume_student', u.nr_tel, u.email, v.denumire_curs, v.descriere_curs, v.nume as 'nume_profesor', v.prenume as 'prenume profesor', v.id_ca
+FROM users u JOIN studenti_activitati sa JOIN vCursuri v ON u.id_user = sa.id_student AND sa.id_activitate = v.id_ca
+ORDER BY id_ca;
+-- WHERE v.denumire_curs = ... SAU v.descriere_curs = ... SAU v.id_ca = ... (provenita de la faptul ca administratorul da click pe butonul de la o activitate de curs si vede toti studentii de acolo si doar luam id-ul de la cursul ales si afisam folosind acest view)
+SELECT * FROM vStudentiLaCurs;
+SELECT * FROM vStudentiLaCurs;
+DESCRIBE vStudentiLaCurs;
+-- select sa zicem: domn profesor, trebuie sa programati examene pentru ... sau la administrator cand cauta sau la profesor cand cauta cursul idk
+
+
+
+-- folosit pentru a asigna studentii la cursuri, seminarii si laboratoare
+DROP VIEW IF EXISTS vProfNrCursanti;
+CREATE VIEW vProfNrCursanti AS
+SELECT ca.id_ca, c.id_curs, ca.id_prof_titular, c.denumire, c.descriere, count(ca.id_ca) as 'nr_actual_participanti', a.nr_max_participanti as 'numar_maxim', ca.nr_zi_sapt as 'ziua', ca.ora_inceput, ca.durata, ca.perioada
+FROM curs_activitati ca JOIN studenti_activitati sa JOIN activitati a JOIN cursuri c
+ON ca.id_ca = sa.id_activitate AND ca.id_activ = a.id_activitate AND ca.id_curs = c.id_curs -- sa nu bagam la laboratoare mai mult de 15 studenti
+-- WHERE daca_mai_este_necesar, daca este asignat la cursul lui X, seminarul lui X dar nu mai gaseste loc la lab lui X, atunci schimbam la cursul lui Y si facem iar verificari de program
+GROUP BY (ca.id_ca)
+HAVING count(ca.id_ca) < a.nr_max_participanti;
+-- Salutare, ai fost asignat la activitatea ... din data (deoarece ti se potriveste), la profesorul X (care are cei mai putini studenti si program perfect pentru tine)
+-- sau... Salutare, nu ai putut fi asignat la nicio activitate ...
+-- exista sansa sa gaseasca laborator in saptamana para iar in saptamana impara sa faca altceva
+SELECT * FROM vProfNrCursanti;
+
+
+
+-- gasire fereastra potrivita pentru grupele de studiu:
+--                 -Se face un o interogare a membrilor grupei si se cauta la fiecare ora de la 8 la 20 cati studenti sunt liberi pentru fiecare zi din saptamana
+--                 -Se returneaza ferestrele potrivite cu un numar de posibil de participanti peste jumatate
+-- de asemenea, se poate proceda la fel si pentru profesori, se vor cauta profesori care sunt liberi in orele cu numar ridicat de studenti (atat prof titular cat si delegat)
+
+
+DROP PROCEDURE IF EXISTS pInsertAdmin;
+DELIMITER %%
+CREATE PROCEDURE pInsertAdmin(IN p_id_rol INT, IN p_cnp CHAR(13), IN p_nume VARCHAR(64), IN p_prenume VARCHAR(64), IN p_adresa VARCHAR(128), IN p_nr_tel CHAR(10), IN p_email VARCHAR(64), IN p_iban VARCHAR(34), IN p_nr_contract INT)
+BEGIN
+	SET @username = concat(p_nume, '.', p_prenume, SUBSTR(p_cnp, 3, 3));
+    SET @parola = concat(p_nume, SUBSTR(p_cnp, 5, 3));
+	INSERT INTO users (id_rol, cnp, nume, prenume, adresa, nr_tel, email, iban, nr_contract, username, parola) VALUES (p_id_rol, p_cnp, p_nume, p_prenume, p_adresa, p_nr_tel, p_email, p_iban, p_nr_contract, @username, @parola);
+END %%
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS pInsertStudent;
+DELIMITER %%
+CREATE PROCEDURE pInsertStudent(IN p_id_rol INT, IN p_cnp CHAR(13), IN p_nume VARCHAR(64), IN p_prenume VARCHAR(64), IN p_adresa VARCHAR(128), IN p_nr_tel CHAR(10), IN p_email VARCHAR(64), IN p_iban VARCHAR(34), IN p_nr_contract INT, IN p_nr_ore INT, IN p_an_studiu INT, IN p_id_status INT)
+BEGIN
+	SET @username = concat(p_nume, '.', p_prenume, SUBSTR(p_cnp, 3, 3));
+    SET @parola = concat(p_nume, SUBSTR(p_cnp, 5, 3));
+	INSERT INTO users (id_rol, cnp, nume, prenume, adresa, nr_tel, email, iban, nr_contract, username, parola) VALUES (p_id_rol, p_cnp, p_nume, p_prenume, p_adresa, p_nr_tel, p_email, p_iban, p_nr_contract, @username, @parola);
+    SET @id = (SELECT max(id_user) FROM users);
+    INSERT INTO studenti (id_student, nr_ore, an_studiu, id_status) VALUES (@id, p_nr_ore, p_an_studiu, p_id_status);
+END %%
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS pInsertProfesor;
+DELIMITER %%
+CREATE PROCEDURE pInsertProfesor(IN p_id_rol INT, IN p_cnp CHAR(13), IN p_nume VARCHAR(64), IN p_prenume VARCHAR(64), IN p_adresa VARCHAR(128), IN p_nr_tel CHAR(10), IN p_email VARCHAR(64), IN p_iban VARCHAR(34), IN p_nr_contract INT, IN p_nr_min_ore INT, IN p_nr_max_ore INT, IN p_id_departament INT)
+BEGIN
+	SET @username = concat(p_nume, '.', p_prenume, SUBSTR(p_cnp, 3, 3));
+    SET @parola = concat(p_nume, SUBSTR(p_cnp, 5, 3));
+	INSERT INTO users (id_rol, cnp, nume, prenume, adresa, nr_tel, email, iban, nr_contract, username, parola) VALUES (p_id_rol, p_cnp, p_nume, p_prenume, p_adresa, p_nr_tel, p_email, p_iban, p_nr_contract, @username, @parola);
+    SET @id = (SELECT max(id_user) FROM users);
+    INSERT INTO profesori VALUES (@id, p_nr_min_ore, p_nr_max_ore, p_id_departament);
+END %%
+DELIMITER ;
+
+DELETE FROM studenti;
+DELETE FROM profesori;
+DELETE FROM users;
+
+CALL pInsertAdmin(2, '9870413096583', 'Chance', 'Rafael', 'Hair Melted  Nr. 90', '7412627503', 'Chance._Rafael987041@admin_uni.com', 'RO603286752703763305279187163374', 29870425);
+CALL pInsertAdmin(2, '1740058413750', 'George', 'Hugo', 'Wiry  Nr. 188', '9655138724', 'George_Hugo174005@admin_uni.com', 'RO901941536217230145344155883589', 21740084);
+CALL pInsertAdmin(2, '5077950881242', 'Knox', 'Ryder', 'Remind  Nr. 46', '8345338716', 'Knox.Ryder507795@admin_uni.com', 'RO107793993631733906265985628390', 25077963);
+CALL pInsertAdmin(2, '8992987944108', 'Rocco', 'Max', 'Victorious  Nr. 115', '4713770988', 'Rocco._Max899298@admin_uni.com', 'RO699352431808906882073497975068', 28992972);
+CALL pInsertAdmin(2, '8467579504566', 'Otto', 'Cohen', 'Remind Abandoned Farm  Nr. 141', '7815414406', 'OttoCohen846757@admin_uni.com', 'RO598621607413607518278533685830', 28467554);
+CALL pInsertAdmin(2, '1752947785954', 'Callum', 'Xander', 'Chicken Extra-small  Nr. 30', '4117609652', 'Callum.Xander175294@admin_uni.com', 'RO412177167991571503341609615784', 21752978);
+CALL pInsertAdmin(2, '6953686956401', 'Lorenzo', 'Solomon', 'Handsomely Symptomatic  Nr. 80', '7256846962', 'Lorenzo_Solomon695368@admin_uni.com', 'RO645784746731388262981560520356', 26953655);
+CALL pInsertAdmin(2, '6550487808149', 'Finnegan', 'Nicholas', 'Vegetable  Nr. 183', '7777640180', 'FinneganNicholas655048@admin_uni.com', 'RO541035033613436673934478439758', 26550479);
+CALL pInsertAdmin(2, '3073767334496', 'Luca', 'Omar', 'Letter Extra-small Hollow  Nr. 10', '7057741801', 'Luca_Omar307376@admin_uni.com', 'RO165530124618873115905003837930', 23073723);
+CALL pInsertAdmin(2, '8891411198762', 'Axel', 'Jasper', 'Uncle Offer  Nr. 47', '2472587422', 'Axel.Jasper889141@admin_uni.com', 'RO799911021347022023439513561147', 28891447);
+CALL pInsertStudent(4, '7425764482589', 'Matthias', 'Kashton', 'Airplane Dangerous  Nr. 126', '5019391545', 'Matthias.Kashton74257@student_uni.com', 'RO772057830941423602039567206709', 47425717, 21, 3, 2);
+CALL pInsertStudent(4, '1135941115970', 'Seth', 'Colt', 'Position Zoo  Nr. 152', '5249995505', 'Seth._Colt11359@student_uni.com', 'RO104196475489854973797228112233', 41135995, 22, 2, 1);
+CALL pInsertStudent(4, '4876085776805', 'Avery', 'Allen', 'Piquant Picayune  Nr. 20', '5279282005', 'Avery.Allen48760@student_uni.com', 'RO197231724989597968037160373725', 44876030, 23, 3, 2);
+CALL pInsertStudent(4, '8603525168809', 'Manuel', 'John', 'Airplane Muddle  Nr. 40', '1649484291', 'Manuel_John86035@student_uni.com', 'RO055079859789750827354657263127', 48603512, 21, 1, 2);
+CALL pInsertStudent(4, '1689826027380', 'Roberto', 'Henry', 'Nebulous Petite  Nr. 120', '9426048561', 'Roberto_Henry16898@student_uni.com', 'RO040056279561816466489498362792', 41689877, 25, 3, 2);
+CALL pInsertStudent(4, '5257030854947', 'Kamden', 'Adam', 'Male Gusty  Nr. 51', '1554626181', 'KamdenAdam52570@student_uni.com', 'RO045228445802889769576015600641', 45257048, 23, 4, 2);
+CALL pInsertStudent(4, '8194641239992', 'Amari', 'Royal', 'Continue Cross  Nr. 152', '9044142247', 'Amari._Royal81946@student_uni.com', 'RO514497778312899559930433856200', 48194612, 22, 1, 1);
+CALL pInsertStudent(4, '1576559064835', 'Ryan', 'Kenneth', 'Queue  Nr. 164', '7567333630', 'Ryan.Kenneth15765@student_uni.com', 'RO306633830375028518640343090952', 41576530, 25, 2, 2);
+CALL pInsertStudent(4, '8105913974113', 'Jaxson', 'Pedro', 'Gusty Victorious  Nr. 160', '4623914299', 'JaxsonPedro81059@student_uni.com', 'RO930341212507445231526348576081', 48105961, 23, 3, 1);
+CALL pInsertStudent(4, '8355990712895', 'Wyatt', 'Maximilian', 'Vegetable Glossy  Nr. 167', '5316829019', 'Wyatt.Maximilian83559@student_uni.com', 'RO235195599613657717012431771490', 48355916, 21, 3, 2);
+CALL pInsertStudent(4, '4795504603170', 'Emmanuel', 'Jaxon', 'Tin Glossy  Nr. 136', '6226874113', 'Emmanuel._Jaxon47955@student_uni.com', 'RO773066840357377535357038426122', 44795535, 23, 1, 1);
+CALL pInsertStudent(4, '6254073062652', 'Oakley', 'Wilder', 'Diligent Start  Nr. 84', '8388887311', 'Oakley_Wilder62540@student_uni.com', 'RO155638031973381947638891766870', 46254062, 22, 2, 2);
+CALL pInsertStudent(4, '3757252144760', 'Santino', 'Daniel', 'Appliance Zoo Table  Nr. 130', '4734781579', 'SantinoDaniel37572@student_uni.com', 'RO224009650797633211969780101577', 43757286, 23, 2, 2);
+CALL pInsertStudent(4, '8300190281864', 'Gabriel', 'Moises', 'Wrist Staking  Nr. 83', '3093785192', 'Gabriel_Moises83001@student_uni.com', 'RO337003490353738300288920943092', 48300170, 24, 1, 1);
+CALL pInsertStudent(4, '7893424897225', 'Reid', 'Milan', 'Want  Nr. 96', '7188694242', 'ReidMilan78934@student_uni.com', 'RO654729739409035051353052252503', 47893442, 23, 1, 2);
+CALL pInsertStudent(4, '7957879948623', 'Damien', 'Gabriel', 'Seal Curve  Nr. 116', '2864639844', 'DamienGabriel79578@student_uni.com', 'RO443133533826062178145581458697', 47957862, 21, 3, 2);
+CALL pInsertStudent(4, '2815686984164', 'Jesse', 'Braxton', 'Spooky Faulty  Nr. 160', '1220187915', 'Jesse.Braxton28156@student_uni.com', 'RO365447885267484108137892248054', 42815610, 21, 4, 1);
+CALL pInsertStudent(4, '7996894437334', 'Philip', 'Derek', 'Concentrate Offer Jumpy  Nr. 143', '7913654814', 'Philip_Derek79968@student_uni.com', 'RO317438273488726599608945350704', 47996810, 21, 3, 2);
+CALL pInsertStudent(4, '6066492049880', 'Isaac', 'Esteban', 'Puny Zoo  Nr. 16', '7484047985', 'Isaac.Esteban60664@student_uni.com', 'RO418842608914327948340903346763', 46066440, 24, 2, 2);
+CALL pInsertStudent(4, '2478006977513', 'Johnathan', 'Conner', 'Curve  Nr. 30', '9054899848', 'Johnathan._Conner24780@student_uni.com', 'RO255589014271619864010392613791', 42478087, 25, 3, 2);
+CALL pInsertStudent(4, '7142462546332', 'Zachary', 'Levi', 'Handsomely Smoke  Nr. 42', '2618259391', 'Zachary.Levi71424@student_uni.com', 'RO957385582455125500797377176868', 47142426, 21, 2, 2);
+CALL pInsertStudent(4, '1042242890653', 'Ezekiel', 'Devin', 'Hair  Nr. 18', '2081318789', 'Ezekiel.Devin10422@student_uni.com', 'RO573284248324408292216200975973', 41042232, 22, 1, 1);
+CALL pInsertStudent(4, '4608064739192', 'Wade', 'Ibrahim', 'Sordid  Nr. 37', '2870830721', 'WadeIbrahim46080@student_uni.com', 'RO094691468058480220070079609897', 44608074, 21, 4, 1);
+CALL pInsertStudent(4, '3153814436703', 'Ronan', 'Marco', 'Sister Ghost Picayune  Nr. 74', '7655039290', 'Ronan_Marco31538@student_uni.com', 'RO363724179964632481083758091608', 43153825, 21, 3, 2);
+CALL pInsertStudent(4, '2342966003414', 'Luciano', 'Juan', 'Odd  Nr. 66', '1545539800', 'Luciano_Juan23429@student_uni.com', 'RO862788009378257336492273462542', 42342921, 23, 3, 2);
+CALL pInsertStudent(4, '6075154782168', 'Cristian', 'Calvin', 'Table Seal Cute  Nr. 148', '2920294028', 'CristianCalvin60751@student_uni.com', 'RO866377597572404901239464908070', 46075125, 24, 4, 2);
+CALL pInsertStudent(4, '1708447265582', 'Carter', 'Jaden', 'Reflect Women  Nr. 167', '1568484943', 'CarterJaden17084@student_uni.com', 'RO484461242944006945780264101868', 41708436, 21, 4, 1);
+CALL pInsertStudent(4, '4558929839938', 'Holden', 'Mason', 'Teeth Stitch  Nr. 63', '6049616794', 'Holden_Mason45589@student_uni.com', 'RO118346776618464098865652384955', 44558954, 23, 2, 2);
+CALL pInsertStudent(4, '2345108598869', 'Leonardo', 'Thiago', 'Farm Remind  Nr. 160', '9960373573', 'Leonardo._Thiago23451@student_uni.com', 'RO217507801089938093259070238373', 42345159, 23, 3, 2);
+CALL pInsertStudent(4, '2683800492404', 'Spencer', 'Keegan', 'Unequaled Letter Airplane  Nr. 14', '8587223535', 'Spencer._Keegan26838@student_uni.com', 'RO170274918375312146943781030512', 42683830, 21, 2, 2);
+CALL pInsertStudent(4, '1733784111405', 'Frederick', 'Jett', 'Cruel Accurate Appliance  Nr. 162', '4409569348', 'Frederick_Jett17337@student_uni.com', 'RO978283749599957893570971621855', 41733733, 24, 1, 2);
+CALL pInsertStudent(4, '6198071498665', 'Luis', 'Xavier', 'Glove Governor  Nr. 178', '9642867793', 'LuisXavier61980@student_uni.com', 'RO722872919116732940390637947801', 46198075, 21, 4, 1);
+CALL pInsertStudent(4, '9280758346335', 'Cash', 'Aiden', 'Women Piquant Handsomely  Nr. 183', '3681316943', 'Cash_Aiden92807@student_uni.com', 'RO491069984914807406872798403382', 49280757, 21, 4, 1);
+CALL pInsertStudent(4, '8634135476154', 'Max', 'Baker', 'Queue Concentrate  Nr. 32', '6753782971', 'MaxBaker86341@student_uni.com', 'RO439032604455164635136326088112', 48634117, 23, 2, 1);
+CALL pInsertStudent(4, '5205374940061', 'Xavier', 'Rylan', 'Juicy Hug  Nr. 49', '8349357628', 'Xavier._Rylan52053@student_uni.com', 'RO901553737664838257208479346805', 45205371, 25, 1, 1);
+CALL pInsertStudent(4, '3464844171801', 'Landen', 'Enrique', 'Field Tin  Nr. 134', '7377873039', 'Landen._Enrique34648@student_uni.com', 'RO588322798034320195817164443614', 43464844, 21, 3, 2);
+CALL pInsertStudent(4, '8158083995587', 'Mark', 'Zion', 'Digestion Concentrate  Nr. 13', '7395012639', 'Mark.Zion81580@student_uni.com', 'RO224905553676321508971147969098', 48158076, 23, 1, 1);
+CALL pInsertStudent(4, '5978556908973', 'Zayne', 'Kaiden', 'Want Glove  Nr. 130', '5754764473', 'ZayneKaiden59785@student_uni.com', 'RO576719812899816305449446075717', 45978536, 23, 4, 1);
+CALL pInsertStudent(4, '6263865202465', 'Sage', 'Jax', 'Hug  Nr. 89', '4952709445', 'SageJax62638@student_uni.com', 'RO696180612808308730919816376960', 46263897, 22, 4, 2);
+CALL pInsertStudent(4, '7679007283790', 'Kaiden', 'Declan', 'Puny Wry Push  Nr. 119', '8813795176', 'KaidenDeclan76790@student_uni.com', 'RO372376691628138946673121770203', 47679048, 22, 2, 1);
+CALL pInsertStudent(4, '3722782144351', 'Alejandro', 'Damian', 'Wanting Extra-small  Nr. 50', '6126016661', 'AlejandroDamian37227@student_uni.com', 'RO800151595293401236852324769698', 43722760, 21, 2, 2);
+CALL pInsertStudent(4, '3700636445397', 'Muhammad', 'Henry', 'Miniature Hug  Nr. 150', '1444966015', 'Muhammad._Henry37006@student_uni.com', 'RO419886428206707913338062565942', 43700627, 22, 4, 2);
+CALL pInsertStudent(4, '5062694506774', 'Angelo', 'Kaden', 'Uncle Stitch Staking  Nr. 39', '8950201162', 'Angelo._Kaden50626@student_uni.com', 'RO528827941183124498740257224137', 45062636, 24, 1, 1);
+CALL pInsertStudent(4, '4192057781387', 'Alexis', 'Jayce', 'Queue Spooky  Nr. 87', '7846649332', 'Alexis.Jayce41920@student_uni.com', 'RO619961786874570482158176947067', 44192019, 22, 1, 1);
+CALL pInsertStudent(4, '6761287111170', 'Finn', 'Winston', 'Gusty  Nr. 78', '4908752246', 'FinnWinston67612@student_uni.com', 'RO601117628031310472238711978075', 46761297, 24, 4, 1);
+CALL pInsertStudent(4, '2725472063296', 'Lorenzo', 'Anderson', 'Creator Concentrate  Nr. 90', '5402045336', 'LorenzoAnderson27254@student_uni.com', 'RO733313554026433081896668244606', 42725463, 24, 3, 1);
+CALL pInsertStudent(4, '6699577073879', 'Sage', 'Troy', 'Reward Wry  Nr. 133', '9911887581', 'SageTroy66995@student_uni.com', 'RO883871884597550995799820071301', 46699523, 24, 4, 2);
+CALL pInsertStudent(4, '9040672142103', 'Nolan', 'Gabriel', 'Zoo  Nr. 169', '2755556784', 'Nolan.Gabriel90406@student_uni.com', 'RO891446180885861053301733272067', 49040639, 24, 2, 1);
+CALL pInsertStudent(4, '1160049751486', 'Phillip', 'Jude', 'Appliance Hollow  Nr. 32', '8564865382', 'Phillip_Jude11600@student_uni.com', 'RO301564881736998474151540356818', 41160099, 24, 4, 1);
+CALL pInsertStudent(4, '8730238743629', 'Conner', 'Jaxton', 'Cross Handsomely  Nr. 91', '1140604616', 'Conner._Jaxton87302@student_uni.com', 'RO601910154698008679543091683056', 48730215, 21, 3, 2);
+CALL pInsertStudent(4, '3436139083959', 'Ashton', 'Alan', 'Diligent  Nr. 101', '9732967652', 'Ashton_Alan34361@student_uni.com', 'RO508582782809682878051947062619', 43436132, 23, 1, 2);
+CALL pInsertStudent(4, '8979965380829', 'Gage', 'Connor', 'Sand Share  Nr. 74', '2844226303', 'GageConnor89799@student_uni.com', 'RO669169754861246569480004877678', 48979952, 23, 3, 2);
+CALL pInsertStudent(4, '8968269578936', 'Zachariah', 'Dylan', 'Diligent Reward Victorious  Nr. 9', '1179264316', 'ZachariahDylan89682@student_uni.com', 'RO988117692356835906236356401450', 48968287, 24, 4, 1);
+CALL pInsertStudent(4, '4592080079000', 'Jared', 'Bryce', 'Male Sister  Nr. 26', '6979429569', 'Jared.Bryce45920@student_uni.com', 'RO845868588923269199505367334713', 44592059, 25, 2, 2);
+CALL pInsertStudent(4, '8275101620848', 'Ayaan', 'Weston', 'Close  Nr. 65', '1532351763', 'Ayaan.Weston82751@student_uni.com', 'RO109911228805205927301678593459', 48275145, 24, 4, 1);
+CALL pInsertStudent(4, '3253976830603', 'Knox', 'Bentley', 'Zoo Gusty Cross  Nr. 12', '8287140472', 'KnoxBentley32539@student_uni.com', 'RO646969002227897526256723124244', 43253917, 21, 2, 1);
+CALL pInsertStudent(4, '4114716993740', 'Cohen', 'Martin', 'Digestion Women  Nr. 179', '7599150466', 'Cohen.Martin41147@student_uni.com', 'RO025749905553723468710446150401', 44114778, 24, 2, 2);
+CALL pInsertStudent(4, '6199864485901', 'Abraham', 'Leo', 'Abandoned  Nr. 14', '6979466638', 'Abraham_Leo61998@student_uni.com', 'RO491001083195680071902645733972', 46199882, 22, 1, 1);
+CALL pInsertStudent(4, '4859459219921', 'Eden', 'Aaron', 'Saw Victorious  Nr. 151', '6891509104', 'Eden_Aaron48594@student_uni.com', 'RO574827096885925271356354878653', 44859433, 24, 4, 1);
+CALL pInsertStudent(4, '4123404619286', 'Gregory', 'Uriel', 'Letter Magical Can  Nr. 125', '2457588296', 'GregoryUriel41234@student_uni.com', 'RO290441163744678414052301325819', 44123442, 21, 1, 2);
+CALL pInsertStudent(4, '6344571234818', 'Fernando', 'Malachi', 'Close Women  Nr. 128', '7343773578', 'Fernando._Malachi63445@student_uni.com', 'RO988831341100951931870296310810', 46344519, 23, 3, 2);
+CALL pInsertStudent(4, '4462588480245', 'Messiah', 'Harvey', 'Continue Continue Want  Nr. 177', '6517634650', 'MessiahHarvey44625@student_uni.com', 'RO940914561801052006084763273499', 44462576, 25, 4, 2);
+CALL pInsertStudent(4, '6188525672754', 'Tobias', 'Iker', 'Dangerous Gusty  Nr. 31', '9947652721', 'TobiasIker61885@student_uni.com', 'RO602638877967877040319015394035', 46188527, 21, 1, 1);
+CALL pInsertStudent(4, '1422096030462', 'Zaiden', 'Solomon', 'Nebulous Petite  Nr. 117', '2898183673', 'Zaiden_Solomon14220@student_uni.com', 'RO369383601617941700224550690114', 41422059, 23, 4, 2);
+CALL pInsertStudent(4, '7609715011965', 'Waylon', 'Sterling', 'Concentrate Wound Terrify  Nr. 89', '2447442714', 'Waylon.Sterling76097@student_uni.com', 'RO838496011651229908430485974659', 47609724, 23, 2, 2);
+CALL pInsertStudent(4, '6334626949632', 'Walker', 'Jayden', 'Smoke Muddle Terrify  Nr. 186', '9053914766', 'Walker._Jayden63346@student_uni.com', 'RO010369845992916223759930892111', 46334639, 25, 3, 1);
+CALL pInsertStudent(4, '2223625197414', 'Alijah', 'Ellis', 'Sister Vegetable Piquant  Nr. 50', '6687624387', 'Alijah.Ellis22236@student_uni.com', 'RO093816219209177801351547719251', 42223611, 25, 1, 2);
+CALL pInsertStudent(4, '7833451063487', 'Shane', 'Joel', 'Field Electric Start  Nr. 37', '8937143555', 'Shane_Joel78334@student_uni.com', 'RO933489234074974142484146390370', 47833450, 24, 2, 1);
+CALL pInsertStudent(4, '8831069349488', 'Jude', 'Raiden', 'Reward  Nr. 58', '3385575134', 'JudeRaiden88310@student_uni.com', 'RO962209391619688631183144897056', 48831075, 25, 1, 2);
+CALL pInsertStudent(4, '7393315308315', 'Callum', 'Easton', 'Temporary Six  Nr. 5', '2896187371', 'Callum.Easton73933@student_uni.com', 'RO437841585216937507702493440987', 47393361, 25, 1, 1);
+CALL pInsertStudent(4, '5231931600976', 'Zion', 'Ayden', 'Sand Hollow  Nr. 9', '5238586263', 'Zion_Ayden52319@student_uni.com', 'RO735319550869248552169734954245', 45231980, 22, 2, 1);
+CALL pInsertStudent(4, '2811613500943', 'Alijah', 'Archer', 'Cute Hug  Nr. 118', '3910075001', 'Alijah.Archer28116@student_uni.com', 'RO709485658537469650352362765195', 42811646, 22, 1, 2);
+CALL pInsertStudent(4, '3307669952634', 'Hank', 'Atlas', 'Position  Nr. 49', '6469193866', 'HankAtlas33076@student_uni.com', 'RO582650658930973734778039962104', 43307619, 24, 1, 1);
+CALL pInsertStudent(4, '7386023662198', 'Finn', 'King', 'Untidy  Nr. 149', '7974344000', 'Finn._King73860@student_uni.com', 'RO388111417717642153684643350762', 47386069, 22, 4, 2);
+CALL pInsertStudent(4, '1849606723103', 'Ezekiel', 'Apollo', 'Offer Start  Nr. 2', '6720206747', 'Ezekiel._Apollo18496@student_uni.com', 'RO259433906076162167505714574794', 41849668, 21, 3, 1);
+CALL pInsertStudent(4, '3606685696658', 'Christian', 'Jaylen', 'Remind  Nr. 111', '3733025238', 'Christian._Jaylen36066@student_uni.com', 'RO261266156179304792681726705486', 43606671, 25, 2, 2);
+CALL pInsertStudent(4, '3750709327595', 'Giovanni', 'Sean', 'Sordid Dogs Saw  Nr. 93', '8542888667', 'GiovanniSean37507@student_uni.com', 'RO142631185268536897047998328664', 43750746, 24, 1, 1);
+CALL pInsertStudent(4, '2452166562003', 'Alejandro', 'Milan', 'Abandoned Paddle  Nr. 14', '5716013719', 'AlejandroMilan24521@student_uni.com', 'RO127775781900823376001523797364', 42452128, 24, 3, 1);
+CALL pInsertStudent(4, '4556869099314', 'Adriel', 'Harrison', 'Cute Continue  Nr. 188', '9759073394', 'Adriel._Harrison45568@student_uni.com', 'RO062876914255786386065791708092', 44556853, 22, 1, 1);
+CALL pInsertStudent(4, '5595383756444', 'Clayton', 'Blake', 'Start Needy Stitch  Nr. 55', '9588781972', 'ClaytonBlake55953@student_uni.com', 'RO022055167662252524577406115401', 45595380, 24, 3, 2);
+CALL pInsertStudent(4, '6722756037516', 'Henry', 'Jay', 'Spooky Gusty  Nr. 177', '6574150395', 'Henry.Jay67227@student_uni.com', 'RO304016840911276107854914810551', 46722731, 23, 1, 1);
+CALL pInsertStudent(4, '3753200039324', 'Elliott', 'Kamden', 'Can  Nr. 101', '9198161571', 'Elliott.Kamden37532@student_uni.com', 'RO646185947681053688263201539146', 43753210, 21, 2, 1);
+CALL pInsertStudent(4, '6092725362314', 'Kyson', 'Elliot', 'Continue Carpenter  Nr. 108', '7503177768', 'Kyson_Elliot60927@student_uni.com', 'RO828326378789763419120023844219', 46092782, 22, 2, 2);
+CALL pInsertStudent(4, '5341921840103', 'Titus', 'Adrian', 'Untidy Petite  Nr. 118', '4902818289', 'Titus._Adrian53419@student_uni.com', 'RO459615339349212502556733094952', 45341944, 22, 3, 1);
+CALL pInsertStudent(4, '3395257862129', 'Johnny', 'Jax', 'Throat Letter  Nr. 51', '9205227934', 'Johnny_Jax33952@student_uni.com', 'RO839974616670361037835603889222', 43395231, 25, 1, 2);
+CALL pInsertStudent(4, '8941577818116', 'Harrison', 'Gael', 'Remove Wiry  Nr. 141', '2228298148', 'Harrison.Gael89415@student_uni.com', 'RO808843889192604647934454494049', 48941592, 25, 2, 1);
+CALL pInsertStudent(4, '2711649654670', 'Jonas', 'Rory', 'Wound Temporary  Nr. 43', '4309447114', 'Jonas.Rory27116@student_uni.com', 'RO497441072708815760975719688110', 42711627, 24, 1, 1);
+CALL pInsertStudent(4, '8329190521629', 'Noel', 'Spencer', 'Letter Chicken  Nr. 159', '7632544313', 'Noel._Spencer83291@student_uni.com', 'RO934978756797922121116938523386', 48329114, 25, 1, 2);
+CALL pInsertStudent(4, '5037499300006', 'Gunner', 'Johnathan', 'Muddle  Nr. 156', '4367809655', 'Gunner.Johnathan50374@student_uni.com', 'RO383226203164648648937397954984', 45037434, 25, 2, 2);
+CALL pInsertStudent(4, '1365781481266', 'Peter', 'Ian', 'Petite Wrist  Nr. 44', '4425156941', 'Peter._Ian13657@student_uni.com', 'RO114699266866213663121308917889', 41365767, 24, 1, 1);
+CALL pInsertStudent(4, '5605052685051', 'Beckett', 'Adonis', 'Gusty Remove  Nr. 174', '8750584388', 'Beckett_Adonis56050@student_uni.com', 'RO661289164995736117148996209247', 45605077, 21, 3, 1);
+CALL pInsertStudent(4, '2116254694171', 'Jackson', 'George', 'Dogs Terrify  Nr. 24', '6454186650', 'Jackson._George21162@student_uni.com', 'RO494328544040526108480761788680', 42116223, 24, 3, 1);
+CALL pInsertStudent(4, '3726782343582', 'Arthur', 'Kayden', 'Gusty  Nr. 71', '7204890123', 'ArthurKayden37267@student_uni.com', 'RO145443596404978976127311266502', 43726722, 24, 1, 2);
+CALL pInsertStudent(4, '7236910101946', 'Jay', 'Remy', 'Temporary Want  Nr. 97', '5416538150', 'Jay_Remy72369@student_uni.com', 'RO105953437958762441224217761309', 47236939, 24, 1, 2);
+CALL pInsertStudent(4, '5924172129213', 'Gianni', 'Finnegan', 'Absent Can  Nr. 124', '8329880635', 'Gianni_Finnegan59241@student_uni.com', 'RO881542473880638468595439595856', 45924164, 24, 4, 2);
+CALL pInsertStudent(4, '6910891133308', 'Avery', 'Adam', 'Share Temporary  Nr. 110', '6370611003', 'Avery.Adam69108@student_uni.com', 'RO393372104660563981742317354825', 46910842, 22, 4, 2);
+CALL pInsertStudent(4, '6419755922690', 'Luke', 'Xavier', 'Smoke Elastic  Nr. 65', '3705674821', 'Luke._Xavier64197@student_uni.com', 'RO054932364037167628622035258276', 46419766, 24, 3, 1);
+CALL pInsertStudent(4, '8878122855813', 'Elian', 'Kasen', 'Staking  Nr. 83', '9605930575', 'ElianKasen88781@student_uni.com', 'RO973457366491218526627121795711', 48878177, 23, 4, 1);
+CALL pInsertStudent(4, '3772293891593', 'Evan', 'Cooper', 'Wanting  Nr. 44', '6607762162', 'Evan.Cooper37722@student_uni.com', 'RO309087465879422635231670043065', 43772262, 21, 2, 1);
+CALL pInsertStudent(4, '1464583616600', 'Dakota', 'Reid', 'Sand  Nr. 110', '4089218055', 'DakotaReid14645@student_uni.com', 'RO442401057204537601313957819908', 41464516, 25, 2, 1);
+CALL pInsertStudent(4, '2770903910751', 'Derek', 'Caden', 'Handsomely Intelligent Accurate  Nr. 118', '7607841700', 'Derek_Caden27709@student_uni.com', 'RO091001893640099023805647591922', 42770925, 24, 1, 1);
+CALL pInsertStudent(4, '6039910556780', 'Emilio', 'Patrick', 'Digestion Abandoned Needy  Nr. 87', '3166897461', 'Emilio.Patrick60399@student_uni.com', 'RO127340891609675751734684778745', 46039933, 25, 1, 2);
+CALL pInsertStudent(4, '1999944421323', 'Dominick', 'Elliot', 'Intelligent Throat Ghost  Nr. 83', '5895753109', 'Dominick._Elliot19999@student_uni.com', 'RO521763852605144951877013109379', 41999917, 24, 3, 2);
+CALL pInsertStudent(4, '9925803557788', 'Atticus', 'Alexis', 'Extra-small Wiry  Nr. 36', '4997116823', 'AtticusAlexis99258@student_uni.com', 'RO978890072102792313374576035177', 49925893, 23, 4, 1);
+CALL pInsertStudent(4, '3108607681411', 'Patrick', 'Abram', 'Elastic Puny  Nr. 185', '6686009597', 'Patrick_Abram31086@student_uni.com', 'RO166869145021172360182049808910', 43108616, 24, 3, 2);
+CALL pInsertStudent(4, '3813250314617', 'Jaxton', 'Landen', 'Miniature Digestion  Nr. 114', '7720060414', 'Jaxton_Landen38132@student_uni.com', 'RO127543010778927538360530397859', 43813276, 21, 3, 1);
+CALL pInsertStudent(4, '1664546590368', 'Grayson', 'Jude', 'Temporary Petite Teeth  Nr. 73', '6336066923', 'GraysonJude16645@student_uni.com', 'RO403394587224069080065931041945', 41664549, 25, 3, 1);
+CALL pInsertStudent(4, '7726034228639', 'Cade', 'Hendrix', 'Jumpy  Nr. 12', '5647544820', 'CadeHendrix77260@student_uni.com', 'RO021335233802654535670575964951', 47726097, 23, 1, 2);
+CALL pInsertStudent(4, '8049039693440', 'Braxton', 'Deacon', 'Hug Wiry Uncle  Nr. 186', '6188695410', 'Braxton.Deacon80490@student_uni.com', 'RO966694208009519182462527707272', 48049053, 22, 1, 2);
+CALL pInsertStudent(4, '3727598538297', 'Gabriel', 'Edwin', 'Electric Absent Uncle  Nr. 139', '3649814955', 'Gabriel._Edwin37275@student_uni.com', 'RO052365486133124746874207179853', 43727596, 21, 4, 2);
+CALL pInsertStudent(4, '4310324523700', 'Jorge', 'Milo', 'Wanting Electric Swim  Nr. 171', '2510042370', 'Jorge._Milo43103@student_uni.com', 'RO660054852692201170056657797710', 44310376, 21, 4, 2);
+CALL pInsertStudent(4, '8238199373995', 'Corey', '', 'Throat Teeth Hug  Nr. 83', '9540284353', 'Corey82381@student_uni.com', 'RO682962529481739480290321189661', 48238140, 23, 2, 1);
+CALL pInsertStudent(4, '3935646109955', 'Jacob', 'Remy', 'Appliance Zoo  Nr. 117', '7498314400', 'Jacob_Remy39356@student_uni.com', 'RO920928332972230189426099627140', 43935643, 23, 4, 2);
+CALL pInsertStudent(4, '3706249201771', 'Augustus', 'Ayden', 'Vegetable  Nr. 23', '2310779759', 'Augustus.Ayden37062@student_uni.com', 'RO883753283754267541402603118163', 43706284, 23, 3, 2);
+CALL pInsertStudent(4, '1779506014712', 'Weston', 'Lukas', 'Magical Dogs  Nr. 53', '3727397750', 'WestonLukas17795@student_uni.com', 'RO480436080947634169212507478724', 41779574, 21, 3, 2);
+CALL pInsertStudent(4, '9292377257313', 'Carter', 'Johnathan', 'Reward Six Juicy  Nr. 70', '5113853276', 'Carter.Johnathan92923@student_uni.com', 'RO657672335372115875645993117122', 49292372, 22, 2, 2);
+CALL pInsertStudent(4, '8267252427368', 'Ayden', 'Angelo', 'Hug Saw  Nr. 27', '5196144777', 'Ayden_Angelo82672@student_uni.com', 'RO293453553004090951372427699590', 48267252, 23, 2, 2);
+CALL pInsertStudent(4, '1886994561115', 'Rafael', 'Marcus', 'Field Needy  Nr. 155', '4431092669', 'Rafael._Marcus18869@student_uni.com', 'RO820465371312446778447942366197', 41886983, 25, 1, 1);
+CALL pInsertStudent(4, '2441227444653', 'Declan', 'Spencer', 'Faulty Muddle Petite  Nr. 116', '9513287123', 'DeclanSpencer24412@student_uni.com', 'RO434114366467779911825121257846', 42441282, 21, 2, 2);
+CALL pInsertStudent(4, '6957309348028', 'Bruce', 'Kamden', 'Zoo Reflect  Nr. 139', '8361909760', 'BruceKamden69573@student_uni.com', 'RO093252064145990118349198625650', 46957375, 25, 4, 1);
+CALL pInsertStudent(4, '2232471365503', 'Braylen', 'Memphis', 'Victorious Jumpy  Nr. 177', '2309527271', 'Braylen.Memphis22324@student_uni.com', 'RO712543065883842480501134943612', 42232412, 23, 2, 1);
+CALL pInsertStudent(4, '1091973115480', 'William', 'Jasper', 'Odd Victorious Petite  Nr. 120', '7102303041', 'William_Jasper10919@student_uni.com', 'RO083095540142935990726404366382', 41091922, 25, 2, 2);
+CALL pInsertStudent(4, '6297045036429', 'Josue', 'Reid', 'Glove Juicy Throat  Nr. 51', '2307161589', 'Josue._Reid62970@student_uni.com', 'RO341385648484615681247751508224', 46297027, 21, 4, 1);
+CALL pInsertStudent(4, '4683757999713', 'Josiah', 'Dominick', 'Accurate Spooky  Nr. 3', '3111975222', 'Josiah_Dominick46837@student_uni.com', 'RO808780438897738325492854296226', 44683724, 21, 4, 1);
+CALL pInsertStudent(4, '3149852462053', 'Austin', 'Asa', 'Miniature  Nr. 178', '7523759884', 'AustinAsa31498@student_uni.com', 'RO429622620880184838557949917687', 43149814, 21, 3, 1);
+CALL pInsertStudent(4, '3405326071148', 'Kamari', 'Christopher', 'Jumpy Cute Intelligent  Nr. 78', '1731169823', 'Kamari._Christopher34053@student_uni.com', 'RO655728178845853212417676767145', 43405368, 21, 3, 2);
+CALL pInsertStudent(4, '9973584497194', 'Joaquin', 'Ronin', 'Victorious Swim  Nr. 41', '9055636624', 'Joaquin_Ronin99735@student_uni.com', 'RO680211341754966117025336232745', 49973538, 24, 4, 2);
+CALL pInsertStudent(4, '6895198718135', 'Conner', 'Ezequiel', 'Letter Puny  Nr. 39', '9925403766', 'ConnerEzequiel68951@student_uni.com', 'RO102847491311458815780905141750', 46895146, 25, 4, 2);
+CALL pInsertStudent(4, '4475876766821', 'Luke', 'Sebastian', 'Push Share  Nr. 92', '3098874047', 'Luke_Sebastian44758@student_uni.com', 'RO171964648707209081685613219084', 44475853, 25, 1, 2);
+CALL pInsertStudent(4, '5930580991532', 'Reed', 'Trevor', 'Offer Spooky Close  Nr. 188', '3454988345', 'Reed._Trevor59305@student_uni.com', 'RO751913931661948797901344944017', 45930543, 22, 2, 2);
+CALL pInsertStudent(4, '5479910069426', 'Abdiel', 'Nathaniel', 'Share Curve  Nr. 11', '8982669889', 'AbdielNathaniel54799@student_uni.com', 'RO938120811519711127795416193456', 45479953, 23, 2, 1);
+CALL pInsertStudent(4, '3395100949719', 'Kaiden', 'Tristan', 'Untidy Position Abandoned  Nr. 78', '6298821124', 'KaidenTristan33951@student_uni.com', 'RO186349329713305606143655932769', 43395127, 23, 3, 2);
+CALL pInsertStudent(4, '9299686058316', 'Conner', 'Mohamed', 'Sister Petite  Nr. 31', '1078413367', 'Conner_Mohamed92996@student_uni.com', 'RO984957739339952989039670557586', 49299683, 24, 3, 2);
+CALL pInsertStudent(4, '1996910815646', 'Thiago', 'Finley', 'Diligent Gusty  Nr. 82', '5849677999', 'Thiago.Finley19969@student_uni.com', 'RO906361532723236667407662488102', 41996956, 21, 1, 2);
+CALL pInsertStudent(4, '5984969806635', 'Easton', 'Benjamin', 'Wanting Start  Nr. 37', '8109571078', 'Easton.Benjamin59849@student_uni.com', 'RO178504098628843245699759411866', 45984998, 24, 3, 1);
+CALL pInsertStudent(4, '6313365852035', 'Brady', 'Griffin', 'Sister Women Melted  Nr. 1', '7668429477', 'Brady_Griffin63133@student_uni.com', 'RO859128758175849736409924484814', 46313338, 21, 3, 1);
+CALL pInsertStudent(4, '9407290393968', 'Odin', 'Dexter', 'Donkey  Nr. 110', '2972086285', 'Odin._Dexter94072@student_uni.com', 'RO710337322684382558706340545092', 49407287, 24, 4, 1);
+CALL pInsertStudent(4, '3269824743002', 'Jaylen', 'Aiden', 'Concentrate Curve  Nr. 112', '3572487902', 'Jaylen._Aiden32698@student_uni.com', 'RO338834072350160621825298230969', 43269868, 25, 3, 2);
+CALL pInsertStudent(4, '2861795010479', 'Lennox', 'Finley', 'Smoke Juicy Governor  Nr. 129', '8301502386', 'LennoxFinley28617@student_uni.com', 'RO243470220222054600133997160999', 42861791, 25, 1, 2);
+CALL pInsertStudent(4, '2745659932645', 'Jordan', 'Bradley', 'Handsomely  Nr. 30', '9416661174', 'JordanBradley27456@student_uni.com', 'RO924808208657384801353305537157', 42745695, 24, 1, 2);
+CALL pInsertStudent(4, '5393335142666', 'Conner', 'Desmond', 'Tin Nebulous  Nr. 113', '9546450894', 'ConnerDesmond53933@student_uni.com', 'RO948235302505907479568322867223', 45393329, 25, 3, 2);
+CALL pInsertStudent(4, '8473866400259', 'Aaron', 'George', 'Reward  Nr. 94', '9734887345', 'AaronGeorge84738@student_uni.com', 'RO346032959231518576405708185592', 48473833, 21, 4, 2);
+CALL pInsertStudent(4, '7097449861847', 'Matthias', 'Sawyer', 'Digestion Teeth  Nr. 1', '2542270479', 'Matthias_Sawyer70974@student_uni.com', 'RO228364650541626051351937557059', 47097493, 25, 4, 2);
+CALL pInsertStudent(4, '3491973318737', 'Manuel', 'Griffin', 'Odd  Nr. 11', '9184787050', 'ManuelGriffin34919@student_uni.com', 'RO915147056823214969704298646863', 43491965, 24, 2, 1);
+CALL pInsertStudent(4, '4551923212321', 'Levi', 'Royce', 'Wound  Nr. 111', '2194292907', 'Levi_Royce45519@student_uni.com', 'RO216827302591162588836303855557', 44551991, 24, 4, 2);
+CALL pInsertStudent(4, '2624890562660', 'Ian', 'Donovan', 'Glove Miniature Electric  Nr. 52', '2243925057', 'IanDonovan26248@student_uni.com', 'RO462455696289706739219042927907', 42624877, 24, 2, 1);
+CALL pInsertStudent(4, '1003235966801', 'Brandon', 'Oliver', 'Extra-small Cruel  Nr. 146', '5299833123', 'Brandon._Oliver10032@student_uni.com', 'RO230931530850196639250822975164', 41003292, 24, 2, 1);
+CALL pInsertStudent(4, '5816621177732', 'Albert', 'Conor', 'Reward Glossy  Nr. 114', '4865984748', 'AlbertConor58166@student_uni.com', 'RO261536830524619474671626012039', 45816647, 24, 3, 2);
+CALL pInsertStudent(4, '7435791263456', 'Elian', 'Enzo', 'Diligent  Nr. 45', '5640600016', 'Elian_Enzo74357@student_uni.com', 'RO801609369114167493424893484118', 47435731, 22, 1, 1);
+CALL pInsertStudent(4, '4316491297408', 'Charlie', 'Niko', 'Juicy Letter  Nr. 88', '5695063868', 'Charlie._Niko43164@student_uni.com', 'RO770464939652406105374187697998', 44316454, 21, 2, 2);
+CALL pInsertStudent(4, '1339970213239', 'Stephen', 'Philip', 'Miniature  Nr. 186', '4262584784', 'StephenPhilip13399@student_uni.com', 'RO029745728526327887375866178970', 41339988, 22, 2, 1);
+CALL pInsertStudent(4, '4624550732142', 'Prince', 'Landen', 'Absent Close  Nr. 130', '2644210285', 'Prince.Landen46245@student_uni.com', 'RO362519290650965936161011370985', 44624577, 22, 3, 2);
+CALL pInsertStudent(4, '5311630541827', 'Joshua', 'Jose', 'Intelligent  Nr. 75', '9318827506', 'JoshuaJose53116@student_uni.com', 'RO427174909234437018536030805406', 45311690, 24, 2, 1);
+CALL pInsertStudent(4, '4151464696009', 'Robert', 'Matthew', 'Smoke  Nr. 110', '8844762968', 'RobertMatthew41514@student_uni.com', 'RO274617773161860790861623797563', 44151494, 23, 1, 1);
+CALL pInsertStudent(4, '9615812773437', 'Luke', 'Titus', 'Extra-small Tin  Nr. 186', '6306025033', 'LukeTitus96158@student_uni.com', 'RO281359877736158126301801280805', 49615836, 25, 3, 2);
+CALL pInsertStudent(4, '8576241942237', 'Angelo', 'Andre', 'Invincible Queue Creator  Nr. 46', '7565260729', 'AngeloAndre85762@student_uni.com', 'RO212258249054390750245747503241', 48576282, 22, 2, 2);
+CALL pInsertStudent(4, '2576743796806', 'Royal', 'Kenneth', 'Nebulous Concentrate  Nr. 30', '5065282412', 'Royal._Kenneth25767@student_uni.com', 'RO795485507284692055685497631531', 42576792, 24, 3, 1);
+CALL pInsertStudent(4, '7329918822301', 'Lane', 'Hunter', 'Governor Absent  Nr. 130', '6804425121', 'Lane_Hunter73299@student_uni.com', 'RO515670696484644455811796251800', 47329975, 21, 4, 2);
+CALL pInsertStudent(4, '5190953096509', 'Paul', 'Oscar', 'Offer  Nr. 121', '3368362631', 'PaulOscar51909@student_uni.com', 'RO021770463613744176802037725528', 45190914, 21, 4, 1);
+CALL pInsertStudent(4, '9554930922847', 'Travis', 'Gideon', 'Electric  Nr. 121', '7130599034', 'Travis_Gideon95549@student_uni.com', 'RO751633886918296714394477583535', 49554941, 23, 4, 1);
+CALL pInsertStudent(4, '1242528082545', 'Roberto', 'Jayce', 'Offer Continue Employ  Nr. 75', '3866922802', 'Roberto._Jayce12425@student_uni.com', 'RO323180584518121280698989342671', 41242566, 24, 4, 1);
+CALL pInsertStudent(4, '3398742336426', 'Alexander', 'Jayson', 'Appliance Wiry  Nr. 83', '6037692069', 'AlexanderJayson33987@student_uni.com', 'RO489731918279973076363444656779', 43398768, 22, 1, 2);
+CALL pInsertStudent(4, '9399660348930', 'Remington', 'Royal', 'Handsomely Elastic  Nr. 49', '8733100401', 'Remington.Royal93996@student_uni.com', 'RO302913792744600813459901899958', 49399663, 21, 4, 2);
+CALL pInsertStudent(4, '1829861263393', 'Jude', 'Charlie', 'Digestion Handsomely  Nr. 102', '8973578872', 'Jude_Charlie18298@student_uni.com', 'RO038631141723539721715240794816', 41829829, 23, 2, 2);
+CALL pInsertStudent(4, '6507015795488', 'Maddox', 'Nolan', 'Reflect Juicy Curve  Nr. 193', '3464670213', 'Maddox.Nolan65070@student_uni.com', 'RO940475910499632371987784067106', 46507047, 23, 1, 2);
+CALL pInsertStudent(4, '7043447150456', 'Rowan', 'Philip', 'Untidy Reflect Wrist  Nr. 195', '5321712129', 'Rowan.Philip70434@student_uni.com', 'RO716327761060869843317533623322', 47043486, 25, 2, 2);
+CALL pInsertStudent(4, '2305437050628', 'Theodore', 'Robert', 'Appliance Reward Close  Nr. 79', '6622111324', 'Theodore._Robert23054@student_uni.com', 'RO772411336775543942697252443707', 42305427, 21, 1, 2);
+CALL pInsertStudent(4, '2255826341691', 'Anthony', 'Bryan', 'Watch Vegetable  Nr. 153', '5721170153', 'Anthony._Bryan22558@student_uni.com', 'RO320065438283953388055968641384', 42255850, 23, 4, 2);
+CALL pInsertStudent(4, '3867816347874', 'Pierce', 'Blake', 'Jumpy Women  Nr. 166', '1686018917', 'PierceBlake38678@student_uni.com', 'RO995555120903963327108432308345', 43867875, 22, 3, 2);
+CALL pInsertStudent(4, '5572000241071', 'Angel', 'Colin', 'Throat  Nr. 186', '8152637779', 'AngelColin55720@student_uni.com', 'RO741238658442332290475824879436', 45572023, 22, 2, 1);
+CALL pInsertStudent(4, '3816584465035', 'Alejandro', 'Reid', 'Throat  Nr. 120', '6169857949', 'Alejandro.Reid38165@student_uni.com', 'RO708455193862389793082247068125', 43816532, 21, 2, 1);
+CALL pInsertStudent(4, '9776142126415', 'Grayson', 'Adriel', 'Hair  Nr. 136', '6976310217', 'GraysonAdriel97761@student_uni.com', 'RO964401391955971490779778364166', 49776164, 25, 3, 1);
+CALL pInsertStudent(4, '7189269831828', 'Ibrahim', 'Jett', 'Gusty Wiry  Nr. 117', '2660629014', 'Ibrahim._Jett71892@student_uni.com', 'RO624418980431998703712768042613', 47189274, 24, 3, 2);
+CALL pInsertStudent(4, '6614817043922', 'Kai', 'Barrett', 'Needy Abandoned  Nr. 91', '9408027596', 'KaiBarrett66148@student_uni.com', 'RO091458481649927980292021626758', 46614833, 25, 2, 1);
+CALL pInsertStudent(4, '8070067245051', 'Josue', 'Jesse', 'Governor  Nr. 32', '7889064458', 'JosueJesse80700@student_uni.com', 'RO199081150546546305614045443774', 48070032, 24, 3, 1);
+CALL pInsertStudent(4, '9078016646617', 'Jared', 'Bodhi', 'Abandoned Spooky  Nr. 104', '3211649329', 'Jared._Bodhi90780@student_uni.com', 'RO018347928612615254385391929226', 49078098, 25, 3, 1);
+CALL pInsertStudent(4, '7861970745931', 'Karter', 'Zander', 'Abandoned Faulty Male  Nr. 189', '9874952444', 'Karter._Zander78619@student_uni.com', 'RO951326006958482127738183314828', 47861921, 24, 1, 2);
+CALL pInsertStudent(4, '8635321694496', 'Jaden', 'Andy', 'Cruel Abandoned  Nr. 88', '9753151319', 'Jaden._Andy86353@student_uni.com', 'RO604171302188141877584699053195', 48635374, 24, 4, 2);
+CALL pInsertStudent(4, '5295673657192', 'Adriel', 'Uriel', 'Women  Nr. 199', '8060796733', 'Adriel._Uriel52956@student_uni.com', 'RO295725408803685910001915034547', 45295631, 23, 2, 2);
+CALL pInsertStudent(4, '5629283888974', 'Maddox', 'Carter', 'Gusty Watch  Nr. 30', '2348942212', 'MaddoxCarter56292@student_uni.com', 'RO189459670914247122643962806100', 45629267, 24, 4, 2);
+CALL pInsertStudent(4, '1660282158754', 'Matthias', 'Sterling', 'Appliance Smoke  Nr. 12', '1910164048', 'Matthias_Sterling16602@student_uni.com', 'RO952461872808584925601035141937', 41660270, 25, 2, 1);
+CALL pInsertStudent(4, '3900184937253', 'Jameson', 'Wyatt', 'Field Magical  Nr. 89', '9116195719', 'Jameson_Wyatt39001@student_uni.com', 'RO731121046354788564588190656063', 43900143, 23, 2, 2);
+CALL pInsertStudent(4, '2084368548977', 'Christopher', 'Jaiden', 'Terrify  Nr. 98', '9954955091', 'ChristopherJaiden20843@student_uni.com', 'RO509091151082551196723223760844', 42084313, 24, 1, 1);
+CALL pInsertStudent(4, '6847972882434', 'Warren', 'Lukas', 'Hollow Creator  Nr. 137', '1121215721', 'Warren_Lukas68479@student_uni.com', 'RO981693830628856852716790669981', 46847918, 25, 2, 2);
+CALL pInsertStudent(4, '2451194031116', 'Dakota', 'Jared', 'Magical Offer Diligent  Nr. 160', '1262211400', 'Dakota_Jared24511@student_uni.com', 'RO724246952146753599101932947952', 42451123, 23, 2, 2);
+CALL pInsertStudent(4, '6490301481848', 'Everett', 'Jace', 'Cross Cross Wanting  Nr. 134', '8033553615', 'EverettJace64903@student_uni.com', 'RO850810305646245174239303527419', 46490342, 22, 4, 1);
+CALL pInsertStudent(4, '3526862677467', 'Eric', 'Malakai', 'Elastic Queue  Nr. 71', '9650483398', 'Eric.Malakai35268@student_uni.com', 'RO258439437306558119370558601147', 43526876, 21, 4, 1);
+CALL pInsertStudent(4, '4005861276644', 'Omar', 'Ian', 'Continue Zoo  Nr. 179', '6419955502', 'Omar._Ian40058@student_uni.com', 'RO750204307517129527026559519742', 44005892, 21, 4, 2);
+CALL pInsertStudent(4, '7775288166376', 'Miles', 'Ryder', 'Smoke Piquant  Nr. 167', '3144733856', 'Miles.Ryder77752@student_uni.com', 'RO809930492908818362197126016385', 47775239, 21, 1, 1);
+CALL pInsertStudent(4, '1533849701965', 'Francisco', 'Nico', 'Push Tin  Nr. 121', '2860609879', 'FranciscoNico15338@student_uni.com', 'RO122872029036817787266670155174', 41533872, 21, 3, 1);
+CALL pInsertStudent(4, '5520025942269', 'Jeffrey', 'Alex', 'Nebulous Picayune  Nr. 85', '3780949433', 'JeffreyAlex55200@student_uni.com', 'RO321045736208760108299161763897', 45520069, 24, 2, 2);
+CALL pInsertStudent(4, '2640925197545', 'Solomon', 'Albert', 'Women  Nr. 6', '5822979038', 'Solomon._Albert26409@student_uni.com', 'RO874288592651422551926625583373', 42640977, 24, 3, 2);
+CALL pInsertStudent(4, '1959090088896', 'Marco', 'Wyatt', 'Miniature Remind Watch  Nr. 194', '4680728852', 'Marco.Wyatt19590@student_uni.com', 'RO387989223712833285970918232622', 41959075, 24, 2, 2);
+CALL pInsertStudent(4, '5278090197558', 'Lane', 'Knox', 'Letter Remind Zoo  Nr. 43', '5916744639', 'Lane._Knox52780@student_uni.com', 'RO057737316353465303459918032107', 45278060, 22, 2, 2);
+CALL pInsertStudent(4, '3489107524916', 'Kingston', 'Preston', 'Governor  Nr. 134', '5664176158', 'Kingston._Preston34891@student_uni.com', 'RO516280601169720455230406922450', 43489145, 22, 4, 2);
+CALL pInsertStudent(4, '5084178674280', 'Leonardo', 'Brantley', 'Odd Uncle  Nr. 187', '2995010361', 'LeonardoBrantley50841@student_uni.com', 'RO623005132488264346832555980513', 45084192, 21, 4, 2);
+CALL pInsertStudent(4, '9114191815914', 'Jose', 'Remy', 'Start  Nr. 78', '1230438805', 'Jose._Remy91141@student_uni.com', 'RO694458679468168881863898910019', 49114111, 21, 2, 2);
+CALL pInsertStudent(4, '1802937062943', 'Ari', 'Emmitt', 'Handsomely Muddle Remind  Nr. 94', '8249958168', 'Ari._Emmitt18029@student_uni.com', 'RO444915348530266342665244539588', 41802972, 22, 3, 2);
+CALL pInsertStudent(4, '9603201592344', 'Kyson', 'Fabian', 'Untidy  Nr. 38', '8458964006', 'Kyson_Fabian96032@student_uni.com', 'RO664313919331383715609596277219', 49603262, 23, 1, 2);
+CALL pInsertStudent(4, '8711932932343', 'Greyson', 'Alan', 'Teeth Intelligent  Nr. 7', '6739299091', 'Greyson_Alan87119@student_uni.com', 'RO956370614955581252939917608458', 48711991, 24, 3, 1);
+CALL pInsertStudent(4, '1309573709578', 'Spencer', 'Peter', 'Abandoned Wry  Nr. 55', '1909110478', 'SpencerPeter13095@student_uni.com', 'RO142972211148194082674744846338', 41309565, 21, 4, 2);
+CALL pInsertStudent(4, '4499037939279', 'Allen', 'Elian', 'Abandoned  Nr. 110', '8820049903', 'Allen_Elian44990@student_uni.com', 'RO561337853104057013229179964676', 44499063, 21, 2, 1);
+CALL pInsertStudent(4, '8855388139212', 'Frederick', 'Cannon', 'Six  Nr. 29', '8656481879', 'Frederick._Cannon88553@student_uni.com', 'RO421760837369228367464374049536', 48855350, 24, 1, 1);
+CALL pInsertStudent(4, '5502162283292', 'Dax', 'Phoenix', 'Muddle Faulty  Nr. 76', '2761412587', 'DaxPhoenix55021@student_uni.com', 'RO029285766854853655183443471980', 45502150, 24, 4, 2);
+CALL pInsertStudent(4, '2156652447959', 'Romeo', 'Thomas', 'Hollow Picayune Cute  Nr. 115', '3193393891', 'Romeo_Thomas21566@student_uni.com', 'RO008350730469599878388009243531', 42156612, 25, 3, 1);
+CALL pInsertStudent(4, '4676316264353', 'Andy', 'Karter', 'Wry Unequaled Hair  Nr. 159', '4000675464', 'Andy.Karter46763@student_uni.com', 'RO315362799707592563895694280600', 44676316, 24, 4, 2);
+CALL pInsertStudent(4, '3532284702315', 'Caiden', 'Conner', 'Faulty Accurate  Nr. 61', '1272477212', 'Caiden_Conner35322@student_uni.com', 'RO914255785928209981165726608042', 43532279, 24, 4, 1);
+CALL pInsertStudent(4, '1794828359167', 'Daxton', 'Mathias', 'Cute Start  Nr. 98', '5635568706', 'Daxton.Mathias17948@student_uni.com', 'RO085940048759051796498468721456', 41794819, 25, 2, 2);
+CALL pInsertStudent(4, '4486367218169', 'Louis', 'Colt', 'Watch Needy  Nr. 163', '4838141130', 'Louis.Colt44863@student_uni.com', 'RO325909443100368689648525087405', 44486330, 23, 1, 2);
+CALL pInsertStudent(4, '8271774893772', 'Cayden', 'Alan', 'Juicy Cruel Reflect  Nr. 166', '8182818115', 'Cayden.Alan82717@student_uni.com', 'RO078861085897109350209811685930', 48271740, 23, 1, 2);
+CALL pInsertStudent(4, '1473659388682', 'Milo', 'Kendrick', 'Sand  Nr. 33', '1513598223', 'Milo.Kendrick14736@student_uni.com', 'RO838422637455131120948501400166', 41473633, 23, 2, 1);
+CALL pInsertStudent(4, '1325511024076', 'Thiago', 'Mohamed', 'Picayune Women  Nr. 160', '7487634909', 'ThiagoMohamed13255@student_uni.com', 'RO303508976285963848755966103624', 41325518, 24, 1, 1);
+CALL pInsertStudent(4, '7061734366004', '', 'Marshall', 'Swim  Nr. 111', '5802790407', '.Marshall70617@student_uni.com', 'RO584751118438612115516707909064', 47061788, 24, 3, 2);
+CALL pInsertStudent(4, '1391013362626', 'Reed', 'Mohamed', 'Electric Abandoned Carpenter  Nr. 55', '9125138759', 'Reed.Mohamed13910@student_uni.com', 'RO236299919800379000417622792836', 41391031, 23, 4, 1);
+CALL pInsertStudent(4, '8113010311145', 'Hunter', 'Kolton', 'Piquant  Nr. 107', '8119287411', 'Hunter_Kolton81130@student_uni.com', 'RO549806572722939060178363730293', 48113040, 23, 2, 1);
+CALL pInsertStudent(4, '5443544363249', 'Benjamin', 'Colt', 'Staking Spooky  Nr. 80', '8561872153', 'Benjamin_Colt54435@student_uni.com', 'RO493764280326954716932802598491', 45443512, 22, 2, 1);
+CALL pInsertStudent(4, '9148252803660', 'Jeffrey', 'Conner', 'Electric Tin Ghost  Nr. 160', '3694807026', 'Jeffrey_Conner91482@student_uni.com', 'RO604719991910754755216550565517', 49148286, 24, 3, 1);
+CALL pInsertStudent(4, '5554538706946', 'Wesley', 'Lawson', 'Puny Wanting  Nr. 200', '9078936346', 'WesleyLawson55545@student_uni.com', 'RO785269471252681869848628945765', 45554529, 25, 1, 1);
+CALL pInsertStudent(4, '4931855709398', 'Aaron', 'Edward', 'Reflect Tin  Nr. 185', '2454796787', 'Aaron_Edward49318@student_uni.com', 'RO815886863917209259002520830967', 44931824, 25, 4, 1);
+CALL pInsertStudent(4, '1197612330812', 'Blake', 'Kolton', 'Teeth Juicy  Nr. 97', '7510072369', 'Blake._Kolton11976@student_uni.com', 'RO653389736203747568442987196656', 41197689, 22, 2, 2);
+CALL pInsertStudent(4, '6849404175588', 'Kaleb', 'Crew', 'Needy  Nr. 86', '1301468207', 'Kaleb._Crew68494@student_uni.com', 'RO841063632164539351063303234902', 46849445, 25, 2, 1);
+CALL pInsertStudent(4, '9342011571019', 'Dylan', 'Jay', 'Diligent Odd Hair  Nr. 126', '1617464852', 'Dylan._Jay93420@student_uni.com', 'RO976352900195691498978590324735', 49342048, 23, 2, 1);
+CALL pInsertStudent(4, '4973769392248', 'Nolan', 'Desmond', 'Petite Handsomely Accurate  Nr. 126', '3248801483', 'NolanDesmond49737@student_uni.com', 'RO583984423103641787468582227713', 44973771, 21, 1, 1);
+CALL pInsertStudent(4, '6926868484536', 'Jordan', 'Porter', 'Gusty Jumpy  Nr. 6', '4252256044', 'Jordan._Porter69268@student_uni.com', 'RO456010160230336398452386303129', 46926818, 25, 4, 1);
+CALL pInsertStudent(4, '4032290660090', 'Omari', 'Conner', 'Donkey Petite Extra-small  Nr. 163', '7713066693', 'Omari._Conner40322@student_uni.com', 'RO432346221502010144612534208276', 44032270, 21, 1, 1);
+CALL pInsertStudent(4, '2918641476746', 'Camden', 'Simon', 'Wry Curve  Nr. 72', '4001392051', 'Camden.Simon29186@student_uni.com', 'RO947379011777575026987127296247', 42918692, 23, 3, 1);
+CALL pInsertStudent(4, '9821635393860', 'Derek', 'Raiden', 'Reflect Watch  Nr. 140', '8055145334', 'Derek.Raiden98216@student_uni.com', 'RO445195724841029190172088025165', 49821637, 24, 2, 2);
+CALL pInsertStudent(4, '5731981668955', 'Jaden', 'Kyler', 'Position Vegetable Can  Nr. 108', '2432041475', 'JadenKyler57319@student_uni.com', 'RO483231226549115498071121103560', 45731955, 21, 3, 1);
+CALL pInsertStudent(4, '1362992452443', 'Jensen', 'Xander', 'Invincible Jumpy  Nr. 180', '5494420799', 'Jensen._Xander13629@student_uni.com', 'RO324403862421422794724586982132', 41362924, 23, 3, 1);
+CALL pInsertStudent(4, '4918331104954', 'Edwin', 'Cristian', 'Concentrate Spooky Carpenter  Nr. 87', '4737179434', 'Edwin_Cristian49183@student_uni.com', 'RO173345243502421051053194534506', 44918322, 22, 4, 1);
+CALL pInsertStudent(4, '4285649145187', 'Joseph', 'Joaquin', 'Donkey Cute  Nr. 105', '4735664766', 'JosephJoaquin42856@student_uni.com', 'RO551432754420146089164649636045', 44285657, 24, 1, 1);
+CALL pInsertStudent(4, '6037064277935', 'Kairo', 'Colton', 'Digestion Field Six  Nr. 52', '6086713042', 'Kairo_Colton60370@student_uni.com', 'RO769691363776117300417275775886', 46037068, 23, 1, 2);
+CALL pInsertStudent(4, '7854696809896', 'Malachi', 'Hayes', 'Zoo Untidy Seal  Nr. 155', '3618438017', 'Malachi_Hayes78546@student_uni.com', 'RO094362039683810874583498305249', 47854624, 24, 3, 2);
+CALL pInsertStudent(4, '8237511847486', 'Xander', 'Rhett', 'Nebulous Symptomatic  Nr. 32', '9970094291', 'Xander_Rhett82375@student_uni.com', 'RO529696914855039855573841876921', 48237567, 25, 2, 2);
+CALL pInsertStudent(4, '7659050009033', 'Archer', 'Andrew', 'Governor Queue  Nr. 192', '5804019225', 'Archer._Andrew76590@student_uni.com', 'RO524189632638905637894373307157', 47659070, 25, 4, 1);
+CALL pInsertStudent(4, '2198452984459', 'Max', 'Alijah', 'Male  Nr. 142', '2723443791', 'Max._Alijah21984@student_uni.com', 'RO346991032172055736492783843140', 42198469, 22, 1, 2);
+CALL pInsertStudent(4, '3042448372320', 'Erick', 'Declan', 'Godly  Nr. 56', '2200810002', 'Erick_Declan30424@student_uni.com', 'RO078010017630561055046749394004', 43042430, 25, 4, 2);
+CALL pInsertStudent(4, '9823427852835', 'Marco', 'Omari', 'Untidy Victorious  Nr. 118', '4962926914', 'Marco.Omari98234@student_uni.com', 'RO631470368994063817115043386973', 49823496, 24, 4, 2);
+CALL pInsertStudent(4, '5762900800768', 'Matteo', 'Gunner', 'Paddle  Nr. 120', '7920420926', 'Matteo_Gunner57629@student_uni.com', 'RO410407798758674255985218918188', 45762967, 25, 3, 2);
+CALL pInsertStudent(4, '6207108719473', 'Andre', 'Nicolas', 'Watch  Nr. 151', '5349883366', 'AndreNicolas62071@student_uni.com', 'RO763938427626913052172230862918', 46207176, 21, 1, 1);
+CALL pInsertStudent(4, '3323640402570', 'Adan', 'Jeremiah', 'Sister Discovery  Nr. 34', '8895245404', 'Adan.Jeremiah33236@student_uni.com', 'RO293279687696639835405699809817', 43323698, 23, 3, 1);
+CALL pInsertStudent(4, '1044779140714', 'Kevin', 'Royal', 'Reflect Cruel Smoke  Nr. 45', '3455593153', 'Kevin_Royal10447@student_uni.com', 'RO041690866152592481737144285053', 41044715, 24, 1, 2);
+CALL pInsertStudent(4, '7160331557299', 'Grady', 'Forrest', 'Zoo Temporary  Nr. 70', '3625502125', 'Grady_Forrest71603@student_uni.com', 'RO941550048917332257855049654339', 47160373, 25, 4, 2);
+CALL pInsertStudent(4, '4476072277428', 'Jay', 'Reid', 'Cross Wrist  Nr. 141', '8997740518', 'Jay._Reid44760@student_uni.com', 'RO271359136897964315271380251995', 44476022, 25, 3, 1);
+CALL pInsertStudent(4, '2595047119570', 'Tate', 'Rowan', 'Piquant  Nr. 41', '3697796740', 'Tate.Rowan25950@student_uni.com', 'RO166806490808184164837232942141', 42595063, 22, 1, 1);
+CALL pInsertStudent(4, '2097059561939', 'Alijah', 'Rowan', 'Repeat Wiry Nebulous  Nr. 101', '1878992163', 'Alijah._Rowan20970@student_uni.com', 'RO288887664787092559503970919713', 42097014, 21, 4, 2);
+CALL pInsertStudent(4, '2304032887663', 'Deacon', 'Johnathan', 'Concentrate Wry  Nr. 47', '1620455366', 'Deacon_Johnathan23040@student_uni.com', 'RO037368546849635402030308937794', 42304096, 22, 4, 2);
+CALL pInsertStudent(4, '8923403736018', 'Zaiden', 'Ayden', 'Continue Glossy  Nr. 52', '2599570873', 'ZaidenAyden89234@student_uni.com', 'RO447873175435171449733851686661', 48923447, 23, 1, 1);
+CALL pInsertStudent(4, '6739648714582', 'John', 'Jayceon', 'Offer  Nr. 56', '1518419581', 'John.Jayceon67396@student_uni.com', 'RO481593389737634946299693870078', 46739655, 22, 4, 2);
+CALL pInsertStudent(4, '7392018397377', 'Jonah', 'Warren', 'Diligent Start  Nr. 23', '6102288831', 'Jonah_Warren73920@student_uni.com', 'RO512627661008848886000859718716', 47392050, 25, 1, 1);
+CALL pInsertStudent(4, '1133809882436', 'Ezra', 'Kaleb', 'Unequaled Share  Nr. 195', '7942922991', 'Ezra.Kaleb11338@student_uni.com', 'RO165113798035354568688220087149', 41133873, 24, 2, 2);
+CALL pInsertStudent(4, '8225301751792', 'Paxton', 'Jaden', 'Sordid Women  Nr. 79', '5364658339', 'Paxton._Jaden82253@student_uni.com', 'RO840313694044784800685991183940', 48225328, 25, 2, 1);
+CALL pInsertStudent(4, '6069609045092', 'Collin', 'Skyler', 'Carpenter Electric Handsomely  Nr. 18', '9697441669', 'Collin._Skyler60696@student_uni.com', 'RO324432244831042563296257304656', 46069675, 21, 1, 1);
+CALL pInsertStudent(4, '9012758899150', 'Jaxon', 'Dexter', 'Wanting Cross  Nr. 175', '1167489107', 'Jaxon.Dexter90127@student_uni.com', 'RO109595312577656022549686428369', 49012725, 25, 2, 2);
+CALL pInsertStudent(4, '4484086680328', 'Michael', 'Peyton', 'Offer Wanting  Nr. 110', '8352306348', 'MichaelPeyton44840@student_uni.com', 'RO315218173376299893240336695814', 44484058, 23, 2, 2);
+CALL pInsertStudent(4, '7863012713085', 'Lorenzo', 'Harvey', 'Terrify  Nr. 75', '2288346338', 'Lorenzo_Harvey78630@student_uni.com', 'RO089369744197668350666304819782', 47863040, 21, 1, 2);
+CALL pInsertStudent(4, '8880555224970', 'Brantley', 'Emerson', 'Hug Offer Godly  Nr. 2', '9254762875', 'Brantley.Emerson88805@student_uni.com', 'RO174558856369986291718733957547', 48880540, 24, 3, 1);
+CALL pInsertStudent(4, '5954987377312', 'Gavin', 'Jude', 'Nebulous Airplane  Nr. 180', '8841103556', 'Gavin_Jude59549@student_uni.com', 'RO090273391595828579536968201359', 45954970, 25, 3, 1);
+CALL pInsertStudent(4, '6233376735874', 'Louis', 'Myles', 'Saw Glove  Nr. 1', '9134222282', 'Louis.Myles62333@student_uni.com', 'RO054300206582315336441339522655', 46233371, 21, 1, 1);
+CALL pInsertStudent(4, '1567594970204', 'Leon', 'Troy', 'Farm Reward  Nr. 151', '1771666328', 'LeonTroy15675@student_uni.com', 'RO833273925309980466311298411398', 41567515, 22, 3, 2);
+CALL pInsertStudent(4, '1334707473901', 'Xavier', 'Lennox', 'Hollow Hug  Nr. 108', '3029023322', 'XavierLennox13347@student_uni.com', 'RO316436852764717899782470236405', 41334713, 24, 2, 2);
+CALL pInsertStudent(4, '6506146503878', 'Caden', 'Max', 'Field Tin  Nr. 105', '2327737369', 'Caden_Max65061@student_uni.com', 'RO201427819839341670409005685174', 46506165, 22, 4, 2);
+CALL pInsertStudent(4, '4170415303947', 'Cash', 'Zaiden', 'Seal  Nr. 108', '6415152785', 'Cash.Zaiden41704@student_uni.com', 'RO139765764644050643988259172093', 44170419, 22, 1, 1);
+CALL pInsertStudent(4, '4783844459097', 'Warren', 'Malakai', 'Want Elastic  Nr. 42', '5651797271', 'Warren.Malakai47838@student_uni.com', 'RO830206320170371380632133001038', 44783862, 24, 4, 2);
+CALL pInsertStudent(4, '3788704571983', 'Carson', 'Javier', 'Unequaled Remind Farm  Nr. 22', '5781655800', 'Carson._Javier37887@student_uni.com', 'RO789216515815979809995092027084', 43788759, 23, 4, 1);
+CALL pInsertStudent(4, '5593822655170', 'Cade', 'Ari', 'Miniature Swim  Nr. 100', '1464318504', 'Cade._Ari55938@student_uni.com', 'RO707750348410979606931817585820', 45593895, 24, 2, 2);
+CALL pInsertStudent(4, '6325085747978', 'Royal', 'Tate', 'Zoo Accurate  Nr. 60', '9311349885', 'Royal.Tate63250@student_uni.com', 'RO829524838954466373426904344488', 46325023, 24, 4, 2);
+CALL pInsertStudent(4, '5712618587812', 'Mathias', 'Brady', 'Miniature Accurate  Nr. 145', '8614418731', 'Mathias._Brady57126@student_uni.com', 'RO254319607709662028549982421151', 45712678, 21, 1, 2);
+CALL pInsertStudent(4, '2133453533682', 'Beau', 'Amari', 'Watch Watch  Nr. 123', '9660197225', 'Beau._Amari21334@student_uni.com', 'RO409949413786969662580182678775', 42133428, 23, 1, 1);
+CALL pInsertStudent(4, '8797590408625', 'Abraham', 'Richard', 'Sordid Cruel  Nr. 189', '7178279823', 'Abraham._Richard87975@student_uni.com', 'RO519057659965221387035919979462', 48797575, 21, 1, 1);
+CALL pInsertStudent(4, '6669086409185', 'Cristian', 'Rhett', 'Magical  Nr. 115', '2317886772', 'Cristian.Rhett66690@student_uni.com', 'RO501309119583938442429975478416', 46669021, 21, 4, 1);
+CALL pInsertStudent(4, '8993644463085', 'Gianni', 'Armani', 'Zoo Sordid  Nr. 33', '2731150547', 'GianniArmani89936@student_uni.com', 'RO393183428686407787290577857242', 48993631, 25, 3, 1);
+CALL pInsertStudent(4, '8261623482174', 'Roberto', 'Porter', 'Chicken Creator Miniature  Nr. 43', '8641984622', 'RobertoPorter82616@student_uni.com', 'RO453642046268719923354081440026', 48261677, 24, 3, 2);
+CALL pInsertStudent(4, '6184481365569', 'Zane', 'Otto', 'Faulty Glove  Nr. 89', '8768808809', 'Zane_Otto61844@student_uni.com', 'RO820791286731784696466892912546', 46184460, 21, 2, 2);
+CALL pInsertStudent(4, '7111953030324', 'Oscar', 'Moises', 'Donkey  Nr. 71', '7286106343', 'OscarMoises71119@student_uni.com', 'RO076027798231599962137657162423', 47111919, 21, 3, 1);
+CALL pInsertStudent(4, '4554121507842', 'Kenneth', 'Sage', 'Absent Donkey  Nr. 121', '8420293421', 'Kenneth_Sage45541@student_uni.com', 'RO958823915674058209639239550994', 44554129, 22, 3, 1);
+CALL pInsertStudent(4, '1903957964674', 'Donovan', 'Jesse', 'Wry  Nr. 76', '8275112025', 'Donovan._Jesse19039@student_uni.com', 'RO675550524041580631499357345276', 41903950, 25, 3, 1);
+CALL pInsertStudent(4, '2782388837350', 'Martin', 'Raymond', 'Cute Queue  Nr. 130', '1152213963', 'Martin_Raymond27823@student_uni.com', 'RO047206312172614210446474393688', 42782317, 23, 3, 2);
+CALL pInsertStudent(4, '9915259537607', 'Gianni', 'Mario', 'Digestion  Nr. 69', '5926762501', 'Gianni._Mario99152@student_uni.com', 'RO691164810233191323207675609773', 49915288, 23, 4, 2);
+CALL pInsertStudent(4, '6416346272977', 'Bryan', 'Major', 'Nebulous  Nr. 143', '6344554303', 'Bryan_Major64163@student_uni.com', 'RO270547576306768638500521768101', 46416335, 22, 3, 2);
+CALL pInsertStudent(4, '3572357362960', 'Jayceon', 'Dominic', 'Muddle  Nr. 155', '7439929276', 'JayceonDominic35723@student_uni.com', 'RO634341917417933164271030500724', 43572340, 23, 1, 1);
+CALL pInsertStudent(4, '7235218681958', 'Sebastian', 'Brody', 'Seal  Nr. 39', '1742008526', 'Sebastian.Brody72352@student_uni.com', 'RO726503378723457123087909858308', 47235292, 23, 2, 1);
+CALL pInsertStudent(4, '2505217209208', 'Andre', 'Knox', 'Queue Wry  Nr. 13', '7475719033', 'Andre.Knox25052@student_uni.com', 'RO865856113930306530438529398492', 42505286, 23, 4, 1);
+CALL pInsertStudent(4, '6964143916792', 'Max', 'Major', 'Donkey  Nr. 60', '4363115790', 'Max._Major69641@student_uni.com', 'RO920939222288792756988902834961', 46964181, 23, 3, 2);
+CALL pInsertStudent(4, '4766837940362', 'Walter', 'Elliot', 'Chicken  Nr. 164', '5325615298', 'Walter.Elliot47668@student_uni.com', 'RO057715797020009973148425726311', 44766865, 21, 4, 1);
+CALL pInsertStudent(4, '2282985259553', 'Abel', 'Daniel', 'Throat Magical  Nr. 147', '1132940078', 'AbelDaniel22829@student_uni.com', 'RO290097997167939231246152112174', 42282958, 21, 2, 2);
+CALL pInsertStudent(4, '9031811965509', 'Kaison', 'Kenneth', 'Elastic Field  Nr. 134', '2303714139', 'Kaison_Kenneth90318@student_uni.com', 'RO213758092005609689530136180032', 49031847, 22, 3, 1);
+CALL pInsertStudent(4, '5703707704638', 'Charlie', 'Braylen', 'Tin Unequaled  Nr. 151', '7380637026', 'Charlie_Braylen57037@student_uni.com', 'RO109826480207912992471890190097', 45703734, 21, 1, 1);
+CALL pInsertStudent(4, '2974484975282', 'Bennett', '', 'Women Six Employ  Nr. 156', '4083726153', 'Bennett.29744@student_uni.com', 'RO949577904390809383548184112990', 42974473, 22, 4, 1);
+CALL pInsertStudent(4, '2642541769342', 'Peyton', 'Max', 'Gusty Farm Throat  Nr. 170', '7935329575', 'Peyton_Max26425@student_uni.com', 'RO946944261571735831081828662922', 42642593, 25, 4, 1);
+CALL pInsertStudent(4, '4261035023467', 'Augustus', 'Dominick', 'Elastic Gusty  Nr. 186', '3474650108', 'Augustus._Dominick42610@student_uni.com', 'RO445965644049803661909153105108', 44261078, 21, 3, 2);
+CALL pInsertStudent(4, '7246579060427', 'Isaac', 'Jayceon', 'Accurate Field Terrify  Nr. 191', '7562558507', 'Isaac_Jayceon72465@student_uni.com', 'RO738311006235714379662424961444', 47246540, 23, 1, 1);
+CALL pInsertStudent(4, '7578606299086', 'Simon', 'Dorian', 'Continue Concentrate  Nr. 32', '8099491806', 'SimonDorian75786@student_uni.com', 'RO413116537838402977785573380902', 47578687, 25, 2, 2);
+CALL pInsertStudent(4, '4531772235156', 'River', 'Royal', 'Jumpy Repeat  Nr. 5', '8699962415', 'RiverRoyal45317@student_uni.com', 'RO859514153046107768799912672001', 44531795, 25, 4, 2);
+CALL pInsertStudent(4, '9503546565700', 'Uriel', 'Simon', 'Magical  Nr. 186', '8161594124', 'UrielSimon95035@student_uni.com', 'RO256567947176754370228870644982', 49503570, 21, 1, 2);
+CALL pInsertStudent(4, '7453171023693', 'Emmanuel', 'Eduardo', 'Abandoned Remind  Nr. 162', '6204526866', 'Emmanuel_Eduardo74531@student_uni.com', 'RO572190673228334231270326748097', 47453129, 25, 4, 2);
+CALL pInsertStudent(4, '3260975956046', 'Andy', 'Beau', 'Digestion  Nr. 85', '7972260956', 'Andy.Beau32609@student_uni.com', 'RO411877709707470589027692282992', 43260990, 24, 4, 2);
+CALL pInsertStudent(4, '5418666059016', 'Andrew', 'Jude', 'Puny  Nr. 14', '8910410331', 'Andrew._Jude54186@student_uni.com', 'RO474740970376097387056876372034', 45418638, 23, 3, 2);
+CALL pInsertStudent(4, '9980296645364', 'Blake', 'Thomas', 'Faulty Abandoned  Nr. 105', '3650192427', 'Blake.Thomas99802@student_uni.com', 'RO784530866813321066031838107739', 49980233, 21, 1, 2);
+CALL pInsertStudent(4, '2318196071239', 'Sebastian', 'Patrick', 'Uncle Field  Nr. 123', '3738065244', 'Sebastian._Patrick23181@student_uni.com', 'RO652572308346023869885071711030', 42318186, 24, 2, 2);
+CALL pInsertStudent(4, '2717165207766', 'Finley', 'Cody', 'Abandoned Push  Nr. 110', '1311932416', 'Finley_Cody27171@student_uni.com', 'RO753648708983876108358772107535', 42717180, 22, 2, 1);
+CALL pInsertStudent(4, '4906676022617', 'Garrett', 'Rowan', 'Sordid Picayune  Nr. 16', '6052968646', 'Garrett._Rowan49066@student_uni.com', 'RO861042374106344155897864793710', 44906687, 21, 2, 1);
+CALL pInsertStudent(4, '1386519684283', 'Angelo', 'Josiah', 'Wound Petite  Nr. 42', '4011553709', 'AngeloJosiah13865@student_uni.com', 'RO304833981935869128423031287814', 41386544, 21, 3, 2);
+CALL pInsertStudent(4, '7266113687189', 'Graham', 'Miles', 'Want  Nr. 42', '6384558791', 'Graham_Miles72661@student_uni.com', 'RO897077910992301904442262773367', 47266150, 25, 3, 1);
+CALL pInsertStudent(4, '6858474561391', 'Brayden', 'Leon', 'Teeth Sordid Sister  Nr. 50', '2219760655', 'Brayden._Leon68584@student_uni.com', 'RO839285270949576794829711861582', 46858498, 21, 2, 1);
+CALL pInsertStudent(4, '9681908985670', 'Elliot', 'Brantley', 'Puny Donkey  Nr. 28', '2185815540', 'Elliot.Brantley96819@student_uni.com', 'RO422128990057493595474928651685', 49681962, 23, 2, 2);
+CALL pInsertStudent(4, '2623657137045', 'Jaylen', 'Grant', 'Farm Stitch  Nr. 147', '8545548945', 'Jaylen.Grant26236@student_uni.com', 'RO495395684586517006400762273348', 42623614, 24, 3, 1);
+CALL pInsertStudent(4, '3200189573113', 'Jace', 'Jax', 'Push Muddle Unequaled  Nr. 59', '6949016717', 'Jace.Jax32001@student_uni.com', 'RO461143064382688387179384646426', 43200151, 22, 3, 2);
+CALL pInsertStudent(4, '2189191507484', 'Samuel', 'Jesus', 'Intelligent  Nr. 175', '6231446013', 'SamuelJesus21891@student_uni.com', 'RO118521251067143447590590270950', 42189145, 21, 3, 1);
+CALL pInsertStudent(4, '7146679432899', 'Tyson', 'Titus', 'Extra-small Airplane  Nr. 6', '4964468936', 'Tyson.Titus71466@student_uni.com', 'RO246631279393759761821784493133', 47146677, 24, 3, 1);
+CALL pInsertStudent(4, '6817946814773', 'Russell', 'Malcolm', 'Melted Vegetable Cruel  Nr. 83', '8741898999', 'Russell._Malcolm68179@student_uni.com', 'RO170047427183682051699379347756', 46817912, 25, 1, 2);
+CALL pInsertStudent(4, '8102538158671', 'Francis', 'Kaleb', 'Letter  Nr. 117', '3994879057', 'Francis.Kaleb81025@student_uni.com', 'RO719276473695391273936360391559', 48102592, 21, 4, 1);
+CALL pInsertStudent(4, '5055578963403', 'Avery', 'Jose', 'Male Start  Nr. 113', '6869297928', 'Avery.Jose50555@student_uni.com', 'RO070918294176606568676679689898', 45055588, 24, 2, 2);
+CALL pInsertStudent(4, '1965736442875', 'Santiago', 'Brantley', 'Miniature  Nr. 106', '9038435472', 'Santiago_Brantley19657@student_uni.com', 'RO235478297663485013143095222481', 41965713, 21, 2, 2);
+CALL pInsertStudent(4, '9952577123621', 'Peyton', 'Andy', 'Cute Position Sand  Nr. 113', '6025115326', 'Peyton_Andy99525@student_uni.com', 'RO689191290130017314569956415812', 49952593, 22, 2, 2);
+CALL pInsertStudent(4, '1853266610657', 'Alex', 'Prince', 'Unequaled Start Glove  Nr. 175', '6526432771', 'Alex_Prince18532@student_uni.com', 'RO825009196605357369331940570195', 41853274, 24, 2, 2);
+CALL pInsertStudent(4, '2086803358735', 'Adrian', 'Jacob', 'Puny  Nr. 167', '4077988903', 'Adrian_Jacob20868@student_uni.com', 'RO867651659616368705151416457509', 42086812, 24, 1, 2);
+CALL pInsertStudent(4, '5201278025427', 'Jonathan', 'Phoenix', 'Sordid Digestion  Nr. 74', '2308349919', 'Jonathan_Phoenix52012@student_uni.com', 'RO869063798024343333176275232122', 45201293, 22, 3, 1);
+CALL pInsertStudent(4, '2677721338771', 'Ace', 'Harvey', 'Intelligent Cruel  Nr. 6', '9179079342', 'Ace.Harvey26777@student_uni.com', 'RO551348640134740934555271712988', 42677724, 24, 2, 1);
+CALL pInsertStudent(4, '2410833132208', 'Raiden', 'Mark', 'Juicy  Nr. 106', '5176382568', 'Raiden._Mark24108@student_uni.com', 'RO232837497907278432609987505920', 42410895, 25, 1, 2);
+CALL pInsertStudent(4, '2361176946251', 'Remington', 'Jack', 'Godly Male  Nr. 62', '1150414824', 'RemingtonJack23611@student_uni.com', 'RO583618301596122208231529992797', 42361137, 23, 1, 1);
+CALL pInsertStudent(4, '9955037689574', 'Kashton', 'Rafael', 'Temporary  Nr. 74', '3961056662', 'Kashton.Rafael99550@student_uni.com', 'RO380213104948027009972041014228', 49955067, 22, 2, 1);
+CALL pInsertStudent(4, '1422301056397', 'Dawson', 'Zion', 'Women Diligent  Nr. 198', '8358968506', 'Dawson_Zion14223@student_uni.com', 'RO977860591116916114621495151470', 41422390, 22, 3, 2);
+CALL pInsertStudent(4, '4658017868806', 'Walter', 'Malakai', 'Watch Piquant  Nr. 94', '1268584356', 'WalterMalakai46580@student_uni.com', 'RO588133004518032147262134480070', 44658039, 24, 4, 2);
+CALL pInsertStudent(4, '6814304425865', 'Royce', 'Jase', 'Farm  Nr. 95', '6938188353', 'RoyceJase68143@student_uni.com', 'RO496582505988782036522883987270', 46814316, 25, 1, 2);
+CALL pInsertStudent(4, '5263362828321', 'Ezra', 'Leonidas', 'Hollow Table  Nr. 183', '2355591625', 'Ezra._Leonidas52633@student_uni.com', 'RO347766208905119125955713521116', 45263359, 21, 2, 1);
+CALL pInsertStudent(4, '1827158945817', 'Beau', 'Crew', 'Odd Teeth Wiry  Nr. 37', '5294476601', 'BeauCrew18271@student_uni.com', 'RO688130258216854630946561033268', 41827114, 23, 4, 2);
+CALL pInsertStudent(4, '8397262016404', 'Seth', 'Silas', 'Watch  Nr. 111', '6687195635', 'Seth._Silas83972@student_uni.com', 'RO634255262688402540649123365867', 48397252, 24, 3, 2);
+CALL pInsertStudent(4, '5186279496572', 'Andy', 'Dalton', 'Watch  Nr. 137', '9903387810', 'Andy.Dalton51862@student_uni.com', 'RO092884505251830286145134356792', 45186218, 21, 3, 1);
+CALL pInsertStudent(4, '2418142621849', 'Leon', 'Dominic', 'Saw Dogs Petite  Nr. 132', '9234925486', 'Leon_Dominic24181@student_uni.com', 'RO143726287651613528536841543954', 42418197, 23, 3, 2);
+CALL pInsertStudent(4, '3992103445634', 'Lincoln', 'Ethan', 'Vegetable  Nr. 107', '6051362889', 'LincolnEthan39921@student_uni.com', 'RO966902115245311914986431211958', 43992134, 22, 3, 2);
+CALL pInsertStudent(4, '3953141877258', 'Grant', 'Alijah', 'Hair Temporary  Nr. 127', '5808120139', 'Grant_Alijah39531@student_uni.com', 'RO014081391015306841919116631707', 43953191, 22, 4, 1);
+CALL pInsertStudent(4, '3704411276314', '', 'Jameson', 'Symptomatic Male  Nr. 98', '9943707012', 'Jameson37044@student_uni.com', 'RO650205367659687370028299406438', 43704463, 21, 4, 1);
+CALL pInsertStudent(4, '6135151297672', 'Cairo', 'Weston', 'Seal Throat Remind  Nr. 85', '1715583741', 'Cairo_Weston61351@student_uni.com', 'RO742174610403816816119031579391', 46135154, 22, 1, 2);
+CALL pInsertStudent(4, '4405855924089', 'Phillip', 'Kayson', 'Godly Glove Ghost  Nr. 98', '6914303854', 'Phillip_Kayson44058@student_uni.com', 'RO076723630507209767556805857516', 44405837, 21, 4, 2);
+CALL pInsertStudent(4, '4626524292654', 'Andrew', 'Noel', 'Queue Field Remove  Nr. 117', '7723471821', 'Andrew._Noel46265@student_uni.com', 'RO544493656412604560918311620445', 44626586, 21, 1, 2);
+CALL pInsertStudent(4, '7966939355560', 'Aiden', 'Josue', 'Want  Nr. 144', '7539485276', 'Aiden.Josue79669@student_uni.com', 'RO784833564566521664535942528820', 47966927, 23, 3, 1);
+CALL pInsertStudent(4, '2325142538243', 'Travis', 'Elijah', 'Reflect Melted  Nr. 79', '1842042934', 'Travis._Elijah23251@student_uni.com', 'RO692957292237123825820307528921', 42325164, 24, 1, 2);
+CALL pInsertStudent(4, '3653300054820', 'Adriel', 'Greyson', 'Women  Nr. 44', '2768475263', 'Adriel._Greyson36533@student_uni.com', 'RO810981006755529852833769759532', 43653382, 21, 1, 2);
+CALL pInsertStudent(4, '1653681647435', 'Raymond', 'Damian', 'Intelligent  Nr. 42', '3421784770', 'Raymond._Damian16536@student_uni.com', 'RO614505757916093435556319565671', 41653697, 24, 2, 1);
+CALL pInsertStudent(4, '2641071078406', 'Adriel', 'Kaiden', 'Invincible Sister  Nr. 150', '2451480440', 'Adriel._Kaiden26410@student_uni.com', 'RO406205890839077007849907234392', 42641033, 23, 4, 1);
+CALL pInsertStudent(4, '2798933495219', 'Silas', 'Clark', 'Terrify Farm  Nr. 4', '2775483080', 'Silas.Clark27989@student_uni.com', 'RO281240268290839839758784962937', 42798976, 24, 1, 2);
+CALL pInsertStudent(4, '7165272458241', 'Ibrahim', 'Luca', 'Victorious Push  Nr. 112', '6060437687', 'Ibrahim_Luca71652@student_uni.com', 'RO554761444085049709454622053143', 47165279, 24, 4, 1);
+CALL pInsertStudent(4, '3263927086695', 'Manuel', 'Omari', 'Sand Temporary  Nr. 184', '8897726419', 'Manuel.Omari32639@student_uni.com', 'RO140334227732373740493759991146', 43263912, 21, 3, 1);
+CALL pInsertStudent(4, '5537815650068', 'Apollo', 'Erik', 'Magical Piquant  Nr. 92', '9059770085', 'Apollo._Erik55378@student_uni.com', 'RO909331383971190099271459674204', 45537853, 24, 1, 2);
+CALL pInsertStudent(4, '4638381450077', 'Parker', 'Atticus', 'Six  Nr. 61', '1958598949', 'ParkerAtticus46383@student_uni.com', 'RO220228654378671428121698629379', 44638368, 23, 3, 1);
+CALL pInsertStudent(4, '1686440628423', 'Andrew', 'Zayne', 'Letter  Nr. 166', '8969441069', 'AndrewZayne16864@student_uni.com', 'RO186951895672461029384227008270', 41686466, 21, 2, 2);
+CALL pInsertStudent(4, '3272337113481', 'Rhys', 'Moises', 'Letter Curve Nebulous  Nr. 119', '8140604204', 'Rhys_Moises32723@student_uni.com', 'RO739243513512116269464439433129', 43272391, 24, 2, 1);
+CALL pInsertStudent(4, '7437505237073', 'Hunter', 'King', 'Remind Picayune  Nr. 95', '3080027083', 'HunterKing74375@student_uni.com', 'RO213908665747415510428673516130', 47437536, 21, 1, 1);
+CALL pInsertStudent(4, '5667249871298', 'Tobias', 'Ronin', 'Terrify Intelligent  Nr. 141', '5037490001', 'Tobias._Ronin56672@student_uni.com', 'RO070739311849949286886032060735', 45667281, 23, 2, 2);
+CALL pInsertStudent(4, '5983814126231', 'Ayden', 'Julian', 'Terrify  Nr. 63', '6947259049', 'Ayden_Julian59838@student_uni.com', 'RO306732376939350945429783751848', 45983822, 24, 1, 1);
+CALL pInsertStudent(4, '4181087859938', 'Porter', 'Hugo', 'Elastic Zoo Melted  Nr. 38', '8030587104', 'Porter._Hugo41810@student_uni.com', 'RO931371982264447955501982235905', 44181027, 24, 4, 1);
+CALL pInsertStudent(4, '2542440755059', 'Austin', 'Clayton', 'Table Chicken Picayune  Nr. 3', '7617983666', 'AustinClayton25424@student_uni.com', 'RO969362156966683704252672828229', 42542443, 23, 3, 2);
+CALL pInsertStudent(4, '9700557544341', 'Harvey', 'Jaxton', 'Continue Unequaled Seal  Nr. 170', '9508288481', 'Harvey_Jaxton97005@student_uni.com', 'RO767293655972368560185526265528', 49700574, 21, 2, 1);
+CALL pInsertStudent(4, '6396956617430', 'Dakota', 'Everett', 'Letter Accurate Airplane  Nr. 30', '4856439900', 'Dakota._Everett63969@student_uni.com', 'RO654754549930435961442622065336', 46396948, 25, 3, 2);
+CALL pInsertStudent(4, '7323697329372', 'Ezra', 'Evan', 'Magical Muddle  Nr. 198', '2090197766', 'Ezra_Evan73236@student_uni.com', 'RO112198256326032367341263596841', 47323680, 24, 1, 2);
+CALL pInsertStudent(4, '5645441496913', 'Felix', 'Joel', 'Picayune Male  Nr. 194', '7488622435', 'Felix_Joel56454@student_uni.com', 'RO825799409932558882890470699707', 45645460, 25, 2, 2);
+CALL pInsertStudent(4, '4600014663326', 'Carlos', 'Atticus', 'Wanting Six Temporary  Nr. 164', '3033213752', 'Carlos_Atticus46000@student_uni.com', 'RO642787332940175458946828713729', 44600066, 21, 4, 2);
+CALL pInsertStudent(4, '5381292468758', 'Kingston', 'Sawyer', 'Hug  Nr. 176', '4711402184', 'Kingston.Sawyer53812@student_uni.com', 'RO039518456236062232233266299568', 45381216, 24, 1, 2);
+CALL pInsertStudent(4, '7974620525432', 'Damon', 'Knox', 'Start  Nr. 86', '9939539220', 'Damon.Knox79746@student_uni.com', 'RO442499328296654260884474096774', 47974643, 24, 3, 1);
+CALL pInsertStudent(4, '5003417868603', 'Eduardo', 'Jaxton', 'Watch Can  Nr. 184', '3037449636', 'Eduardo.Jaxton50034@student_uni.com', 'RO928487370686492854933326774640', 45003429, 21, 2, 1);
+CALL pInsertStudent(4, '7868318383034', 'Jaylen', 'Kasen', 'Puny Discovery Hug  Nr. 12', '2066633987', 'JaylenKasen78683@student_uni.com', 'RO474816858486718034076637143941', 47868334, 24, 2, 1);
+CALL pInsertStudent(4, '7741574186018', 'Luca', 'Colt', 'Reward Dogs  Nr. 41', '7344874971', 'LucaColt77415@student_uni.com', 'RO910151652885383328479082350599', 47741538, 22, 3, 2);
+CALL pInsertStudent(4, '9795329618874', 'Abel', 'Kaden', 'Symptomatic  Nr. 76', '6228518980', 'Abel._Kaden97953@student_uni.com', 'RO178976167848656336496302259272', 49795377, 23, 3, 1);
+CALL pInsertStudent(4, '3895609981575', 'Evan', 'Niko', 'Vegetable Hug  Nr. 171', '7362422615', 'Evan._Niko38956@student_uni.com', 'RO965807770804640737135524204823', 43895666, 23, 4, 1);
+CALL pInsertStudent(4, '1035675650248', 'Adriel', 'Maximilian', 'Abandoned  Nr. 47', '8325666998', 'Adriel_Maximilian10356@student_uni.com', 'RO319634669707300343108040721647', 41035674, 24, 2, 2);
+CALL pInsertStudent(4, '2863318306934', 'Khalil', 'Luke', 'Hair Curve  Nr. 7', '3151541843', 'Khalil.Luke28633@student_uni.com', 'RO286100530974179435243509069592', 42863342, 23, 4, 2);
+CALL pInsertStudent(4, '3249580383299', 'Remington', 'Abdiel', 'Handsomely Position Remind  Nr. 72', '8625311830', 'Remington_Abdiel32495@student_uni.com', 'RO857585967485852146317207312788', 43249515, 24, 1, 1);
+CALL pInsertStudent(4, '3313454651081', 'Wyatt', 'Ismael', 'Cute  Nr. 163', '7870761466', 'Wyatt.Ismael33134@student_uni.com', 'RO540230713777527028468355118444', 43313433, 25, 4, 1);
+CALL pInsertStudent(4, '9251669693358', 'Everett', 'Paxton', 'Dangerous Accurate  Nr. 110', '5449815317', 'EverettPaxton92516@student_uni.com', 'RO154911330639997698377704574917', 49251697, 21, 2, 1);
+CALL pInsertStudent(4, '3538514742208', 'Derrick', 'Braylen', 'Ghost Victorious Nebulous  Nr. 79', '1407596924', 'Derrick_Braylen35385@student_uni.com', 'RO312104160298128869849088303790', 43538563, 23, 1, 1);
+CALL pInsertStudent(4, '7413329232553', 'Ryan', 'Jack', 'Chicken Electric  Nr. 200', '1081556853', 'RyanJack74133@student_uni.com', 'RO648670364235151753665760297056', 47413366, 21, 3, 1);
+CALL pInsertStudent(4, '8376097338296', 'Cash', 'Nash', 'Cruel  Nr. 169', '9211208913', 'Cash._Nash83760@student_uni.com', 'RO388946625738344194269355765242', 48376020, 22, 3, 1);
+CALL pInsertStudent(4, '2749334522330', 'Sawyer', 'Eduardo', 'Muddle Godly Absent  Nr. 64', '2024339464', 'SawyerEduardo27493@student_uni.com', 'RO571847195181839391722273124392', 42749343, 23, 1, 1);
+CALL pInsertStudent(4, '9441764155922', 'Dylan', 'John', 'Symptomatic Six  Nr. 51', '5997822233', 'Dylan_John94417@student_uni.com', 'RO310789017183427423911455940896', 49441758, 22, 1, 2);
+CALL pInsertStudent(4, '9716041640678', 'Remington', 'Rhett', 'Male Close  Nr. 185', '2574743388', 'Remington_Rhett97160@student_uni.com', 'RO795415174029397422294973945639', 49716018, 22, 2, 1);
+CALL pInsertStudent(4, '6019421112693', 'Knox', 'Isaac', 'Extra-small  Nr. 15', '6437822755', 'Knox.Isaac60194@student_uni.com', 'RO325071276570348322101428522979', 46019435, 21, 3, 2);
+CALL pInsertStudent(4, '6428614776974', 'Tatum', 'Kamden', 'Cute Remove  Nr. 138', '6813688528', 'Tatum.Kamden64286@student_uni.com', 'RO690684723438562055040296567998', 46428619, 25, 3, 1);
+CALL pInsertStudent(4, '2533331272803', 'Peter', 'Memphis', 'Repeat  Nr. 120', '8990160919', 'Peter.Memphis25333@student_uni.com', 'RO214524289890920794900383220581', 42533327, 24, 3, 2);
+CALL pInsertStudent(4, '4232994196975', 'Bryan', 'Kaden', 'Field Petite  Nr. 186', '8135717400', 'Bryan.Kaden42329@student_uni.com', 'RO625211587676720186772291844008', 44232924, 23, 2, 2);
+CALL pInsertStudent(4, '2375891684929', 'Braylen', 'Muhammad', 'Saw Start Symptomatic  Nr. 55', '7258398388', 'Braylen._Muhammad23758@student_uni.com', 'RO009511305369686578856721281061', 42375856, 23, 1, 2);
+CALL pInsertStudent(4, '2331920746043', 'Matthew', 'Patrick', 'Puny Curve  Nr. 125', '4921627509', 'Matthew._Patrick23319@student_uni.com', 'RO831982522552163888847091803040', 42331976, 21, 2, 1);
+CALL pInsertStudent(4, '4348467491462', 'Frank', 'Timothy', 'Creator Carpenter Muddle  Nr. 51', '6444363978', 'FrankTimothy43484@student_uni.com', 'RO299983781923751457459778468588', 44348488, 21, 4, 1);
+CALL pInsertStudent(4, '7324920449442', 'Damian', 'Christian', 'Repeat Dogs  Nr. 127', '2943021576', 'Damian.Christian73249@student_uni.com', 'RO038140354114672456955771438448', 47324945, 21, 4, 1);
+CALL pInsertStudent(4, '7946184123514', 'Maximilian', 'Kashton', 'Godly  Nr. 27', '6077808599', 'Maximilian.Kashton79461@student_uni.com', 'RO476797464099284757234120258574', 47946198, 23, 3, 1);
+CALL pInsertStudent(4, '1381789871843', 'Eduardo', 'Hendrix', 'Needy  Nr. 9', '6970722197', 'EduardoHendrix13817@student_uni.com', 'RO935530308206427963249939199225', 41381711, 21, 4, 1);
+CALL pInsertStudent(4, '4153102126903', 'Damon', 'Dominic', 'Dangerous Spooky Hollow  Nr. 34', '3196346171', 'Damon_Dominic41531@student_uni.com', 'RO658825623904543834915885829134', 44153148, 22, 2, 2);
+CALL pInsertStudent(4, '6222463758146', 'Emanuel', 'Elliott', 'Godly Picayune  Nr. 118', '1129296873', 'Emanuel_Elliott62224@student_uni.com', 'RO435485329413917361552123696806', 46222412, 21, 3, 2);
+CALL pInsertStudent(4, '7672203483649', 'Landon', 'Bryce', 'Hollow  Nr. 119', '4251894728', 'LandonBryce76722@student_uni.com', 'RO588622602189926771109666528178', 47672291, 25, 4, 2);
+CALL pInsertStudent(4, '1499014925476', 'Oliver', 'Xavier', 'Table Start  Nr. 186', '7292178394', 'Oliver_Xavier14990@student_uni.com', 'RO209353296059595143887903940896', 41499021, 25, 3, 1);
+CALL pInsertStudent(4, '8595618089894', 'Jeffrey', 'Damian', 'Employ Start  Nr. 152', '5665233270', 'JeffreyDamian85956@student_uni.com', 'RO648068163357225400517485255016', 48595688, 24, 4, 2);
+CALL pInsertStudent(4, '7836289857916', 'Paxton', 'Orion', 'Intelligent Can Hair  Nr. 21', '9642587286', 'PaxtonOrion78362@student_uni.com', 'RO506215574402897318033081696430', 47836276, 21, 1, 1);
+CALL pInsertStudent(4, '4188279631676', 'Tyson', 'Kash', 'Jumpy Staking Elastic  Nr. 195', '2297012325', 'Tyson_Kash41882@student_uni.com', 'RO351200805185417828124510524478', 44188235, 25, 3, 1);
+CALL pInsertStudent(4, '5409162713959', 'Lawson', '', 'Glove Smoke  Nr. 50', '7382196625', 'Lawson._54091@student_uni.com', 'RO542323002393981733323971312054', 45409147, 25, 2, 1);
+CALL pInsertStudent(4, '4520676909131', 'Cameron', 'Erik', 'Reflect  Nr. 195', '6947360706', 'Cameron_Erik45206@student_uni.com', 'RO796417940628954834220329599600', 44520654, 25, 4, 1);
+CALL pInsertStudent(4, '9005282553147', 'Kian', 'Ricardo', 'Wound Sister  Nr. 94', '3713731079', 'KianRicardo90052@student_uni.com', 'RO499823544327602698648077814523', 49005251, 23, 3, 1);
+CALL pInsertStudent(4, '3395051926225', 'Rocco', 'Jeremiah', 'Saw Tin  Nr. 8', '7815259868', 'Rocco._Jeremiah33950@student_uni.com', 'RO873709212168172131436186537272', 43395014, 21, 1, 2);
+CALL pInsertStudent(4, '3570275448275', 'Graham', 'Jackson', 'Untidy Melted  Nr. 193', '9668249851', 'Graham._Jackson35702@student_uni.com', 'RO273806438445748097232332929757', 43570272, 24, 3, 2);
+CALL pInsertStudent(4, '3298809032773', 'August', 'Mathias', 'Digestion Uncle  Nr. 128', '1710414928', 'AugustMathias32988@student_uni.com', 'RO260953946497963270341714871427', 43298879, 21, 4, 2);
+CALL pInsertStudent(4, '3549457280009', 'Xavier', 'Hayden', 'Creator Melted  Nr. 91', '6059860041', 'Xavier.Hayden35494@student_uni.com', 'RO765505797704198338330298636051', 43549442, 25, 4, 2);
+CALL pInsertStudent(4, '3333600053155', 'Albert', 'Logan', 'Appliance Puny  Nr. 103', '1947432293', 'AlbertLogan33336@student_uni.com', 'RO697393626404401690155606886171', 43333698, 24, 2, 2);
+CALL pInsertStudent(4, '3357566759535', 'Emiliano', 'Wade', 'Victorious Muddle  Nr. 136', '5723340924', 'Emiliano._Wade33575@student_uni.com', 'RO475250576300874587081236088676', 43357565, 23, 2, 2);
+CALL pInsertStudent(4, '7268736197310', 'Wade', 'Pedro', 'Spooky  Nr. 51', '7349145439', 'Wade_Pedro72687@student_uni.com', 'RO096861188651507938428945610527', 47268776, 23, 3, 2);
+CALL pInsertStudent(4, '1513716129173', 'Sergio', 'Phillip', 'Godly  Nr. 111', '4423479999', 'Sergio_Phillip15137@student_uni.com', 'RO987369023746371478563366680887', 41513785, 24, 1, 1);
+CALL pInsertStudent(4, '3621917792989', 'Charlie', 'Kaiden', 'Cute Nebulous  Nr. 143', '9958458909', 'Charlie_Kaiden36219@student_uni.com', 'RO233456316584372012752258276153', 43621931, 25, 2, 2);
+CALL pInsertStudent(4, '6844178511233', 'Barrett', 'Jax', 'Abandoned Watch  Nr. 44', '2603953851', 'Barrett_Jax68441@student_uni.com', 'RO291174638470445183730199334499', 46844125, 22, 2, 1);
+CALL pInsertStudent(4, '6541163998392', 'Owen', 'Dante', 'Elastic Saw  Nr. 146', '9734041243', 'Owen_Dante65411@student_uni.com', 'RO498844793445080542763556444003', 46541170, 25, 3, 2);
+CALL pInsertStudent(4, '2039961238444', 'Enzo', 'Colton', 'Farm  Nr. 186', '9827307858', 'Enzo._Colton20399@student_uni.com', 'RO067199088440904727302578121522', 42039978, 25, 2, 1);
+CALL pInsertStudent(4, '3731564048765', 'Devin', 'Jameson', 'Extra-small Position Queue  Nr. 110', '2446955766', 'Devin._Jameson37315@student_uni.com', 'RO307805579028799514009151991940', 43731517, 21, 1, 2);
+CALL pInsertStudent(4, '4612399254796', 'Francis', 'Aaron', 'Glove  Nr. 181', '9442728702', 'Francis_Aaron46123@student_uni.com', 'RO162845771286072049742490749830', 44612380, 22, 1, 2);
+CALL pInsertStudent(4, '3447255086527', 'Grayson', 'Max', 'Jumpy  Nr. 194', '8730579382', 'Grayson._Max34472@student_uni.com', 'RO822019064372947157548942580364', 43447261, 22, 2, 1);
+CALL pInsertStudent(4, '7355118720147', 'Ace', 'Cash', 'Godly Discovery  Nr. 69', '3043444782', 'Ace.Cash73551@student_uni.com', 'RO329997747435400152076232248878', 47355172, 24, 2, 1);
+CALL pInsertStudent(4, '4619940812650', 'Odin', 'Wesley', 'Odd Close  Nr. 38', '6399695023', 'Odin_Wesley46199@student_uni.com', 'RO666867975017296840736396892855', 44619910, 21, 2, 2);
+CALL pInsertStudent(4, '6857188472706', 'Santiago', 'Manuel', 'Diligent Magical  Nr. 99', '6835752704', 'Santiago.Manuel68571@student_uni.com', 'RO012773332535799804580036018279', 46857144, 21, 4, 2);
+CALL pInsertStudent(4, '7040375098818', 'Josiah', 'Archer', 'Piquant Field  Nr. 57', '8245033964', 'Josiah_Archer70403@student_uni.com', 'RO436317182916030745375203994219', 47040326, 24, 1, 1);
+CALL pInsertStudent(4, '9116301938232', 'Victor', 'Niko', 'Untidy Elastic  Nr. 60', '8451503936', 'VictorNiko91163@student_uni.com', 'RO886717242692281595931817529248', 49116346, 22, 1, 1);
+CALL pInsertStudent(4, '8829771116046', 'Bennett', 'Russell', 'Juicy Muddle Juicy  Nr. 109', '7995932362', 'Bennett.Russell88297@student_uni.com', 'RO934099070906031007262786239221', 48829754, 25, 2, 2);
+CALL pInsertStudent(4, '1035032615630', 'Hendrix', 'Zayne', 'Tin Petite  Nr. 77', '1587731523', 'Hendrix._Zayne10350@student_uni.com', 'RO587198665506675896929105533282', 41035095, 21, 1, 2);
+CALL pInsertStudent(4, '1154553077037', 'Carlos', 'Gregory', 'Want  Nr. 194', '9392555579', 'CarlosGregory11545@student_uni.com', 'RO429365164863930988820228514489', 41154518, 22, 2, 1);
+CALL pInsertStudent(4, '5719551428545', 'Esteban', 'Victor', 'Six  Nr. 192', '3497760054', 'Esteban.Victor57195@student_uni.com', 'RO894607774526942338347642345754', 45719594, 25, 4, 1);
+CALL pInsertStudent(4, '6824538987847', 'Preston', 'Trevor', 'Table Sordid  Nr. 73', '6523498156', 'Preston.Trevor68245@student_uni.com', 'RO076272514216109641079028869903', 46824520, 22, 1, 2);
+CALL pInsertStudent(4, '9718971964298', 'Dante', 'Kaleb', 'Donkey Wiry  Nr. 90', '8412548695', 'DanteKaleb97189@student_uni.com', 'RO779093705328068259937815193039', 49718940, 22, 4, 1);
+CALL pInsertStudent(4, '7303083792747', 'Dawson', 'Brian', 'Sister  Nr. 125', '7185717044', 'Dawson_Brian73030@student_uni.com', 'RO411988112197601979177738472271', 47303057, 22, 2, 2);
+CALL pInsertStudent(4, '9298848725124', 'Mathias', 'Everett', 'Letter Vegetable Ghost  Nr. 183', '4858194507', 'MathiasEverett92988@student_uni.com', 'RO698910390561613239154742522998', 49298881, 22, 3, 1);
+CALL pInsertStudent(4, '3716549662373', 'Miguel', 'Conner', 'Glove  Nr. 131', '2864329864', 'Miguel._Conner37165@student_uni.com', 'RO802250762405095453701883309198', 43716583, 21, 1, 1);
+CALL pInsertStudent(4, '3050266000461', 'Shane', 'Cody', 'Symptomatic Farm Field  Nr. 127', '5480509303', 'Shane_Cody30502@student_uni.com', 'RO821959432593957053337093399616', 43050277, 21, 4, 2);
+CALL pInsertStudent(4, '4151405556890', 'Ayden', 'Joel', 'Reflect Melted Field  Nr. 34', '4851587234', 'Ayden._Joel41514@student_uni.com', 'RO619833363454860362491193036348', 44151459, 24, 3, 1);
+CALL pInsertStudent(4, '6757655020514', 'Everett', 'Cayden', 'Needy Picayune Gusty  Nr. 189', '9468432543', 'Everett._Cayden67576@student_uni.com', 'RO695987259190413037561470167501', 46757676, 23, 1, 1);
+CALL pInsertStudent(4, '7400014176929', 'Killian', 'Hector', 'Miniature Sand  Nr. 21', '5903559166', 'Killian._Hector74000@student_uni.com', 'RO604465948268766207170613581961', 47400067, 24, 3, 2);
+CALL pInsertStudent(4, '5111315594459', 'Elliot', 'Maddox', 'Juicy Dangerous  Nr. 16', '4010538843', 'Elliot.Maddox51113@student_uni.com', 'RO435268111202968784865094407908', 45111365, 22, 3, 1);
+CALL pInsertStudent(4, '8227409925720', 'Ibrahim', 'Dean', 'Sister Unequaled  Nr. 124', '1232464566', 'Ibrahim.Dean82274@student_uni.com', 'RO663428652855533801013126769371', 48227433, 24, 4, 2);
+CALL pInsertStudent(4, '4082623119828', 'Ricardo', 'Miguel', 'Can  Nr. 72', '8422444651', 'Ricardo.Miguel40826@student_uni.com', 'RO245246952158094113098010784349', 44082670, 25, 2, 1);
+CALL pInsertStudent(4, '9892907982307', 'Brooks', 'Raymond', 'Sister Push  Nr. 192', '6134042826', 'Brooks._Raymond98929@student_uni.com', 'RO833893814254594784391612653369', 49892915, 24, 4, 1);
+CALL pInsertStudent(4, '4587953788390', 'Gregory', 'Logan', 'Close Dangerous  Nr. 87', '5368757372', 'Gregory._Logan45879@student_uni.com', 'RO208804400378758167424277571919', 44587948, 25, 4, 2);
+CALL pInsertStudent(4, '5730702878130', 'Dakota', 'Louis', 'Hair Temporary  Nr. 63', '1451013976', 'Dakota.Louis57307@student_uni.com', 'RO299822720131234404036403987951', 45730737, 25, 3, 2);
+CALL pInsertStudent(4, '5242036555432', 'Karter', 'Marshall', 'Dangerous Invincible  Nr. 25', '9279740801', 'Karter.Marshall52420@student_uni.com', 'RO643990189317374247524043700363', 45242031, 22, 2, 1);
+CALL pInsertStudent(4, '8699205115875', 'Ali', 'Santino', 'Queue  Nr. 70', '7747777931', 'Ali_Santino86992@student_uni.com', 'RO308000682317714204020199270460', 48699295, 22, 3, 2);
+CALL pInsertStudent(4, '1144651126541', 'George', 'Patrick', 'Melted Extra-small  Nr. 180', '5125226954', 'GeorgePatrick11446@student_uni.com', 'RO081257819339926836663378643718', 41144614, 23, 1, 2);
+CALL pInsertStudent(4, '6345946598511', '', 'Preston', 'Cute Unequaled  Nr. 51', '4888857289', '_Preston63459@student_uni.com', 'RO938044118382731402165313246785', 46345933, 21, 1, 2);
+CALL pInsertStudent(4, '4199556449122', 'Javier', 'Khalil', 'Elastic Position  Nr. 180', '8737210445', 'Javier_Khalil41995@student_uni.com', 'RO468544915546917630966321615741', 44199563, 23, 4, 2);
+CALL pInsertStudent(4, '2876499013674', 'Matias', 'Benjamin', 'Start  Nr. 13', '7205816861', 'Matias_Benjamin28764@student_uni.com', 'RO099770485828876239980836089019', 42876431, 23, 2, 1);
+CALL pInsertStudent(4, '3032398065032', 'Porter', 'Dax', 'Abandoned Puny Magical  Nr. 124', '9805473093', 'PorterDax30323@student_uni.com', 'RO562209541991305703261610173427', 43032347, 25, 4, 1);
+CALL pInsertStudent(4, '1374975738905', 'Apollo', 'Nehemiah', 'Muddle Concentrate Remove  Nr. 89', '1822874849', 'Apollo._Nehemiah13749@student_uni.com', 'RO773776977219326916356749578872', 41374928, 24, 3, 1);
+CALL pInsertStudent(4, '1442636781876', 'Esteban', 'Ashton', 'Tin Diligent  Nr. 13', '5120931754', 'Esteban._Ashton14426@student_uni.com', 'RO761065736041714582942900275142', 41442659, 22, 2, 1);
+CALL pInsertStudent(4, '3244685577783', 'Tyson', 'Bowen', 'Male Stitch  Nr. 174', '9338700396', 'TysonBowen32446@student_uni.com', 'RO986967811636196901134987169693', 43244612, 25, 3, 2);
+CALL pInsertStudent(4, '1031581429097', 'Isaac', 'Amir', 'Hug  Nr. 16', '4881545943', 'Isaac_Amir10315@student_uni.com', 'RO646657199247040860682277140032', 41031529, 23, 4, 1);
+CALL pInsertStudent(4, '8335860763183', 'Dominic', 'Kyson', 'Absent Abandoned  Nr. 178', '6142122171', 'Dominic_Kyson83358@student_uni.com', 'RO776479668909209147379727710290', 48335828, 23, 4, 1);
+CALL pInsertStudent(4, '6825880263826', 'Dakota', 'Alex', 'Godly Accurate Electric  Nr. 59', '1570926816', 'DakotaAlex68258@student_uni.com', 'RO936074207588658220961766681327', 46825817, 22, 1, 2);
+CALL pInsertStudent(4, '1315351720753', 'Cash', 'Abel', 'Zoo Glove  Nr. 154', '9071949638', 'CashAbel13153@student_uni.com', 'RO617264841641596098064008785850', 41315345, 25, 1, 1);
+CALL pInsertStudent(4, '8176774306377', 'Jeremiah', 'Sean', 'Dogs Can Wry  Nr. 87', '2958904606', 'JeremiahSean81767@student_uni.com', 'RO621758192311128515929916313257', 48176711, 21, 1, 1);
+CALL pInsertStudent(4, '7544963112706', 'Richard', 'Declan', 'Cute Electric  Nr. 48', '3479748635', 'Richard.Declan75449@student_uni.com', 'RO783263399158691900895310017520', 47544910, 25, 1, 2);
+CALL pInsertStudent(4, '9136194729642', 'Martin', 'Clark', 'Spooky Odd  Nr. 53', '9697741585', 'Martin._Clark91361@student_uni.com', 'RO952904943311641272170169779429', 49136152, 23, 1, 1);
+CALL pInsertStudent(4, '9264698349122', 'Phoenix', 'Jaxson', 'Hair  Nr. 36', '7170839883', 'Phoenix_Jaxson92646@student_uni.com', 'RO960431199784488516058912102646', 49264635, 21, 1, 1);
+CALL pInsertStudent(4, '6381569671561', 'Luis', 'Ethan', 'Victorious Employ  Nr. 86', '9528269680', 'Luis._Ethan63815@student_uni.com', 'RO153777281078962769398013604502', 46381519, 24, 4, 1);
+CALL pInsertStudent(4, '6678616969078', 'Kaiden', 'Abdiel', 'Sister Wanting Farm  Nr. 189', '6935720705', 'Kaiden_Abdiel66786@student_uni.com', 'RO014494732865633618822851114513', 46678681, 21, 1, 1);
+CALL pInsertStudent(4, '3697850662844', 'Enzo', 'Peyton', 'Can Position  Nr. 169', '2242882802', 'Enzo.Peyton36978@student_uni.com', 'RO843640058231276963344941469392', 43697840, 23, 3, 2);
+CALL pInsertStudent(4, '4637635751774', 'Christopher', 'Lawson', 'Zoo Wanting Women  Nr. 119', '2306534061', 'ChristopherLawson46376@student_uni.com', 'RO430094754329453003716655119514', 44637614, 25, 3, 2);
+CALL pInsertStudent(4, '1850637420230', 'Julius', 'Cairo', 'Field Intelligent Repeat  Nr. 100', '7597951254', 'Julius._Cairo18506@student_uni.com', 'RO804234893807838996753545711895', 41850682, 21, 4, 2);
+CALL pInsertStudent(4, '9511859333306', 'Zayne', 'Mathias', 'Share  Nr. 29', '1251940809', 'ZayneMathias95118@student_uni.com', 'RO932138909463775713841324800440', 49511892, 25, 1, 2);
+CALL pInsertStudent(4, '5785421189083', 'Caiden', 'Niko', 'Queue Male Odd  Nr. 129', '8322516300', 'CaidenNiko57854@student_uni.com', 'RO029348621657483290972348406327', 45785455, 25, 1, 1);
+CALL pInsertStudent(4, '9181777792263', 'Aiden', 'Louis', 'Governor Male  Nr. 175', '5324909379', 'Aiden._Louis91817@student_uni.com', 'RO426769974019258037354559318892', 49181759, 23, 3, 2);
+CALL pInsertStudent(4, '6899561630587', 'Nehemiah', 'Elliot', 'Stitch Cute Swim  Nr. 1', '6251268290', 'Nehemiah.Elliot68995@student_uni.com', 'RO740172233671182406621673766814', 46899574, 23, 2, 2);
+CALL pInsertStudent(4, '6824600059174', 'Mathias', 'Eduardo', 'Accurate  Nr. 28', '3457031565', 'Mathias.Eduardo68246@student_uni.com', 'RO715788113788837227933101317320', 46824669, 21, 1, 1);
+CALL pInsertStudent(4, '4501967557128', 'Titus', 'Malachi', 'Start Concentrate  Nr. 143', '8871506554', 'Titus.Malachi45019@student_uni.com', 'RO676157628062327730914009086504', 44501947, 24, 4, 2);
+CALL pInsertStudent(4, '3206836697458', 'Wyatt', 'Axel', 'Spooky Letter  Nr. 128', '7833048041', 'Wyatt._Axel32068@student_uni.com', 'RO753343251996742616603784220717', 43206847, 25, 2, 2);
+CALL pInsertStudent(4, '7437736691561', 'Connor', 'Jack', 'Farm  Nr. 137', '2071606765', 'Connor._Jack74377@student_uni.com', 'RO602139387755771796636341791136', 47437787, 24, 1, 1);
+CALL pInsertStudent(4, '2958463082115', 'Romeo', 'Hugo', 'Governor Terrify Six  Nr. 3', '8660411606', 'Romeo_Hugo29584@student_uni.com', 'RO230424194562267969671941374455', 42958495, 21, 1, 1);
+CALL pInsertStudent(4, '6926255377408', 'Muhammad', 'Axel', 'Picayune  Nr. 199', '7948875698', 'Muhammad_Axel69262@student_uni.com', 'RO372120238061079692359213198812', 46926277, 21, 3, 1);
+CALL pInsertStudent(4, '5001704854601', 'Tobias', 'Josue', 'Reward Juicy Intelligent  Nr. 56', '2487446546', 'Tobias._Josue50017@student_uni.com', 'RO996485569109675052072192929481', 45001771, 24, 4, 2);
+CALL pInsertStudent(4, '1704538879711', 'Preston', 'Kashton', 'Can Start  Nr. 112', '9598187275', 'Preston._Kashton17045@student_uni.com', 'RO825932948056234669944608826666', 41704543, 24, 2, 1);
+CALL pInsertStudent(4, '9807110231496', 'Charles', 'Ian', 'Sand Repeat  Nr. 158', '2118060351', 'CharlesIan98071@student_uni.com', 'RO543057436478292701719241749922', 49807178, 22, 2, 1);
+CALL pInsertStudent(4, '6627290353687', 'Ezra', 'Jaxson', 'Carpenter  Nr. 17', '3243358524', 'Ezra.Jaxson66272@student_uni.com', 'RO547720919406141838895034543874', 46627297, 22, 1, 2);
+CALL pInsertStudent(4, '4112448256959', 'Erick', 'Antonio', 'Smoke Elastic Godly  Nr. 5', '9015870213', 'Erick.Antonio41124@student_uni.com', 'RO116652990758099613453518409821', 44112446, 21, 3, 1);
+CALL pInsertStudent(4, '9482664917030', 'Zion', 'Enzo', 'Appliance Teeth  Nr. 106', '7284417800', 'Zion._Enzo94826@student_uni.com', 'RO057723718664233981699182013681', 49482662, 22, 4, 1);
+CALL pInsertStudent(4, '1864703336279', 'Clayton', 'Landen', 'Wry Hollow  Nr. 117', '1196569105', 'ClaytonLanden18647@student_uni.com', 'RO356931216388954840115167668241', 41864767, 24, 3, 1);
+CALL pInsertStudent(4, '5506313667552', 'Jesus', 'Lincoln', 'Sordid  Nr. 140', '2900958753', 'Jesus.Lincoln55063@student_uni.com', 'RO550307009094501952383906331176', 45506330, 23, 4, 1);
+CALL pInsertStudent(4, '9282054508857', 'Ezequiel', 'Emanuel', 'Diligent Discovery Governor  Nr. 26', '9869055391', 'Ezequiel.Emanuel92820@student_uni.com', 'RO742754399730595552660085607355', 49282022, 24, 3, 2);
+CALL pInsertStudent(4, '1688491634598', 'Niko', 'Cole', 'Concentrate Petite  Nr. 140', '7677449651', 'Niko_Cole16884@student_uni.com', 'RO854390756014549652632765258507', 41688492, 25, 1, 1);
+CALL pInsertStudent(4, '9146234830247', 'Esteban', 'Nico', 'Saw Reflect  Nr. 130', '6063191012', 'EstebanNico91462@student_uni.com', 'RO590435936490631282551453634069', 49146237, 22, 3, 2);
+CALL pInsertStudent(4, '8197004303981', 'Peyton', 'Conor', 'Throat Repeat  Nr. 74', '2898177772', 'PeytonConor81970@student_uni.com', 'RO742895020661222135594222000189', 48197028, 22, 2, 1);
+CALL pInsertStudent(4, '8117070058845', 'Ace', 'Kyler', 'Puny Employ  Nr. 137', '9441766416', 'Ace.Kyler81170@student_uni.com', 'RO280772162984752940796668188548', 48117057, 21, 4, 1);
+CALL pInsertStudent(4, '1987660418454', 'Ruben', 'Gideon', 'Concentrate  Nr. 176', '8238906449', 'RubenGideon19876@student_uni.com', 'RO769253187398760741861924764078', 41987625, 24, 4, 2);
+CALL pInsertStudent(4, '8169266849990', 'Rocco', 'Christian', 'Abandoned  Nr. 180', '6847245953', 'Rocco_Christian81692@student_uni.com', 'RO978285393074650570902090535380', 48169267, 23, 4, 1);
+CALL pInsertStudent(4, '7544200405456', 'Robert', 'Alexander', 'Hair  Nr. 60', '6516787096', 'Robert.Alexander75442@student_uni.com', 'RO632187428312532870659151252735', 47544258, 22, 2, 1);
+CALL pInsertStudent(4, '3777938792688', 'Ismael', 'Matthew', 'Untidy Digestion Letter  Nr. 145', '2372543291', 'Ismael._Matthew37779@student_uni.com', 'RO460705604749910226715040321152', 43777965, 23, 3, 1);
+CALL pInsertStudent(4, '9075390714240', 'Cristian', 'George', 'Continue Start  Nr. 85', '5852909753', 'Cristian._George90753@student_uni.com', 'RO491721529195391205914167018651', 49075310, 22, 2, 2);
+CALL pInsertStudent(4, '1396176893041', 'Daniel', 'Corbin', 'Remove Vegetable  Nr. 69', '9906402241', 'Daniel.Corbin13961@student_uni.com', 'RO144276341038064057994907297892', 41396195, 22, 3, 1);
+CALL pInsertStudent(4, '4201462569118', 'Kyrie', 'Marcus', 'Dogs Can  Nr. 135', '9632380798', 'Kyrie._Marcus42014@student_uni.com', 'RO657601021907522225510554125652', 44201494, 23, 1, 1);
+CALL pInsertStudent(4, '5539353920189', 'Kamari', 'Jorge', 'Petite Petite Vegetable  Nr. 147', '2056945992', 'Kamari._Jorge55393@student_uni.com', 'RO376178626852190427301664649771', 45539396, 22, 4, 2);
+CALL pInsertStudent(4, '8456146564442', 'King', 'Enrique', 'Cruel Accurate  Nr. 128', '1537964461', 'King.Enrique84561@student_uni.com', 'RO493994422169983808338607348244', 48456179, 23, 3, 2);
+CALL pInsertStudent(4, '2281005055284', 'Alexander', 'Gideon', 'Victorious Miniature  Nr. 43', '9871613857', 'Alexander._Gideon22810@student_uni.com', 'RO233553422048653175624576844602', 42281023, 23, 2, 1);
+CALL pInsertStudent(4, '6966290013535', 'Troy', 'Jordan', 'Picayune Temporary Concentrate  Nr. 54', '7869838994', 'Troy._Jordan69662@student_uni.com', 'RO233150303958450511892275913822', 46966255, 24, 3, 2);
+CALL pInsertStudent(4, '7240659560190', 'Cade', 'Francisco', 'Employ Want  Nr. 6', '7463742770', 'CadeFrancisco72406@student_uni.com', 'RO417435200295717231622888862540', 47240645, 22, 2, 1);
+CALL pInsertStudent(4, '4394203188835', 'Isaac', 'Abraham', 'Concentrate Start  Nr. 117', '1511143392', 'Isaac.Abraham43942@student_uni.com', 'RO742242716986985403633861801525', 44394270, 24, 1, 1);
+CALL pInsertStudent(4, '9434815365725', 'Dexter', 'Carter', 'Repeat  Nr. 23', '1972221080', 'DexterCarter94348@student_uni.com', 'RO884793696330185372075689677588', 49434882, 22, 4, 1);
+CALL pInsertStudent(4, '9899292311556', 'Nicholas', 'Kendrick', 'Zoo Wound Dangerous  Nr. 131', '6509383415', 'NicholasKendrick98992@student_uni.com', 'RO915562438598489246582529185392', 49899227, 22, 3, 2);
+CALL pInsertStudent(4, '1116382168308', 'Jared', 'Jesus', 'Close Elastic  Nr. 106', '3061212652', 'Jared.Jesus11163@student_uni.com', 'RO839898452533119275685372281068', 41116363, 23, 1, 1);
+CALL pInsertStudent(4, '7277080875781', 'Colt', 'Cruz', 'Remove Six Victorious  Nr. 190', '3834727936', 'Colt._Cruz72770@student_uni.com', 'RO211846791872561714270657601113', 47277088, 24, 2, 1);
+CALL pInsertStudent(4, '8360999450024', 'Timothy', 'Alex', 'Chicken Appliance  Nr. 136', '7044237390', 'Timothy._Alex83609@student_uni.com', 'RO367647291855990553204494417361', 48360945, 23, 2, 2);
+CALL pInsertStudent(4, '4912611234115', 'Noah', 'Zayn', 'Wrist Employ  Nr. 77', '1781941941', 'Noah._Zayn49126@student_uni.com', 'RO894692647599659212550850058116', 44912635, 24, 1, 2);
+CALL pInsertProfesor(3, '1312576437984', 'Abraham', 'Royce', 'Remind Watch Can  Nr. 171', '8046844467', 'Abraham._Royce13125@prof_IE_uni.com', 'RO701008810995837674542460694236', 31312584, 23, 40, 5);
+CALL pInsertProfesor(3, '3797244064152', 'Kaleb', 'Deacon', 'Cross Miniature  Nr. 74', '7912784804', 'Kaleb_Deacon37972@prof_CS_uni.com', 'RO399409913087298202236169498701', 33797215, 22, 45, 4);
+CALL pInsertProfesor(3, '8375527725763', 'Oakley', 'Daniel', 'Spooky Airplane  Nr. 137', '4507076260', 'Oakley.Daniel83755@prof_CS_uni.com', 'RO273435006246181605798393436515', 38375511, 22, 44, 2);
+CALL pInsertProfesor(3, '8788850058790', 'Tate', 'Jace', 'Symptomatic Concentrate Temporary  Nr. 178', '3682325366', 'Tate.Jace87888@prof_MATH_uni.com', 'RO500265814674209680783545081052', 38788886, 18, 44, 4);
+CALL pInsertProfesor(3, '9823194223663', 'Hendrix', 'Silas', 'Male Governor Push  Nr. 134', '2825705761', 'Hendrix._Silas98231@prof_PSHY_uni.com', 'RO689404660977409907986833256748', 39823196, 22, 43, 5);
+CALL pInsertProfesor(3, '9946946450104', 'Samuel', 'Everett', 'Teeth Puny  Nr. 127', '2528323663', 'SamuelEverett99469@prof_CS_uni.com', 'RO401221426777801688920781447748', 39946932, 24, 50, 4);
+CALL pInsertProfesor(3, '6624483011853', 'Leon', 'Edward', 'Watch Needy Remove  Nr. 59', '8324723231', 'LeonEdward66244@prof_CS_uni.com', 'RO133696031764383347556913831704', 36624435, 22, 40, 2);
+CALL pInsertProfesor(3, '7200686410487', 'Walker', 'Zander', 'Magical Untidy Intelligent  Nr. 121', '4132988408', 'Walker.Zander72006@prof_MATH_uni.com', 'RO346471089201430178566428365273', 37200628, 19, 42, 3);
+CALL pInsertProfesor(3, '6725058953813', 'Kyle', 'Jace', 'Abandoned Reflect Intelligent  Nr. 116', '7326144814', 'Kyle._Jace67250@prof_IE_uni.com', 'RO182477769039760311532969982348', 36725034, 22, 42, 5);
+CALL pInsertProfesor(3, '8581161249883', 'Adan', 'Max', 'Victorious  Nr. 166', '8803385974', 'Adan.Max85811@prof_MATH_uni.com', 'RO020253117186642691113093407331', 38581112, 19, 46, 2);
+CALL pInsertProfesor(3, '2975653340773', 'Colson', 'Maxwell', 'Continue Odd  Nr. 82', '3643012833', 'Colson_Maxwell29756@prof_CS_uni.com', 'RO254364695477206838031204383288', 32975649, 21, 38, 3);
+CALL pInsertProfesor(3, '3134737365052', 'Connor', 'Avery', 'Seal Tin  Nr. 85', '7751704443', 'Connor_Avery31347@prof_IE_uni.com', 'RO256747481039695269771588666626', 33134747, 21, 39, 4);
+CALL pInsertProfesor(3, '2618823543684', 'Alejandro', 'Nash', 'Ghost  Nr. 141', '5758386988', 'Alejandro.Nash26188@prof_PHYS_uni.com', 'RO087329539962392850447539402665', 32618899, 24, 49, 3);
+CALL pInsertProfesor(3, '2867365671185', 'Felix', 'Peyton', 'Staking Vegetable  Nr. 65', '5788670899', 'Felix._Peyton28673@prof_CS_uni.com', 'RO372232075152132105762714836631', 32867353, 23, 43, 5);
+CALL pInsertProfesor(3, '1255421424315', 'Parker', 'Augustus', 'Curve  Nr. 46', '4591050419', 'Parker._Augustus12554@prof_MATH_uni.com', 'RO604878176878626128041371191484', 31255470, 24, 43, 5);
+CALL pInsertProfesor(3, '3846933325426', 'Jace', 'Amari', 'Cute  Nr. 70', '6089936496', 'JaceAmari38469@prof_CS_uni.com', 'RO886662626216454556119670598952', 33846940, 21, 44, 4);
+CALL pInsertProfesor(3, '3454794822521', 'Jude', 'Uriel', 'Untidy  Nr. 106', '6331921075', 'Jude._Uriel34547@prof_PHYS_uni.com', 'RO513350883413637586026069801279', 33454784, 20, 49, 2);
+CALL pInsertProfesor(3, '4419122536943', 'Cooper', 'Gunnar', 'Digestion Letter  Nr. 26', '8846430645', 'Cooper._Gunnar44191@prof_IE_uni.com', 'RO172555188129866318369099173860', 34419182, 20, 45, 4);
+CALL pInsertProfesor(3, '1537681307598', 'Callum', 'Asher', 'Concentrate  Nr. 154', '4672490543', 'Callum.Asher15376@prof_IE_uni.com', 'RO734288912356120907757453837868', 31537698, 23, 41, 3);
+CALL pInsertProfesor(3, '9416122880596', 'Omar', 'Allen', 'Donkey Donkey Donkey  Nr. 109', '3902013467', 'Omar._Allen94161@prof_PHYS_uni.com', 'RO947024456147147699352649306934', 39416163, 20, 49, 5);
+CALL pInsertProfesor(3, '8007759948229', 'Trevor', 'Landen', 'Spooky Needy  Nr. 25', '4806919026', 'TrevorLanden80077@prof_PSHY_uni.com', 'RO908906244356553120488806677404', 38007746, 20, 45, 1);
+CALL pInsertProfesor(3, '7547880000061', 'Martin', 'Emilio', 'Wrist  Nr. 146', '6899119972', 'Martin_Emilio75478@prof_MATH_uni.com', 'RO690821320241731170652788116720', 37547850, 23, 47, 4);
+CALL pInsertProfesor(3, '4316113938298', 'Callum', 'Muhammad', 'Saw Start Petite  Nr. 175', '7733229081', 'Callum._Muhammad43161@prof_PSHY_uni.com', 'RO862522762198414661204965601818', 34316191, 22, 38, 3);
+CALL pInsertProfesor(3, '5299114867033', 'Dalton', 'Alexander', 'Nebulous Unequaled Wry  Nr. 85', '1367905556', 'Dalton.Alexander52991@prof_PHYS_uni.com', 'RO981788255553765599048612527631', 35299135, 20, 42, 3);
+CALL pInsertProfesor(3, '3854637893726', 'Jase', 'Knox', 'Reflect Invincible Wiry  Nr. 93', '9169128131', 'JaseKnox38546@prof_CS_uni.com', 'RO337988117886388166295890509265', 33854654, 18, 49, 2);
+CALL pInsertProfesor(3, '2966596557072', 'Orion', 'Rafael', 'Intelligent Diligent Wiry  Nr. 36', '4083874573', 'Orion.Rafael29665@prof_MATH_uni.com', 'RO210579778673381399605144250889', 32966573, 22, 49, 2);
+CALL pInsertProfesor(3, '7071987873412', 'Antonio', 'Daxton', 'Electric  Nr. 88', '5222732378', 'Antonio.Daxton70719@prof_IE_uni.com', 'RO753910250736788312249815024182', 37071994, 20, 43, 5);
+CALL pInsertProfesor(3, '3298288892580', 'Jonah', 'Michael', 'Concentrate Intelligent Push  Nr. 186', '9104798030', 'Jonah_Michael32982@prof_PHYS_uni.com', 'RO193452767796045703193616057538', 33298293, 19, 42, 1);
+CALL pInsertProfesor(3, '2088159200588', 'Phoenix', 'Paul', 'Six  Nr. 170', '4010329580', 'PhoenixPaul20881@prof_IE_uni.com', 'RO742803774942458104230408733234', 32088183, 20, 47, 5);
+CALL pInsertProfesor(3, '7293073693684', 'Leo', 'Troy', 'Jumpy Table  Nr. 155', '5788667192', 'Leo_Troy72930@prof_CS_uni.com', 'RO004379033208294378665709643642', 37293085, 22, 45, 3);
+CALL pInsertProfesor(3, '6189315363476', 'Tatum', 'Milo', 'Jumpy  Nr. 73', '2919738421', 'Tatum_Milo61893@prof_PHYS_uni.com', 'RO166562858014847304108615963496', 36189341, 18, 46, 4);
+CALL pInsertProfesor(3, '6034709683368', 'Nehemiah', 'Cohen', 'Uncle Governor  Nr. 105', '6433720633', 'Nehemiah_Cohen60347@prof_MATH_uni.com', 'RO269549376663020555626441858439', 36034770, 23, 46, 5);
+CALL pInsertProfesor(3, '3711859411468', 'Zander', 'Ian', 'Six Male  Nr. 17', '9342575526', 'Zander.Ian37118@prof_IE_uni.com', 'RO211607177396631519676182995735', 33711848, 24, 48, 5);
+CALL pInsertProfesor(3, '9933405724825', 'Derek', 'Chase', 'Faulty Can  Nr. 161', '5045804148', 'DerekChase99334@prof_PHYS_uni.com', 'RO442607629677822579546755849964', 39933418, 18, 48, 4);
+CALL pInsertProfesor(3, '7419153465956', 'Brian', 'Maxwell', 'Uncle Cute  Nr. 27', '6990195229', 'Brian_Maxwell74191@prof_CS_uni.com', 'RO496541973650350703235631066526', 37419126, 23, 41, 1);
+CALL pInsertProfesor(3, '8102156904440', 'Forrest', 'Wyatt', 'Field Male  Nr. 13', '5293155861', 'Forrest_Wyatt81021@prof_IE_uni.com', 'RO947413080247108305046290803623', 38102124, 23, 42, 2);
+CALL pInsertProfesor(3, '1943211352691', 'Khalil', 'Blake', 'Glossy Table  Nr. 24', '3222550066', 'Khalil._Blake19432@prof_PSHY_uni.com', 'RO740418304804999703970137693157', 31943298, 19, 42, 3);
+CALL pInsertProfesor(3, '5141537019118', 'Asa', 'Ismael', 'Cute Airplane  Nr. 60', '1694764419', 'Asa_Ismael51415@prof_CS_uni.com', 'RO838047575452278624463685205592', 35141534, 22, 49, 2);
+CALL pInsertProfesor(3, '4818404402758', 'Liam', 'Eduardo', 'Jumpy Appliance Governor  Nr. 104', '8090976719', 'Liam_Eduardo48184@prof_PHYS_uni.com', 'RO981930824854779031970787767776', 34818471, 23, 47, 1);
+CALL pInsertProfesor(3, '6156392079805', 'Hayden', 'John', 'Petite  Nr. 126', '7947742864', 'Hayden.John61563@prof_IE_uni.com', 'RO284051378193642225585771728961', 36156317, 24, 43, 2);
+CALL pInsertProfesor(3, '9451268847673', 'Jordan', 'Nasir', 'Employ Remove  Nr. 155', '6880182288', 'JordanNasir94512@prof_PSHY_uni.com', 'RO640804028677692849989464428692', 39451229, 23, 39, 5);
+CALL pInsertProfesor(3, '4279913844204', 'Warren', 'Camden', 'Extra-small Muddle  Nr. 134', '9039201809', 'Warren_Camden42799@prof_IE_uni.com', 'RO746514550744515657342733807865', 34279929, 20, 38, 3);
+CALL pInsertProfesor(3, '6171539157168', 'Ali', 'Archer', 'Chicken  Nr. 164', '4865917250', 'Ali_Archer61715@prof_PSHY_uni.com', 'RO861485183928511222685437583331', 36171515, 22, 42, 1);
+CALL pInsertProfesor(3, '5206241930890', 'Kevin', 'Stephen', 'Vegetable Concentrate  Nr. 32', '6383458367', 'Kevin_Stephen52062@prof_PHYS_uni.com', 'RO792433128459673166327833678001', 35206239, 22, 44, 2);
+CALL pInsertProfesor(3, '7370396378058', 'Rhys', 'Jaylen', 'Intelligent Faulty Piquant  Nr. 197', '7121392735', 'Rhys.Jaylen73703@prof_IE_uni.com', 'RO104584171090409651272011937167', 37370393, 23, 41, 2);
+CALL pInsertProfesor(3, '7358941751555', 'Shane', 'Jaxton', 'Muddle Cross Accurate  Nr. 68', '7041498884', 'Shane.Jaxton73589@prof_PSHY_uni.com', 'RO196230264519787166270315671879', 37358947, 18, 50, 5);
+CALL pInsertProfesor(3, '9560641414467', 'Damon', 'Asher', 'Muddle Jumpy Invincible  Nr. 131', '4784419550', 'DamonAsher95606@prof_PHYS_uni.com', 'RO915365731644101083142215267725', 39560611, 24, 46, 1);
+CALL pInsertProfesor(3, '3987232591952', 'Elijah', 'Richard', 'Farm Juicy  Nr. 53', '7582892255', 'Elijah.Richard39872@prof_PSHY_uni.com', 'RO889393173783894150629571617977', 33987211, 19, 43, 1);
+CALL pInsertProfesor(3, '1777801302251', 'Myles', 'Dominick', 'Reward  Nr. 164', '8968009393', 'Myles._Dominick17778@prof_PHYS_uni.com', 'RO729416336658374961507153554503', 31777836, 19, 39, 3);
+CALL pInsertProfesor(3, '3895160396689', 'Peter', 'Emilio', 'Melted Cruel  Nr. 180', '7794342867', 'Peter_Emilio38951@prof_IE_uni.com', 'RO013576518956456972592944191688', 33895167, 23, 39, 1);
+
+UPDATE users SET users.nume = 'Saulea', users.prenume = 'Alessandro', users.username = 'aless', users.parola = '123' WHERE users.id_user = 530;
+UPDATE users SET users.nume = 'Blidea', users.prenume = 'Tudorel Alexandru', users.username = 'tuddi', users.parola = '123' WHERE users.id_user = 1;
+UPDATE users SET users.nume = 'Mariciuc', users.prenume = 'Andrei', users.username = 'andrei', users.parola = '123' WHERE users.id_user = 300;
+
+SELECT * FROM users;
+SELECT * FROM studenti;
+SELECT * FROM profesori;
+
+
+USE aplicatie;
+INSERT INTO cursuri VALUES (1, "BD", "Baze de Date"), (2, "AF", "Algoritmi Fundamentali"), (3, "AF", "Android fundamentals"), (4, "ENG", "Engleza"),
+	(5, "MES", "Masurari Electronice si Senzori"), (6, "PC", "Programarea Calculatoarelor"), (7, "PL", "Proiectare logica"), (8, "POO", "Programare Orientata pe Obiect"),
+    (9, "A1", "Analiza 1"), (10, "MSI", "Matematici speciale in Inginerie");
+
+
+
+drop view if exists vAllCursuri;
+
+create view vAllCursuri as
+select cursuri.descriere
+from cursuri;
+
+drop procedure if exists cursuriDisponibile;
+delimiter //
+create procedure cursuriDisponibile(idStud int)
+begin
+    select*
+    from vAllCursuri
+    where vAllCursuri.descriere not in (select c.descriere
+                                       from cursuri c
+                                                join curs_activitati ca
+                                                join studenti_activitati sa
+                                                join studenti s
+                                                     on c.id_curs = ca.id_curs and ca.id_ca = sa.id_activitate and
+                                                        sa.id_student = s.id_student
+                                                         and s.id_student = idStud);
+end//
+
+call cursuriDisponibile(300);
+
+use aplicatie;
+delete from curs_activitati;
+
+INSERT INTO curs_activitati (id_ca, id_curs, id_activ, id_prof_titular, durata) VALUES (1, 8, 1, 530, 2), (2, 8, 2, 530, 2), (3, 8, 2, 530, 2), (8, 8, 3, 530, 2), (9, 8, 3, 530, 2), (10, 8, 3, 530, 2);
+INSERT INTO curs_activitati (id_ca, id_curs, id_activ, id_prof_titular, durata) VALUES (17, 8, 1, 511, 2), (18, 8, 2, 511, 2), (19, 8, 3, 511, 2), (20, 1, 1, 514, 2), (21, 1, 2, 514, 2), (22, 1, 3, 514, 2);
+SELECT * FROM curs_activitati WHERE id_activ = 1;
+
+delete from studenti_activitati;
+# Online Python compiler (interpreter) to run Python online.
+# Write Python 3 code in this online editor and run it.
+INSERT INTO studenti_activitati (id_student, id_activitate) VALUES (100, 20), (101, 22), (102, 1), (103, 21), (104, 17), (105, 20), (106, 1), (107, 17), (108, 1), (109, 17), (110, 20), (111, 17), (112, 22), (113, 22), (114, 21), (115, 21), (116, 22), (117, 20), (118, 1), (119, 17), (120, 1), (121, 1), (122, 20), (123, 22), (124, 20), (125, 21), (126, 20), (127, 18), (128, 1), (129, 22), (130, 1), (131, 18), (132, 1), (133, 19), (134, 20), (135, 18), (136, 20), (137, 18), (138, 17), (139, 19), (140, 19), (141, 22), (142, 17), (143, 18), (144, 22), (145, 21), (146, 22), (147, 22), (148, 19), (149, 1), (150, 18), (151, 21), (152, 19), (153, 19), (154, 1), (155, 18), (156, 22), (157, 17), (158, 19), (159, 21), (160, 18), (161, 18), (162, 18), (163, 18), (164, 17), (165, 19), (166, 19), (167, 17), (168, 19), (169, 21), (170, 1), (171, 22), (172, 17), (173, 20), (174, 19), (175, 22), (176, 20), (177, 19), (178, 18), (179, 20), (180, 22), (181, 21), (182, 1), (183, 21), (184, 1), (185, 17), (186, 20), (187, 21), (188, 19), (189, 21), (190, 18), (191, 18), (192, 20), (193, 22), (194, 21), (195, 22), (196, 1), (197, 21), (198, 21), (199, 21), (200, 18), (201, 18), (202, 18), (203, 22), (204, 22), (205, 20), (206, 17), (207, 21), (208, 20), (209, 1), (210, 22), (211, 20), (212, 18), (213, 17), (214, 22), (215, 1), (216, 17), (217, 21), (218, 17), (219, 20), (220, 18), (221, 20), (222, 21), (223, 18), (224, 1), (225, 22), (226, 21), (227, 17), (228, 1), (229, 22), (230, 21), (231, 21), (232, 17), (233, 19), (234, 17), (235, 21), (236, 18), (237, 18), (238, 1), (239, 1), (240, 1), (241, 20), (242, 19), (243, 22), (244, 21), (245, 17), (246, 19), (247, 1), (248, 20), (249, 19), (250, 17), (251, 1), (252, 1), (253, 21), (254, 1), (255, 17), (256, 20), (257, 17), (258, 20), (259, 20), (260, 18), (261, 17), (262, 17), (263, 21), (264, 19), (265, 1), (266, 22), (267, 18), (268, 22), (269, 21), (270, 22), (271, 20), (272, 19), (273, 17), (274, 19), (275, 19), (276, 17), (277, 19), (278, 20), (279, 1), (280, 22), (281, 21), (282, 22), (283, 21), (284, 22), (285, 18), (286, 21), (287, 19), (288, 20), (289, 22), (290, 18), (291, 20), (292, 20), (293, 21), (294, 21), (295, 17), (296, 20), (297, 21), (298, 19), (299, 20);
+SELECT * FROM studenti_activitati;
+
+
+
+UPDATE aplicatie.curs_activitati t
+SET t.perioada        = 1,
+    t.nr_zi_sapt      = 6,
+    t.id_prof_delegat = 518,
+    t.ora_inceput     = 15
+WHERE t.id_ca = 19;
+
+UPDATE aplicatie.curs_activitati t
+SET t.perioada        = 2,
+    t.nr_zi_sapt      = 5,
+    t.id_prof_delegat = 530,
+    t.ora_inceput     = 12
+WHERE t.id_ca = 20;
+
+UPDATE aplicatie.curs_activitati t
+SET t.perioada        = 1,
+    t.nr_zi_sapt      = 2,
+    t.id_prof_delegat = 527,
+    t.ora_inceput     = 8
+WHERE t.id_ca = 9;
+
+UPDATE aplicatie.curs_activitati t
+SET t.perioada        = 0,
+    t.nr_zi_sapt      = 4,
+    t.id_prof_delegat = 516,
+    t.ora_inceput     = 17
+WHERE t.id_ca = 22;
+
+UPDATE aplicatie.curs_activitati t
+SET t.perioada        = 2,
+    t.nr_zi_sapt      = 2,
+    t.id_prof_delegat = 529,
+    t.ora_inceput     = 12
+WHERE t.id_ca = 3;
+
+UPDATE aplicatie.curs_activitati t
+SET t.perioada        = 2,
+    t.nr_zi_sapt      = 5,
+    t.id_prof_delegat = 520,
+    t.ora_inceput     = 14
+WHERE t.id_ca = 18;
+
+UPDATE aplicatie.curs_activitati t
+SET t.perioada        = 0,
+    t.nr_zi_sapt      = 3,
+    t.id_prof_delegat = 528,
+    t.ora_inceput     = 8
+WHERE t.id_ca = 8;
+
+UPDATE aplicatie.curs_activitati t
+SET t.perioada        = 2,
+    t.nr_zi_sapt      = 1,
+    t.id_prof_delegat = 531,
+    t.ora_inceput     = 10
+WHERE t.id_ca = 2;
+
+UPDATE aplicatie.curs_activitati t
+SET t.perioada        = 2,
+    t.nr_zi_sapt      = 1,
+    t.id_prof_delegat = 530,
+    t.ora_inceput     = 8
+WHERE t.id_ca = 1;
+
+UPDATE aplicatie.curs_activitati t
+SET t.perioada        = 0,
+    t.nr_zi_sapt      = 4,
+    t.id_prof_delegat = 526,
+    t.ora_inceput     = 8
+WHERE t.id_ca = 10;
+
+UPDATE aplicatie.curs_activitati t
+SET t.perioada        = 2,
+    t.nr_zi_sapt      = 6,
+    t.id_prof_delegat = 514,
+    t.ora_inceput     = 13
+WHERE t.id_ca = 21;
+
+UPDATE aplicatie.curs_activitati t
+SET t.perioada        = 2,
+    t.nr_zi_sapt      = 1,
+    t.id_prof_delegat = 530,
+    t.ora_inceput     = 18
+WHERE t.id_ca = 17;
+
+
+drop procedure if exists profesorCuStudMin;
+
+delimiter //
+create procedure profesorCuStudMin(in idCurs int)
+begin
+    select id_prof_titular, count(id_student) nrStud
+    from curs_activitati ca
+             join studenti_activitati sa on ca.id_ca = sa.id_activitate
+    where id_curs = idCurs
+    group by id_prof_titular
+    order by nrStud
+    limit 1;
+end//
+
+-- 0 sp, 1 si 2 ss
+# sa-mi selectez toate activitatile studentului si sa le aleg pe alea ale cursului care nu se suprapun!
+drop view if exists vActivitatiStudent;
+
+create view vActivitatiStudent as
+select ca.*, id_student
+from studenti_activitati
+         join curs_activitati ca on ca.id_ca = studenti_activitati.id_activitate;
+
+-- test
+select perioada, nr_zi_sapt, ora_inceput, durata
+from vActivitatiStudent
+where id_student = 160;
+
+drop procedure if exists getActivitatiCurs;
+delimiter //
+create procedure getActivitatiCurs(idCurs int, idStudent int, idProfTitular int, idActivitate int)
+begin
+    select *
+    from curs_activitati ca
+    where ca.id_curs = idCurs
+      and ca.id_prof_titular = idProfTitular
+      and idActivitate = ca.id_activ
+      and (ca.perioada, ca.nr_zi_sapt, ca.ora_inceput) not in
+          (select perioada, nr_zi_sapt, ora_inceput from vActivitatiStudent where id_student = idStudent)
+    union
+    select *
+    from curs_activitati ca
+    where ca.id_curs = idCurs
+      and ca.id_prof_titular = idProfTitular
+      and idActivitate = ca.id_activ
+      and (ca.perioada, ca.nr_zi_sapt) in (select perioada, nr_zi_sapt
+                                           from vActivitatiStudent
+                                           where id_student = idStudent
+                                               and (ca.ora_inceput < vActivitatiStudent.ora_inceput and
+                                                    vActivitatiStudent.ora_inceput - ca.ora_inceput >= ca.durata)
+                                              or (ca.ora_inceput > vActivitatiStudent.ora_inceput and
+                                                  ca.ora_inceput - vActivitatiStudent.ora_inceput >=
+                                                  vActivitatiStudent.durata))
+    union
+    select *
+    from curs_activitati ca
+    where ca.id_curs = idCurs
+      and ca.id_prof_titular = idProfTitular
+      and idActivitate = ca.id_activ
+      and (ca.perioada, ca.nr_zi_sapt, ca.ora_inceput) in (select perioada, nr_zi_sapt, ora_inceput
+                                                           from vActivitatiStudent
+                                                           where id_student = idStudent
+                                                             and ((ca.perioada = 0 and perioada = 1) or
+                                                                  ca.perioada = 1 and perioada = 0));
+end//
+
+drop procedure if exists insertActivitateStudent;
+
+delimiter //
+create procedure insertActivitateStudent(idStud int, activ int)
+begin
+	insert into studenti_activitati(id_student, id_activitate) values (idStud ,activ);
+end//
+
+drop procedure if exists renuntaCurs;
+
+delimiter //
+create procedure renuntaCurs(id_student int, descriereCurs varchar(128))
+begin
+	select id_curs into @idCurs from cursuri where descriere = descriereCurs;
+
+    delete
+    from studenti_activitati
+    where id_activitate in (select id_ca from curs_activitati where id_curs = @idCurs)
+      and id_student = id_student;
+end//
+
+
+drop procedure if exists cursuriStudent;
+
+delimiter //
+create procedure cursuriStudent(id_student int)
+begin
+    select distinct c.descriere
+    from vactivitatistudent join cursuri c on vactivitatistudent.id_curs = c.id_curs
+    where id_student = id_student;
+end//
+
+drop procedure if exists calendar;
+
+delimiter //
+create procedure calendar(idStud int)
+begin
+    select data_inceput into @dataInceput from an_universitar;
+    select floor(datediff(current_date(), @dataInceput) / 7) % 2 into @tipActivitate;
+    select c.descriere                                  as "Disciplina",
+           a.denumire_activitate                        as "Activitate",
+           p.descriere                                  as "Perioada",
+           vas.nr_zi_sapt                               as "Zi",
+           vas.ora_inceput                              as "Ora de inceput",
+           vas.durata                                   as "Durata",
+           concat(prof.nume, concat(' ', prof.prenume)) as "Nume Profesor"
+    from vactivitatistudent vas
+             join cursuri c
+             join users prof
+             join perioade p
+             join activitati a
+                  on vas.id_prof_delegat = prof.id_user and vas.id_curs = c.id_curs and vas.perioada = p.id_perioada and
+                     vas.id_activ = a.id_activitate
+    where id_student = idStud
+      and (vas.perioada >= 2 or perioada = @tipActivitate)
+    order by Zi, vas.ora_inceput;
+end //
+
+drop procedure if exists calendarToate;
+
+delimiter //
+create procedure calendarToate(idStud int)
+begin
+    select c.descriere                                  as "Disciplina",
+           a.denumire_activitate                        as "Activitate",
+           p.descriere                                  as "Perioada",
+           vas.nr_zi_sapt                               as "Zi",
+           vas.ora_inceput                              as "Ora de inceput",
+           vas.durata                                   as "Durata",
+           concat(prof.nume, concat(' ', prof.prenume)) as "Nume Profesor"
+    from vactivitatistudent vas
+             join cursuri c
+             join users prof
+             join perioade p
+             join activitati a
+                  on vas.id_prof_delegat = prof.id_user and vas.id_curs = c.id_curs and vas.perioada = p.id_perioada and
+                     vas.id_activ = a.id_activitate
+    where id_student = idStud
+    order by Zi, vas.ora_inceput;
+end //
+
+-- ceva procente
+UPDATE aplicatie.curs_activitati t
+SET t.procent = 10
+WHERE t.id_ca = 10;
+
+UPDATE aplicatie.curs_activitati t
+SET t.procent = 30
+WHERE t.id_ca = 3;
+
+UPDATE aplicatie.curs_activitati t
+SET t.procent = 10
+WHERE t.id_ca = 8;
+
+UPDATE aplicatie.curs_activitati t
+SET t.procent = 10
+WHERE t.id_ca = 9;
+
+UPDATE aplicatie.curs_activitati t
+SET t.procent = 30
+WHERE t.id_ca = 2;
+
+UPDATE aplicatie.curs_activitati t
+SET t.procent = 1
+WHERE t.id_ca = 19;
+
+UPDATE aplicatie.curs_activitati t
+SET t.procent = 60
+WHERE t.id_ca = 1;
+
+UPDATE aplicatie.curs_activitati t
+SET t.procent = 9
+WHERE t.id_ca = 18;
+
+UPDATE aplicatie.curs_activitati t
+SET t.procent = 90
+WHERE t.id_ca = 17;
+-- ceva note
+UPDATE aplicatie.studenti_activitati t
+SET t.nota        = 7,
+    t.data_notare = '2020-12-16'
+WHERE t.id_student = 300
+  AND t.id_activitate = 1
+  AND t.nota IS NULL
+  AND t.data_notare IS NULL;
+
+UPDATE aplicatie.studenti_activitati t
+SET t.nota        = 10,
+    t.data_notare = '2020-12-01'
+WHERE t.id_student = 300
+  AND t.id_activitate = 9
+  AND t.nota IS NULL
+  AND t.data_notare IS NULL;
+
+UPDATE aplicatie.studenti_activitati t
+SET t.nota        = 10,
+    t.data_notare = '2020-12-31'
+WHERE t.id_student = 300
+  AND t.id_activitate = 2
+  AND t.nota IS NULL
+  AND t.data_notare IS NULL;
+
+drop procedure if exists notePartiale;
+
+delimiter //
+create procedure notePartiale(idStud int)
+begin
+    select c.descriere                            as "Disciplina",
+           a.denumire_activitate                  as "Activitate",
+           concat(u.nume, concat(' ', u.prenume)) as "Profesor",
+           sa.data_notare                         as "Data",
+           sa.nota                                as "Nota",
+           ca.procent                             as "Procent"
+    from curs_activitati ca
+             join users u
+             join activitati a
+             join cursuri c
+             join studenti_activitati sa
+                  on ca.id_ca = sa.id_activitate and ca.id_curs = c.id_curs and ca.id_prof_delegat = u.id_user and
+                     a.id_activitate = ca.id_activ
+    where id_student = idStud;
+end//
+
+
+
+drop procedure if exists noteFinale;
+
+delimiter //
+create procedure noteFinale(idStud int)
+begin
+    select distinct c.descriere as "Disciplina",
+                    concat(u.nume, concat(' ', u.prenume)) as "Profesor",
+                    truncate(sum(nota * (procent / 100)), 2) as "Nota"
+    from curs_activitati ca
+             join cursuri c
+             join users u
+             join studenti_activitati sa
+                  on ca.id_ca = sa.id_activitate and c.id_curs = ca.id_curs and u.id_user = ca.id_prof_titular
+    where sa.id_student = idStud
+    group by c.descriere, concat(u.nume, concat(' ', u.prenume))
+    having count(sa.id_activitate) = count(sa.nota);
+end//
+
+
+
+drop procedure if exists pDeleteActivitate;
+
+delimiter //
+CREATE DEFINER=`root`@`localhost` PROCEDURE `pDeleteActivitate`(curs int,activitate int)
+BEGIN
+    delete from curs_activitati where id_curs = curs and id_activ = activitate;
+    delete from studenti_activitati where id_activitate in (select id_ca from curs_activitati where id_curs = curs and id_activ = activitate);
+END//
+
+drop procedure if exists pInsertActivitate;
+
+delimiter //
+CREATE DEFINER=`root`@`localhost` PROCEDURE `pInsertActivitate`(id_curs int, id_activ int, perioada int, nr_zi_sapt int, procent int,id_prof_titular int,id_prof_delegat int,ora int,durata int,max_participanti int)
+BEGIN
+    set @new_id = if ((select count(*) from curs_activitati)>0,(select max(id_ca) from curs_activitati),0);
+    insert into curs_activitati value (@new_id+1,id_curs,id_activ,perioada,nr_zi_sapt,procent,id_prof_titular,id_prof_delegat,ora,durata,max_participanti);
+END//
+
+
+drop procedure if exists pInsertExamen;
+
+delimiter //
+CREATE DEFINER=`root`@`localhost` PROCEDURE `pInsertExamen`(tip_exam int,data_desf datetime,durata int,activ_curs int)
+BEGIN
+    set @new_id = if ((select count(*) from examinari)>0,(select max(id_examinari) from examinari),0);
+    insert into examinari value(@new_id+1,tip_exam,data_desf,durata,activ_curs);
+END//
+
+
+
+
+
+

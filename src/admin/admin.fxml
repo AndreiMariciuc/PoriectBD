@@ -2,47 +2,102 @@
 
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
-
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="admin.ControlAdmin">
     <children>
-        <AnchorPane depthTest="ENABLE" prefHeight="720.0" prefWidth="200.0" style="-fx-border-color: #fff;">
+        <AnchorPane depthTest="ENABLE" prefHeight="720.0" prefWidth="200.0" style="-fx-background-color: #A6A6A6;">
             <children>
-                <Button layoutX="7.0" layoutY="120.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="185.0" style="-fx-border-radius: 90;" text="date personale">
+                <Button layoutX="6.0" layoutY="125.0" mnemonicParsing="false" onMouseClicked="#setDatePersonale" prefHeight="35.0" prefWidth="186.0" style="-fx-background-radius: 90; -fx-background-color: #e2e0d4;" text="         Date personale" textAlignment="RIGHT">
                     <cursor>
-                        <Cursor fx:constant="DEFAULT" />
+                        <Cursor fx:constant="HAND" />
                     </cursor>
                 </Button>
-                <Button layoutX="7.0" layoutY="169.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="185.0" style="-fx-border-radius: 90;" text="orar zi curenta">
+                <Button layoutX="6.0" layoutY="671.0" minHeight="9.0" mnemonicParsing="false" onAction="#deconectare" prefHeight="35.0" prefWidth="186.0" style="-fx-background-radius: 90; -fx-background-color: #fecac2;" text="Deconectare" textFill="#d32828">
                     <cursor>
-                        <Cursor fx:constant="DEFAULT" />
+                        <Cursor fx:constant="HAND" />
                     </cursor>
+                    <font>
+                        <Font name="System Bold" size="15.0" />
+                    </font>
                 </Button>
-                <Button layoutX="7.0" layoutY="215.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="185.0" style="-fx-border-radius: 90;" text="carnet">
-                    <cursor>
-                        <Cursor fx:constant="DEFAULT" />
-                    </cursor>
-                </Button>
-                <Button layoutX="7.0" layoutY="262.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="185.0" style="-fx-border-radius: 90;" text="gestionare cursuri">
-                    <cursor>
-                        <Cursor fx:constant="DEFAULT" />
-                    </cursor>
-                </Button>
-                <Button layoutX="7.0" layoutY="309.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="185.0" style="-fx-border-radius: 90;" text="grupuri">
-                    <cursor>
-                        <Cursor fx:constant="DEFAULT" />
-                    </cursor>
-                </Button>
-                <Button layoutX="6.0" layoutY="666.0" minHeight="9.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="186.0" style="-fx-border-radius: 90;" text="deautentificare">
-                    <cursor>
-                        <Cursor fx:constant="DEFAULT" />
-                    </cursor>
-                </Button>
-                <Label layoutX="44.0" layoutY="36.0" text="Bun venit x-ulescu" textOverrun="CLIP" />
+                <Label fx:id="welcome" blendMode="SRC_ATOP" layoutX="14.0" layoutY="37.0" text="Bun venit x-ulescu" textOverrun="CLIP">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font></Label>
+            <ImageView fitHeight="35.0" fitWidth="40.0" layoutX="24.0" layoutY="123.0" onMouseClicked="#setDatePersonale" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/date.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+            <Button fx:id="modificareUtilizatori" layoutX="6.0" layoutY="169.0" mnemonicParsing="false" onMouseClicked="#fereastraGestiuneUtilizatori" prefHeight="35.0" prefWidth="186.0" style="-fx-background-radius: 90; -fx-background-color: #e2e0d4;" text="          Gestiune Utilizatori">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <ImageView fitHeight="35.0" fitWidth="35.0" layoutX="20.0" layoutY="170.0" onMouseClicked="#fereastraGestiuneUtilizatori" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/hiring.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+            <Button layoutX="6.0" layoutY="213.0" mnemonicParsing="false" onMouseClicked="#paneAdaugareToFront" prefHeight="36.0" prefWidth="186.0" style="-fx-background-color: #e2e0d4; -fx-background-radius: 90;" text="         Adaugare Utilizator">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <ImageView fitHeight="31.0" fitWidth="35.0" layoutX="20.0" layoutY="217.0" onMouseClicked="#paneAdaugareToFront" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/approved.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+            <Button layoutX="6.0" layoutY="258.0" mnemonicParsing="false" onMouseClicked="#toFrontCautareCursuri" prefHeight="36.0" prefWidth="186.0" style="-fx-background-color: #e2e0d4; -fx-background-radius: 90;" text="        Cautare Cursuri">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <ImageView fitHeight="28.0" fitWidth="35.0" layoutX="24.0" layoutY="264.0" onMouseClicked="#toFrontCautareCursuri" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/search.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+            <Button layoutX="8.0" layoutY="304.0" mnemonicParsing="false" onMouseClicked="#toFrontAsignareProfesor" prefHeight="36.0" prefWidth="186.0" style="-fx-background-color: #e2e0d4; -fx-background-radius: 90;" text="       Asignare profesor">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <ImageView fitHeight="28.0" fitWidth="35.0" layoutX="26.0" layoutY="310.0" onMouseClicked="#toFrontAsignareProfesor" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/website.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
             </children>
             <effect>
                 <DropShadow />
@@ -53,11 +108,568 @@
                 <DropShadow />
             </effect>
             <children>
-                <Pane prefHeight="720.0" prefWidth="1080.0" />
-                <Pane prefHeight="720.0" prefWidth="1080.0" />
-                <Pane prefHeight="720.0" prefWidth="1080.0" />
-                <Pane prefHeight="720.0" prefWidth="1080.0" />
-                <Pane prefHeight="720.0" prefWidth="1080.0" />
+                <Pane fx:id="date_personale" prefHeight="720.0" prefWidth="1080.0" style="-fx-background-color: #e8e8e8;">
+                    <children>
+                        <Text fx:id="welcomeText" blendMode="SRC_ATOP" layoutX="172.0" layoutY="58.0" smooth="false" stroke="#f7070700" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                            <font>
+                                <Font size="30.0" />
+                            </font>
+                        </Text>
+                        <Text fx:id="rol" blendMode="SRC_ATOP" layoutX="227.0" layoutY="219.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
+                        </Text>
+                        <Text fx:id="CNP" blendMode="SRC_ATOP" layoutX="227.0" layoutY="244.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
+                        </Text>
+                        <Text fx:id="nume" blendMode="SRC_ATOP" layoutX="227.0" layoutY="269.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
+                        </Text>
+                        <Text fx:id="prenume" blendMode="SRC_ATOP" layoutX="227.0" layoutY="294.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
+                        </Text>
+                        <Text fx:id="adresa" blendMode="SRC_ATOP" layoutX="227.0" layoutY="319.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
+                        </Text>
+                        <Text fx:id="nrTel" blendMode="SRC_ATOP" layoutX="227.0" layoutY="344.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
+                        </Text>
+                        <Text fx:id="email" blendMode="SRC_ATOP" layoutX="227.0" layoutY="369.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
+                        </Text>
+                        <Text fx:id="IBAN" blendMode="SRC_ATOP" layoutX="227.0" layoutY="394.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
+                        </Text>
+                        <Text fx:id="nrContract" blendMode="SRC_ATOP" layoutX="227.0" layoutY="419.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
+                        </Text>
+                        <Text fx:id="username" blendMode="SRC_ATOP" layoutX="227.0" layoutY="444.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
+                        </Text>
+                        <Text fx:id="parola" blendMode="SRC_ATOP" layoutX="227.0" layoutY="469.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
+                        </Text>
+                        <Text fx:id="tRol" blendMode="SRC_ATOP" layoutX="77.0" layoutY="219.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
+                        </Text>
+                        <Text fx:id="tCNP" blendMode="SRC_ATOP" layoutX="77.0" layoutY="244.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
+                        </Text>
+                        <Text fx:id="tNume" blendMode="SRC_ATOP" layoutX="77.0" layoutY="269.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
+                        </Text>
+                        <Text fx:id="tPrenume" blendMode="SRC_ATOP" layoutX="77.0" layoutY="294.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
+                        </Text>
+                        <Text fx:id="tAdresa" blendMode="SRC_ATOP" layoutX="77.0" layoutY="319.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
+                        </Text>
+                        <Text fx:id="tNrTel" blendMode="SRC_ATOP" layoutX="77.0" layoutY="344.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
+                        </Text>
+                        <Text fx:id="tEmail" blendMode="SRC_ATOP" layoutX="77.0" layoutY="369.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
+                        </Text>
+                        <Text fx:id="tIBAN" blendMode="SRC_ATOP" layoutX="77.0" layoutY="394.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
+                        </Text>
+                        <Text fx:id="tNrContract" blendMode="SRC_ATOP" layoutX="77.0" layoutY="419.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
+                        </Text>
+                        <Text fx:id="tUsername" blendMode="SRC_ATOP" layoutX="77.0" layoutY="444.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
+                        </Text>
+                        <Text fx:id="tParola" blendMode="SRC_ATOP" layoutX="77.0" layoutY="469.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
+                        </Text>
+                    </children>
+            </Pane>
+                <Pane fx:id="gestUtilizatori" prefHeight="720.0" prefWidth="1080.0" style="-fx-background-color: #e8e8e8;">
+               <children>
+                  <Text layoutX="344.0" layoutY="64.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gestiunea utilizatorilor" underline="true">
+                     <font>
+                        <Font name="System Bold" size="30.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="fieldNume_v" layoutX="516.0" layoutY="105.0" promptText="nume..." />
+                  <Text layoutX="396.0" layoutY="125.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nume:">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="396.0" layoutY="165.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Prenume:">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="fieldPrenume_v" layoutX="516.0" layoutY="145.0" promptText="prenume..." />
+                  <Text layoutX="396.0" layoutY="205.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CNP:">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="fieldCNP_v" layoutX="516.0" layoutY="185.0" promptText="CNP..." />
+                  <Button fx:id="butonCautare_v" layoutX="491.0" layoutY="278.0" mnemonicParsing="false" onMouseClicked="#butonSearchUtilizatori" style="-fx-background-color: #222c3c; -fx-border-color: #000000; -fx-background-radius: 30; -fx-border-radius: 30;" text="Cautare" textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <ChoiceBox fx:id="choiceRoluri_v" layoutX="394.0" layoutY="234.0" prefHeight="26.0" prefWidth="295.0" style="-fx-background-color: #dfdbd8; -fx-background-radius: 30; -fx-border-color: #000000; -fx-border-radius: 30;">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></ChoiceBox>
+                  <ChoiceBox fx:id="resultUtilizatori_v" layoutX="224.0" layoutY="382.0" prefHeight="26.0" prefWidth="770.0" style="-fx-background-color: #dfdbd8; -fx-background-radius: 30; -fx-border-color: #000000; -fx-border-radius: 30;">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></ChoiceBox>
+                  <Text fx:id="alegere_v" layoutX="71.0" layoutY="403.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Alege user:" wrappingWidth="150.4921875">
+                     <font>
+                        <Font size="22.0" />
+                     </font>
+                  </Text>
+                  <Button fx:id="butonStergereUser_v" layoutX="626.0" layoutY="430.0" mnemonicParsing="false" onMouseClicked="#stergereUser" prefHeight="33.0" prefWidth="305.0" style="-fx-background-color: #a24f5e; -fx-background-radius: 30;" text="Stergere user" textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Button fx:id="butonModificareDatePersonale_v" layoutX="156.0" layoutY="430.0" mnemonicParsing="false" onMouseClicked="#modificareDatePersonaleUser" style="-fx-background-color: #524fff; -fx-background-radius: 30;" text="Modificare date personale User" textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Text fx:id="fieldTextNume_v" layoutX="55.0" layoutY="530.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nume">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="fieldTextPrenume_v" layoutX="354.0" layoutY="530.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Prenume">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="fieldTextNrTelefon_v" layoutX="354.0" layoutY="579.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nr. Telefon">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="fieldTextEmail_v" layoutX="686.0" layoutY="529.0" strokeType="OUTSIDE" strokeWidth="0.0" text="e-mail">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="fieldTextIBAN_v" layoutX="55.0" layoutY="580.0" strokeType="OUTSIDE" strokeWidth="0.0" text="IBAN">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="fieldTextUsername_v" layoutX="355.0" layoutY="621.0" strokeType="OUTSIDE" strokeWidth="0.0" text="UserName">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="fieldTextParola_v" layoutX="53.0" layoutY="621.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Parola">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="tfieldNume_v" layoutX="120.0" layoutY="512.0" promptText="nume..." />
+                  <TextField fx:id="tfieldPrenume_v" layoutX="455.0" layoutY="511.0" promptText="prenume..." />
+                  <TextField fx:id="tfieldEmail_v" layoutX="750.0" layoutY="510.0" promptText="e-mail..." />
+                  <TextField fx:id="tfieldUsername_v" layoutX="456.0" layoutY="602.0" promptText="username..." />
+                  <TextField fx:id="tfieldIBAN_v" layoutX="120.0" layoutY="561.0" prefHeight="26.0" prefWidth="170.0" promptText="IBAN..." />
+                  <TextField fx:id="tfieldNrTelefon_v" layoutX="456.0" layoutY="560.0" promptText="numar de telefon...." />
+                  <PasswordField fx:id="tfieldParola_v" layoutX="120.0" layoutY="602.0" promptText="password..." />
+                  <Button fx:id="butonAsaRamane_v" layoutX="441.0" layoutY="646.0" mnemonicParsing="false" onMouseClicked="#confirmareModificare" style="-fx-background-color: #455954; -fx-background-radius: 30;" text="ASA RAMANE!" textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Text layoutX="345.0" layoutY="256.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rol">
+                     <font>
+                        <Font size="22.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="mesajEroareAlegereRol_v" fill="RED" layoutX="452.0" layoutY="337.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*Te rog sa selectezi un rol!" />
+                  <Text fx:id="fieldTextAdresa_v" layoutX="686.0" layoutY="576.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Adresa">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="tfieldAdresa_v" layoutX="750.0" layoutY="557.0" promptText="adresa..." />
+                  <Text fx:id="textUserNeselectat_v" fill="RED" layoutX="315.0" layoutY="703.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*Te rog sa alegi un user, altfel nu se va face nicio modificare!" />
+               </children></Pane>
+                <Pane fx:id="paneAdaugare" prefHeight="720.0" prefWidth="1080.0" style="-fx-background-color: #e8e8e8;">
+               <children>
+                  <Text layoutX="375.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Adaugare Utilizator" underline="true">
+                     <font>
+                        <Font name="System Bold" size="30.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="81.0" layoutY="137.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Alege Rolul noului utilizator">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="66.0" layoutY="180.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nume">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="430.0" layoutY="180.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Prenume">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="430.0" layoutY="260.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Adresa">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="66.0" layoutY="220.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CNP">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="66.0" layoutY="300.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nr. Telefon">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="430.0" layoutY="220.0" strokeType="OUTSIDE" strokeWidth="0.0" text="e-mail">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="66.0" layoutY="260.0" strokeType="OUTSIDE" strokeWidth="0.0" text="IBAN">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="430.0" layoutY="300.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nr. Contract">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="tfieldNume_a" layoutX="130.0" layoutY="162.0" promptText="nume..." />
+                  <TextField fx:id="tfieldAdresa_a" layoutX="519.0" layoutY="241.0" prefHeight="26.0" prefWidth="486.0" promptText="adresa...." />
+                  <TextField fx:id="tfieldIBAN_a" layoutX="130.0" layoutY="241.0" promptText="iban..." />
+                  <TextField fx:id="tfieldCNP_a" layoutX="130.0" layoutY="201.0" promptText="cnp..." />
+                  <TextField fx:id="tfieldPrenume_a" layoutX="519.0" layoutY="162.0" promptText="prenume..." />
+                  <TextField fx:id="tfieldEmail_a" layoutX="519.0" layoutY="201.0" promptText="e-mail..." />
+                  <TextField fx:id="tfieldNrTel_a" layoutX="175.0" layoutY="281.0" promptText="numar de telefon..." />
+                  <TextField fx:id="tfieldNrContract_a" layoutX="550.0" layoutY="281.0" promptText="numarul de contract...." />
+                  <Pane fx:id="paneStudenti_a" layoutX="37.0" layoutY="315.0" prefHeight="135.0" prefWidth="754.0" style="-fx-background-color: #e8e8e8;">
+                     <children>
+                        <ChoiceBox fx:id="choiceAnStudiu_a" layoutX="175.0" layoutY="18.0" prefWidth="150.0" style="-fx-background-color: #dfdbd8; -fx-border-color: #000000; -fx-border-radius: 30; -fx-background-radius: 30;" />
+                        <Text layoutX="28.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Anul de studiu">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="64.0" layoutY="72.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Status">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Text>
+                        <ChoiceBox fx:id="choiceStatus_a" layoutX="175.0" layoutY="51.0" prefWidth="150.0" style="-fx-background-color: #dfdbd8; -fx-border-color: #000000; -fx-border-radius: 30; -fx-background-radius: 30;" />
+                        <Text layoutX="28.0" layoutY="107.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Numar de ore">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Text>
+                        <TextField fx:id="tfieldNrOreStud_a" layoutX="175.0" layoutY="88.0" promptText="numarul de ore..." />
+                     </children>
+                  </Pane>
+                  <Pane fx:id="paneProfesori_a" layoutX="51.0" layoutY="323.0" prefHeight="123.0" prefWidth="875.0" style="-fx-background-color: #e8e8e8;">
+                     <children>
+                        <Text layoutX="17.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Departament">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Text>
+                        <ChoiceBox fx:id="choiceDepartament_a" layoutX="166.0" layoutY="10.0" prefWidth="150.0" style="-fx-background-color: #dfdbd8; -fx-border-radius: 30; -fx-background-radius: 30; -fx-border-color: #000000;">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor></ChoiceBox>
+                        <Text layoutX="17.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Numar minim de ore">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="17.0" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Numar maxim de ore">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Text>
+                        <TextField fx:id="tfieldNrMinOre_a" layoutX="224.0" layoutY="49.0" prefHeight="26.0" prefWidth="186.0" promptText="numarul minim de ore..." />
+                        <TextField fx:id="tfieldNrMaxOre_a" layoutX="224.0" layoutY="83.0" prefWidth="186.0" promptText="numarul maxim de ore..." />
+                     </children>
+                  </Pane>
+                  <Text fx:id="eroareCampuriNecompletate_a" fill="#fc0000" layoutX="281.0" layoutY="521.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*Te rog sa completezi toate campurile, altfel nu se va adauga nimic!">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Text>
+                  <Button fx:id="butonAdaugare_a" layoutX="454.0" layoutY="464.0" mnemonicParsing="false" onMouseClicked="#adaugareUser" style="-fx-background-color: #455954; -fx-background-radius: 90;" text="Adaugare!" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Text fx:id="eroareTipInvalid_a" fill="#fc0000" layoutX="281.0" layoutY="540.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*Te rog sa folosesti numere unde este cazul!">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Text>
+                  <Pane layoutX="64.0" layoutY="321.0" prefHeight="123.0" prefWidth="875.0" style="-fx-background-color: #e8e8e8;" />
+                  <Pane layoutX="6.0" layoutY="142.0" onMouseEntered="#alegereRolClick" onMouseExited="#alegereRolClick" prefHeight="21.0" prefWidth="1074.0" />
+                  <Pane layoutX="6.0" layoutY="96.0" onMouseEntered="#alegereRolClick" onMouseExited="#alegereRolClick" prefHeight="21.0" prefWidth="1074.0" />
+                  <ChoiceBox fx:id="choiceRol_a" layoutX="339.0" layoutY="117.0" prefWidth="150.0" style="-fx-background-color: #dfdbd8; -fx-border-color: #000000; -fx-background-radius: 30; -fx-border-radius: 30;">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></ChoiceBox>
+                  <Pane layoutX="309.0" layoutY="161.0" onMouseEntered="#alegereRolClick" onMouseExited="#alegereRolClick" prefHeight="117.0" prefWidth="94.0" />
+                  <Text fx:id="eroareLipsaRol_a" fill="RED" layoutX="282.0" layoutY="559.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*Te rog sa alegi un rol pentru viitorul utilizator!">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="succesAdaugare_a" fill="#00c624" layoutX="401.0" layoutY="522.0" strokeType="OUTSIDE" strokeWidth="0.0" text="User adaugat cu succes!">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+               </children></Pane>
+                <Pane fx:id="asignareProfesor_ac" prefHeight="720.0" prefWidth="1080.0" style="-fx-background-color: #e8e8e8;">
+               <children>
+                  <Text layoutX="324.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Asignare Profesor la Curs" underline="true">
+                     <font>
+                        <Font name="System Bold" size="30.0" />
+                     </font>
+                  </Text>
+                  <ChoiceBox fx:id="choiceProfesor_ap" layoutX="185.0" layoutY="141.0" prefHeight="26.0" prefWidth="295.0" style="-fx-background-color: #dfdbd8; -fx-background-radius: 30; -fx-border-color: #000000; -fx-border-radius: 30;">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </ChoiceBox>
+                  <ChoiceBox fx:id="choiceMaterie_ap" layoutX="649.0" layoutY="141.0" prefHeight="26.0" prefWidth="377.0" style="-fx-background-color: #dfdbd8; -fx-background-radius: 30; -fx-border-radius: 30; -fx-border-color: #000000;">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </ChoiceBox>
+                  <Text layoutX="84.0" layoutY="162.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Profesor:">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="556.0" layoutY="162.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Materie:">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Text>
+                  <Button fx:id="butonAsignare_ap" layoutX="469.0" layoutY="236.0" mnemonicParsing="false" onMouseClicked="#asignareProfesoriLaCurs" style="-fx-background-color: #558877; -fx-border-color: #000000; -fx-border-radius: 30; -fx-background-radius: 30;" text="Asignare!" textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Text fx:id="succes1_ap" fill="#01b51f" layoutX="358.0" layoutY="301.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*Profesorul X a fost asignat la cursul Y!">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="succes2_ap" fill="#01b51f" layoutX="218.0" layoutY="322.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*Ramane la latitudinea sa daca va avea nevoie de seminare si laboratoare!">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="succes3_ap" fill="#01b51f" layoutX="143.0" layoutY="342.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*De asemenea, tot el va stabili procentele, profesori delegati si momentul la care se tin acestea!">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="eroare_ap" fill="#e40000" layoutX="281.0" layoutY="301.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*Te rog sa selectezi atat un profesor cat si un curs!">
+                     <font>
+                        <Font size="19.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="342.0" layoutY="212.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Numar de ore:">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="numarOre_ap" layoutX="495.0" layoutY="192.0" prefHeight="26.0" prefWidth="230.0" />
+               </children></Pane>
+                <Pane fx:id="panouCautareCursuri_c" prefHeight="720.0" prefWidth="1080.0" style="-fx-background-color: #e8e8e8;">
+               <children>
+                  <Text layoutX="407.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cautare Cursuri" underline="true">
+                     <font>
+                        <Font name="System Bold" size="30.0" />
+                     </font>
+                  </Text>
+                  <TabPane layoutX="70.0" layoutY="194.0" prefHeight="457.0" prefWidth="964.0" style="-fx-background-color: #FFF0F0; -fx-background-radius: 10; -fx-border-color: #000000; -fx-border-radius: 10;" tabClosingPolicy="UNAVAILABLE">
+                    <tabs>
+                      <Tab fx:id="tabCurs_c" text="Cursuri">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <ListView fx:id="listViewCursuri_c" layoutX="7.0" layoutY="7.0" prefHeight="415.0" prefWidth="950.0" style="-fx-background-color: #FFF0F0;" />
+                                 </children>
+                              </AnchorPane>
+                        </content>
+                      </Tab>
+                      <Tab fx:id="tabStudentiCurs_c" text="Studenti La curs">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="317.0" prefWidth="964.0">
+                                 <children>
+                                    <ListView fx:id="listViewStudenti_c" layoutX="7.0" layoutY="7.0" prefHeight="415.0" prefWidth="950.0" style="-fx-background-color: #FFF0F0;" />
+                                 </children>
+                              </AnchorPane>
+                        </content>
+                      </Tab>
+                    </tabs>
+                  </TabPane>
+                  <ChoiceBox fx:id="choiceCurs_c" layoutX="296.0" layoutY="125.0" prefHeight="26.0" prefWidth="569.0" style="-fx-background-color: #dfdbd8; -fx-background-radius: 30; -fx-border-radius: 30; -fx-border-color: #000000;">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </ChoiceBox>
+                  <Text layoutX="224.0" layoutY="146.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Curs:">
+                     <font>
+                        <Font size="22.0" />
+                     </font>
+                  </Text>
+                  <Button fx:id="butonCautare_c" layoutX="509.0" layoutY="158.0" mnemonicParsing="false" onMouseClicked="#cautareCursuri_c" style="-fx-background-color: #007722; -fx-background-radius: 30;" text="Cautare" textFill="WHITE">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Button>
+               </children></Pane>
             </children>
         </AnchorPane>
     </children>

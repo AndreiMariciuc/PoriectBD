@@ -112,7 +112,7 @@ public class Functii {
     public static float pondereActiv(int id_curs,int id_activitate) throws SQLException {
         PreparedStatement s = conexiune.prepareStatement("select procent from curs_activitati where id_curs = "+id_curs+" and id_activ = "+id_activitate);
         ResultSet rs=s.executeQuery();
-        int pondere = -1;
+        int pondere = 0;
         while(rs.next())
             pondere = rs.getInt("procent");
         return (float)pondere;

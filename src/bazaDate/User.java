@@ -1,5 +1,7 @@
 package bazaDate;
 
+import java.util.ArrayList;
+
 public class User {
     private int idUser;
     private int idRol;
@@ -132,7 +134,26 @@ public class User {
     @Override
     public String toString() {
         String result = new String(idUser + " "  + idRol + " " + CNP + " " + nume + " " + prenume + " '" + adresa + "' " +
-                nrTelefon + " " + email + " " + IBAN + " " + nrContract + " " + username + " " + parola + "\n");
+            nrTelefon + " " + email + " " + IBAN + " " + nrContract + " " + username + " " + parola + "\n");
+        return result;
+    }
+
+    public String getString() {
+        String result = new String(nume + " " + prenume + " CNP: " + CNP);
+        if (idRol == 1) {
+            result = "Super-Admin: " + result;
+        } else if (idRol == 2) {
+            result = "Admin: " + result;
+        } else if (idRol == 3) {
+            result = "Profesor: " + result;
+        } else if (idRol == 4) {
+            result = "Student: " + result;
+        }
+        return result;
+    }
+
+    public ArrayList<User> filterUsers(String query) {
+        ArrayList<User> result = new ArrayList<User>();
         return result;
     }
 }

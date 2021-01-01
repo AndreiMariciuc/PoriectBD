@@ -1,5 +1,4 @@
 package autentificare;
-
 import bazaDate.Conexiune;
 import constante.Ecran;
 import javafx.event.ActionEvent;
@@ -26,13 +25,13 @@ public class ControlAutentificare {
     int state = 0;
 
     public void autentificare(ActionEvent actionEvent) throws IOException {
-        String passwordBd = "admin";
-        String userNameBd = "admin";
+        String pass = "123";//username.getText()
+        String userName = "aless"; //password.getText()
         Conexiune c = Conexiune.getConexiune();
-        int rol = c.getUserType(username.getText(), password.getText());
-        if (rol == 1) {
-            loadScene(actionEvent, "../admin/admin.fxml");
-        } else if (rol == 2) {
+        int rol = c.getUserType(userName, pass);//(username.getText(), password.getText());
+        System.out.println(rol);
+        System.out.println(Conexiune.getUser().getNume());
+        if (rol == 2 || rol == 1) {
             incorect.setText("Admin");
             if (state == 1) {
                 changeState();
@@ -51,7 +50,7 @@ public class ControlAutentificare {
                 changeState();
             }
             //de lucrat la gui
-            loadScene(actionEvent, "../student/student.fxml");
+            loadScene(actionEvent, "..\\student\\student.fxml");
         } else {
             if (state == 0) {
                 changeState();
