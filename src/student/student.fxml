@@ -483,7 +483,7 @@
             </Pane>
             <Pane fx:id="grupuriPane" prefHeight="720.0" prefWidth="1080.0" style="-fx-background-color: #e8e8e8;">
                <children>
-                  <Text layoutX="-2.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Grupuri" textAlignment="CENTER" underline="true" wrappingWidth="1082.0">
+                  <Text layoutX="-2.0" layoutY="57.0" onMouseClicked="#refresh" strokeType="OUTSIDE" strokeWidth="0.0" text="Grupuri" textAlignment="CENTER" underline="true" wrappingWidth="1082.0">
                      <font>
                         <Font name="System Bold" size="30.0" />
                      </font>
@@ -494,21 +494,39 @@
                         <content>
                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #e8e8e8;">
                                  <children>
-                                    <ChoiceBox fx:id="choiceBoxGrupur_vg" layoutX="176.0" layoutY="37.0" prefHeight="25.0" prefWidth="668.0" />
+                                    <ChoiceBox fx:id="choiceBoxGrupur_vg" layoutX="176.0" layoutY="37.0" prefHeight="25.0" prefWidth="668.0" style="-fx-background-color: #dfdbd8; -fx-background-radius: 30; -fx-border-radius: 30; -fx-border-color: #000000;">
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor></ChoiceBox>
                                     <Text layoutX="33.0" layoutY="59.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Alege grupa:">
                                        <font>
                                           <Font size="22.0" />
                                        </font>
                                     </Text>
-                                    <TextArea fx:id="textAreaGrupuri_vg" editable="false" layoutX="384.0" layoutY="89.0" prefHeight="496.0" prefWidth="667.0" />
-                                    <Button layoutX="886.0" layoutY="37.0" mnemonicParsing="false" onMouseClicked="#inserareMesaje" text="Afisare Mesaje!" />
+                                    <TextArea fx:id="textAreaGrupuri_vg" editable="false" layoutX="384.0" layoutY="89.0" prefHeight="496.0" prefWidth="667.0" style="-fx-background-radius: 10;" />
+                                    <Button layoutX="877.0" layoutY="34.0" mnemonicParsing="false" onMouseClicked="#inserareMesaje" style="-fx-background-color: #229956; -fx-background-radius: 10;" text="Afisare Mesaje!" textFill="WHITE">
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor></Button>
                                     <Pane layoutX="14.0" layoutY="62.0" onMouseEntered="#vizualizareMesaj" prefHeight="28.0" prefWidth="1037.0" />
-                                    <Pane layoutX="14.0" layoutY="126.0" onMouseEntered="#vizualizareMesaj" prefHeight="473.0" prefWidth="1037.0">
+                                    <Pane layoutX="14.0" layoutY="126.0" onMouseEntered="#vizualizareMesaj" prefHeight="473.0" prefWidth="1037.0" style="-fx-background-radius: 10;">
                                        <children>
-                                          <Button fx:id="butonParticipareActivitate_vg" disable="true" layoutX="932.0" layoutY="401.0" mnemonicParsing="false" onMouseClicked="#incaUnul" text="Participa!" />
+                                          <Button fx:id="butonParticipareActivitate_vg" disable="true" layoutX="899.0" layoutY="401.0" mnemonicParsing="false" onMouseClicked="#incaUnul" style="-fx-background-color: #229956; -fx-background-radius: 25;" text="Participa!" textFill="WHITE">
+                                             <font>
+                                                <Font name="System Bold" size="14.0" />
+                                             </font>
+                                             <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                             </cursor></Button>
                                        </children>
                                     </Pane>
-                                    <ChoiceBox fx:id="choiceBoxMesaje_vg" layoutX="33.0" layoutY="90.0" prefHeight="25.0" prefWidth="333.0" />
+                                    <ChoiceBox fx:id="choiceBoxMesaje_vg" layoutX="33.0" layoutY="90.0" prefHeight="25.0" prefWidth="333.0" style="-fx-background-color: #dfdbd8; -fx-border-color: #000000; -fx-background-radius: 30; -fx-border-radius: 30;">
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor></ChoiceBox>
                                  </children>
                               </AnchorPane>
                         </content>
@@ -517,7 +535,10 @@
                         <content>
                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #e8e8e8;">
                                  <children>
-                                    <ChoiceBox fx:id="choiceBoxGrupuri_tmg" layoutX="176.0" layoutY="37.0" prefHeight="25.0" prefWidth="668.0" />
+                                    <ChoiceBox fx:id="choiceBoxGrupuri_tmg" layoutX="176.0" layoutY="37.0" prefHeight="25.0" prefWidth="668.0" style="-fx-background-color: #dfdbd8; -fx-border-color: #000000; -fx-border-radius: 30; -fx-background-radius: 30;">
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor></ChoiceBox>
                                     <Text layoutX="33.0" layoutY="59.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Alege grupa:">
                                        <font>
                                           <Font size="22.0" />
@@ -535,15 +556,21 @@
                                           <Font size="20.0" />
                                        </font>
                                     </Text>
-                                    <Button layoutX="371.0" layoutY="508.0" mnemonicParsing="false" onMouseClicked="#renuntareTrimitereMesaj" text="Renuntare">
+                                    <Button layoutX="371.0" layoutY="508.0" mnemonicParsing="false" onMouseClicked="#renuntareTrimitereMesaj" style="-fx-background-color: #992211; -fx-background-radius: 15;" text="Renuntare" textFill="WHITE">
                                        <font>
-                                          <Font size="15.0" />
+                                          <Font name="System Bold" size="15.0" />
                                        </font>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
                                     </Button>
-                                    <Button layoutX="500.0" layoutY="508.0" mnemonicParsing="false" onMouseClicked="#trimiteMesaj" text="Trimitere">
+                                    <Button layoutX="494.0" layoutY="508.0" mnemonicParsing="false" onMouseClicked="#trimiteMesaj" style="-fx-background-color: #229956; -fx-background-radius: 15;" text="Trimitere" textFill="WHITE">
                                        <font>
-                                          <Font size="15.0" />
+                                          <Font name="System Bold" size="15.0" />
                                        </font>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
                                     </Button>
                                     <Text fx:id="textSucces_tms" fill="#00e116" layoutX="714.0" layoutY="329.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*Mesaj Trimis cu succes!">
                                        <font>
@@ -558,13 +585,19 @@
                           <content>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #e8e8e8;">
                                  <children>
-                                    <ChoiceBox fx:id="choiceBoxGrupuri_ag" layoutX="176.0" layoutY="37.0" prefHeight="25.0" prefWidth="668.0" />
+                                    <ChoiceBox fx:id="choiceBoxGrupuri_ag" layoutX="176.0" layoutY="37.0" prefHeight="25.0" prefWidth="668.0" style="-fx-background-color: #dfdbd8; -fx-background-radius: 30; -fx-border-radius: 30; -fx-border-color: #000000;">
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor></ChoiceBox>
                                     <Text layoutX="39.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Alege grupa:">
                                        <font>
                                           <Font size="22.0" />
                                        </font>
                                     </Text>
-                                    <ChoiceBox layoutX="176.0" layoutY="73.0" prefHeight="25.0" prefWidth="668.0" />
+                                    <ChoiceBox layoutX="176.0" layoutY="73.0" prefHeight="25.0" prefWidth="668.0" style="-fx-background-color: #dfdbd8; -fx-border-color: #000000; -fx-border-radius: 30; -fx-background-radius: 30;">
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor></ChoiceBox>
                                     <Text layoutX="80.0" layoutY="94.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Profesor">
                                        <font>
                                           <Font size="22.0" />
@@ -579,14 +612,23 @@
                           <content>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #e8e8e8;">
                                  <children>
-                                    <ChoiceBox fx:id="choiceBoxMaterii_cg" layoutX="155.0" layoutY="50.0" prefHeight="25.0" prefWidth="539.0" />
+                                    <ChoiceBox fx:id="choiceBoxMaterii_cg" layoutX="155.0" layoutY="50.0" prefHeight="25.0" prefWidth="539.0" style="-fx-background-color: #dfdbd8; -fx-background-radius: 30; -fx-border-radius: 30; -fx-border-color: #000000;">
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor></ChoiceBox>
                                     <Text layoutX="52.0" layoutY="71.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Materie">
                                        <font>
                                           <Font size="25.0" />
                                        </font>
                                     </Text>
-                                    <Button layoutX="605.0" layoutY="155.0" mnemonicParsing="false" onMouseClicked="#creareGrupa" text="Creare grupa!" />
-                                    <Text fx:id="textSuccesCreareGrupa" fill="#40ff00" layoutX="292.0" layoutY="133.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*Grupa a fost creata cu succes!">
+                                    <Button layoutX="585.0" layoutY="155.0" mnemonicParsing="false" onMouseClicked="#creareGrupa" style="-fx-background-color: #229956; -fx-background-radius: 15;" text="Creare grupa!" textFill="WHITE">
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor></Button>
+                                    <Text fx:id="textSuccesCreareGrupa" fill="#39d700" layoutX="292.0" layoutY="133.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*Grupa a fost creata cu succes!">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
@@ -603,14 +645,29 @@
                                           <Font size="18.0" />
                                        </font>
                                     </Text>
-                                    <ChoiceBox fx:id="choiceBoxGrupuriBune_ig" layoutX="223.0" layoutY="97.0" prefHeight="25.0" prefWidth="510.0" />
-                                    <Button layoutX="621.0" layoutY="193.0" mnemonicParsing="false" onMouseClicked="#inscriereInGrupa" text="Inscriete in grupa!" />
+                                    <ChoiceBox fx:id="choiceBoxGrupuriBune_ig" layoutX="223.0" layoutY="97.0" prefHeight="25.0" prefWidth="510.0" style="-fx-background-color: #dfdbd8; -fx-border-color: #000000; -fx-background-radius: 30; -fx-border-radius: 30;">
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor></ChoiceBox>
+                                    <Button layoutX="590.0" layoutY="195.0" mnemonicParsing="false" onMouseClicked="#inscriereInGrupa" style="-fx-background-radius: 15; -fx-background-color: #115699;" text="Inscriete in grupa!" textFill="WHITE">
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font></Button>
                                     <Text fx:id="textSuccesInscriereGrupa_ig" fill="#00fc1d" layoutX="61.0" layoutY="174.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*Felicitari te-ai inscris in grupa: ">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
                                     </Text>
-                                    <Button layoutX="511.0" layoutY="23.0" mnemonicParsing="false" onMouseClicked="#refresh" text="Refresh!" />
+                                    <Button layoutX="511.0" layoutY="23.0" mnemonicParsing="false" onMouseClicked="#refresh" style="-fx-background-color: #229956; -fx-background-radius: 15;" text="Refresh!" textFill="WHITE">
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font></Button>
                                     <Text layoutX="14.0" layoutY="87.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Inscriere la o grupa noua">
                                        <font>
                                           <Font size="20.0" />
@@ -626,13 +683,19 @@
                                           <Font size="18.0" />
                                        </font>
                                     </Text>
-                                    <ChoiceBox fx:id="grupeLaCareEste_irg" layoutX="243.0" layoutY="294.0" prefHeight="25.0" prefWidth="491.0" />
+                                    <ChoiceBox fx:id="grupeLaCareEste_irg" layoutX="243.0" layoutY="294.0" prefHeight="25.0" prefWidth="491.0" style="-fx-background-color: #dfdbd8; -fx-border-color: #000000; -fx-background-radius: 30; -fx-border-radius: 30;">
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor></ChoiceBox>
                                     <Text fx:id="textSuccesRenuntareGrupa_irg" fill="#fa0000" layoutX="61.0" layoutY="358.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*Felicitari te-ai inscris in grupa: ">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
                                     </Text>
-                                    <Button layoutX="617.0" layoutY="390.0" mnemonicParsing="false" onMouseClicked="#renuntareGrupa" text="Renuntare la grupa!" />
+                                    <Button layoutX="578.0" layoutY="389.0" mnemonicParsing="false" onMouseClicked="#renuntareGrupa" style="-fx-background-color: #992211; -fx-background-radius: 15;" text="Renuntare la grupa!" textFill="WHITE">
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font></Button>
                                  </children></AnchorPane>
                           </content>
                         </Tab>
