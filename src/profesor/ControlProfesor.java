@@ -1052,4 +1052,5 @@ public class ControlProfesor implements Initializable {
         s1.executeUpdate();
         programareReusita1.setVisible(true);
     }
+
 }

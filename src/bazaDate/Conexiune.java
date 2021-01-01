@@ -1,6 +1,7 @@
 package bazaDate;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -716,6 +717,100 @@ public class Conexiune {
             selectStatement.executeUpdate("call pRenuntaLaGrupa(" + curent.getIdUser() + ", " + pid_grupa + ");");
         } catch (SQLException throwables) {
             System.out.println(throwables);
+            //throwables.printStackTrace();
+        }
+    }
+
+    public void updateNrMaxPart(int id_grupa, int nrMaxNouParticip) {
+        try{
+            selectStatement.executeUpdate("UPDATE grupe SET nr_max_particip = " + nrMaxNouParticip + " WHERE id_grupa = " + id_grupa + ";");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void updateProfesorGrupa(int id_grupa, int id_prof) {
+        try {
+            selectStatement.executeUpdate("UPDATE grupe SET id_profesor_raspunzator = " + id_prof + " WHERE id_grupa = " + id_grupa + ";");
+        } catch (SQLException throwables) {
+            System.out.println(throwables.getMessage());
+            //throwables.printStackTrace();
+        }
+    }
+
+    public ArrayList<Grupe> getGrupeLaCareEAdmin() {
+        ArrayList<Grupe> result = new ArrayList<>();
+        try {
+            String statement_ = new String("SELECT * FROM vGetDetaliiGrupe WHERE id_grupa IN (SELECT id_grupa FROM grupe WHERE id_admin_grupa = " + curent.getIdUser() + ") and id_student = " + curent.getIdUser() + ";");
+            System.out.println(statement_);
+            rs = selectStatement.executeQuery(statement_);
+            while (rs.next()) {
+                Grupe grupa = new Grupe();
+                grupa.setIdGrupa(rs.getInt(2));
+                grupa.setNumeAdmin(rs.getString(3));
+                grupa.setPrenumeAdmin(rs.getString(4));
+                grupa.setDenumireMaterie(rs.getString(5));
+                grupa.setDescriereMaterie(rs.getString(6));
+                if (rs.getInt(7) == 0) {
+                    grupa.setNumeProfesor(null);
+                    grupa.setPrenumeProfesor(null);
+                } else {
+                    String statement = new String("SELECT nume, prenume FROM vGetProfById WHERE id_profesor = " + rs.getInt(7) + ";");
+                    ResultSet resultTemp = connection.createStatement().executeQuery(statement);
+                    resultTemp.next();
+                    grupa.setNumeProfesor(resultTemp.getString(1));
+                    grupa.setPrenumeProfesor(resultTemp.getString(2));
+                }
+                result.add(grupa);
+            }
+        } catch (SQLException throwables) {
+            System.out.println(throwables.getMessage());
+            //throwables.printStackTrace();
+        }
+        return result;
+    }
+
+    public ArrayList<Zile> getZile() {
+        ArrayList<Zile> result = new ArrayList<>();
+        try{
+            rs = selectStatement.executeQuery("SELECT * FROM zile");
+            while(rs.next()) {
+                Zile zi = new Zile();
+                zi.setIdZi(rs.getInt(1));
+                zi.setZi(rs.getString(2));
+                result.add(zi);
+            }
+        } catch (SQLException throwables) {
+            System.out.println("ceva aici" + throwables.getMessage());
+            //throwables.printStackTrace();
+        }
+        return result;
+    }
+
+    public ArrayList<Ore> getOreRecomandate(int idGrupa, int nrZi) {
+        ArrayList<Ore> result = new ArrayList<>();
+        try{
+            rs = selectStatement.executeQuery("call pGetRecomandariActivitati(" + idGrupa + ", " + nrZi + ");");
+            while(rs.next()) {
+                Ore ora = new Ore();
+                ora.setOra(rs.getInt(1));
+                ora.setNrStudentiOcupati(rs.getInt(2));
+                result.add(ora);
+            }
+        } catch (SQLException throwables) {
+            System.out.println(throwables.getMessage());
+            //throwables.printStackTrace();
+        }
+        return result;
+    }
+
+    public void creareActivitateNouaDeGrupa(int pidGrupa, int nrMinPart, LocalDate dataActivitate, int oraActivitate, int durata, int deadline) {
+        try{
+            // (IN pid_grupa INT, IN pnr_min INT, IN pdata_activitate_grupa DATE, IN pora_activitate INT, IN pdurata_activitate INT, IN pdeadline INT, IN pid_student INT)
+            String statement = new String("call pCreareActivitateGrupa(" + pidGrupa + ", " + nrMinPart + ", '" + dataActivitate.toString() + "', " + oraActivitate + ", " + durata + ", " + deadline + ", " + curent.getIdUser() +  ")");
+            selectStatement.executeQuery(statement);
+        } catch (SQLException throwables) {
+            System.out.println(throwables.getMessage());
             //throwables.printStackTrace();
         }
     }

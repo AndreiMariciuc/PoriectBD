@@ -80,11 +80,7 @@ public class ControlStudent implements Initializable {
         initInscrieriCursuri();
         initCalendar();
         initCarnet();
-        incarcareGrupe();
-        textSucces_tms.setText("");
-        adaugareCursuri();
-        adaugareGrupeBune();
-        adaugareGrupeBune();
+        refresh();
     }
 
     private void initCarnet() {
@@ -445,6 +441,16 @@ public class ControlStudent implements Initializable {
         adaugareGrupeBune();
         textSuccesInscriereGrupa_ig.setText("");
         textSuccesRenuntareGrupa_irg.setText("");
+        incarcareProfesori();
+        mesajCorectitudine_ig.setText("");
+        incarcareGrupeAdministrate();
+        textFieldNrMaxPart_ig.setText("");
+        incarcareGrupe();
+        textSucces_tms.setText("");
+        adaugareCursuri();
+        adaugareGrupeBune();
+        adaugareGrupeBune();
+        textOperatieSucces_sga.setText("");
     }
 
     public void renuntareGrupa() {
@@ -453,6 +459,96 @@ public class ControlStudent implements Initializable {
             Conexiune.getConexiune().renuntareLaGrupa(grupeLaCareEste_irg.getValue().getIdGrupa());
             textSuccesRenuntareGrupa_irg.setText("Ai renuntat la grupa " + despreGrupa);
             refresh();
+        }
+    }
+
+    public ChoiceBox<Profesor> choiceBoxProfesori_ag;
+    public ChoiceBox<Grupe> choiceBoxGrupeAdministrate_ag;
+    public Text mesajCorectitudine_ig;
+    public TextField textFieldNrMaxPart_ig;
+
+    private void incarcareProfesori() {
+        choiceBoxProfesori_ag.getItems().clear();
+        ArrayList<Profesor> profesori = Conexiune.getConexiune().getListaProfesori();
+        for(Profesor profesor: profesori) {
+            choiceBoxProfesori_ag.getItems().add(profesor);
+        }
+    }
+
+    private void incarcareGrupeAdministrate() {
+        ArrayList<Grupe> grupe = Conexiune.getConexiune().getGrupeLaCareEAdmin();
+        System.out.println(grupe);
+        choiceBoxGrupeAdministrate_ag.getItems().clear();
+        for(Grupe grupa: grupe) {
+            choiceBoxGrupeAdministrate_ag.getItems().add(grupa);
+        }
+    }
+
+    public void editareGrupa() {
+        boolean ok = false;
+        boolean nuAFostNumar = true;
+        if (isNumber(textFieldNrMaxPart_ig.getText())) {
+            Conexiune.getConexiune().updateNrMaxPart(choiceBoxGrupeAdministrate_ag.getValue().getIdGrupa(), Integer.parseInt(textFieldNrMaxPart_ig.getText()));
+            ok = true;
+        } else if (textFieldNrMaxPart_ig.getText().compareTo("") != 0) {
+            nuAFostNumar = false;
+        }
+        if (nuAFostNumar == true && choiceBoxProfesori_ag.getValue() != null) {
+            Conexiune.getConexiune().updateProfesorGrupa(choiceBoxGrupeAdministrate_ag.getValue().getIdGrupa(), choiceBoxProfesori_ag.getValue().getIdUser());
+            ok = true;
+        }
+        refresh();
+        if (ok == true) {
+            mesajCorectitudine_ig.fillProperty().setValue(Paint.valueOf("#11AA11"));
+            mesajCorectitudine_ig.setText("Modificarile au fost facute!");
+        } else {
+            if (nuAFostNumar == false) {
+                mesajCorectitudine_ig.fillProperty().setValue(Paint.valueOf("#FF0000"));
+                mesajCorectitudine_ig.setText("Te rog sa introduci un numar valid!!");
+            } else {
+                mesajCorectitudine_ig.setText("");
+            }
+        }
+    }
+
+    public boolean isNumber(String n) {
+        try{
+            int nr = Integer.parseInt(n);
+            if (nr > 0) {
+                return true;
+            }
+        } catch (Exception e) {
+            return false;
+        }
+        return false;
+    }
+
+    public DatePicker datePickerZiua_sag;
+
+    public ChoiceBox<Ore> choiceBoxOre_sag;
+
+    public void incarcareOre() {
+        if (choiceBoxGrupuri_ag.getValue() != null &&  datePickerZiua_sag.getValue() != null) {
+            choiceBoxOre_sag.getItems().clear();
+            System.out.println(datePickerZiua_sag.getValue().getDayOfWeek().getValue());
+            ArrayList<Ore> ore = Conexiune.getConexiune().getOreRecomandate(choiceBoxGrupuri_ag.getValue().getIdGrupa(), datePickerZiua_sag.getValue().getDayOfWeek().getValue());
+            for (Ore ora : ore) {
+                choiceBoxOre_sag.getItems().add(ora);
+            }
+        }
+    }
+
+    public TextField textFieldNrMinParticipActivitate_ag, textFieldNrOreValabilitate_ag, textFieldDurata_sga;
+    public Text textOperatieSucces_sga;
+    public void rezervaActivitate() {
+        if (choiceBoxGrupuri_ag.getValue() != null && datePickerZiua_sag.getValue() != null && choiceBoxOre_sag.getValue() != null && isNumber(textFieldNrMinParticipActivitate_ag.getText()) && isNumber(textFieldNrOreValabilitate_ag.getText()) && isNumber(textFieldDurata_sga.getText())) {
+            // creareActivitateNouaDeGrupa(int pidGrupa, int nrMinPart, LocalDate dataActivitate, int oraActivitate, int durata, int deadline)
+            Conexiune.getConexiune().creareActivitateNouaDeGrupa(choiceBoxGrupuri_ag.getValue().getIdGrupa(), Integer.parseInt(textFieldNrMinParticipActivitate_ag.getText()), datePickerZiua_sag.getValue(), choiceBoxOre_sag.getValue().getOra(), Integer.parseInt(textFieldDurata_sga.getText()), Integer.parseInt(textFieldNrOreValabilitate_ag.getText()));
+            textOperatieSucces_sga.fillProperty().setValue(Paint.valueOf("#11CC11"));
+            textOperatieSucces_sga.setText("Activitatea a fost adaugata!");
+        } else {
+            textOperatieSucces_sga.fillProperty().setValue(Paint.valueOf("#CC1111"));
+            textOperatieSucces_sga.setText("Te rog sa completezi toate campurile aferet!");
         }
     }
 }

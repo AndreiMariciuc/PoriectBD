@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
@@ -581,7 +582,7 @@
                               </AnchorPane>
                         </content>
                       </Tab>
-                        <Tab text="Administrare Grupa">
+                        <Tab text="Setare activitate grupa">
                           <content>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #e8e8e8;">
                                  <children>
@@ -594,16 +595,61 @@
                                           <Font size="22.0" />
                                        </font>
                                     </Text>
-                                    <ChoiceBox layoutX="176.0" layoutY="73.0" prefHeight="25.0" prefWidth="668.0" style="-fx-background-color: #dfdbd8; -fx-border-color: #000000; -fx-border-radius: 30; -fx-background-radius: 30;">
-                                       <cursor>
-                                          <Cursor fx:constant="HAND" />
-                                       </cursor></ChoiceBox>
-                                    <Text layoutX="80.0" layoutY="94.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Profesor">
+                                    <Text layoutX="111.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ziua:">
                                        <font>
                                           <Font size="22.0" />
                                        </font>
                                     </Text>
-                                    <Button layoutX="838.0" layoutY="513.0" mnemonicParsing="false" text="Modifica" />
+                                    <Button layoutX="375.0" layoutY="112.0" mnemonicParsing="false" onMouseClicked="#incarcareOre" style="-fx-background-color: #229956; -fx-background-radius: 15;" text="Incarcare ore favorabile" textFill="WHITE">
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </Button>
+                                    <Text layoutX="20.0" layoutY="200.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ore favorabile:">
+                                       <font>
+                                          <Font size="22.0" />
+                                       </font>
+                                    </Text>
+                                    <ChoiceBox fx:id="choiceBoxOre_sag" layoutX="176.0" layoutY="179.0" prefHeight="25.0" prefWidth="668.0" style="-fx-background-color: #dfdbd8; -fx-border-color: #000000; -fx-border-radius: 30; -fx-background-radius: 30;">
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </ChoiceBox>
+                                    <TextField fx:id="textFieldNrMinParticipActivitate_ag" layoutX="266.0" layoutY="236.0" prefHeight="25.0" prefWidth="287.0" promptText="nr min particip..." />
+                                    <TextField fx:id="textFieldNrOreValabilitate_ag" layoutX="289.0" layoutY="277.0" prefHeight="25.0" prefWidth="289.0" promptText="numar ore valabi...." />
+                                    <Text layoutX="30.0" layoutY="255.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Numar minim de participanti">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Text>
+                                    <Text layoutX="32.0" layoutY="296.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Numar ore valabilitate inscriere">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Text>
+                                    <Button layoutX="389.0" layoutY="390.0" mnemonicParsing="false" onMouseClicked="#rezervaActivitate" style="-fx-background-color: #229956; -fx-background-radius: 15;" text="Posteaza activitatea" textFill="WHITE">
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </Button>
+                                    <DatePicker fx:id="datePickerZiua_sag" layoutX="162.0" layoutY="73.0" prefHeight="25.0" prefWidth="289.0" />
+                                    <Text layoutX="32.0" layoutY="339.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Durata:">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Text>
+                                    <TextField fx:id="textFieldDurata_sga" layoutX="101.0" layoutY="320.0" prefHeight="25.0" prefWidth="292.0" promptText="durata minima (ore)..." />
+                                    <Text fx:id="textOperatieSucces_sga" fill="#00f825" layoutX="145.0" layoutY="374.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font>
+                                    </Text>
                                  </children>
                               </AnchorPane>
                           </content>
@@ -697,6 +743,53 @@
                                           <Font name="System Bold" size="15.0" />
                                        </font></Button>
                                  </children></AnchorPane>
+                          </content>
+                        </Tab>
+                        <Tab text="Administrare Grupe">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #e8e8e8;">
+                                 <children>
+                                    <Text layoutX="62.0" layoutY="64.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Grupele PE CARE le administrezi:">
+                                       <font>
+                                          <Font size="22.0" />
+                                       </font>
+                                    </Text>
+                                    <ChoiceBox fx:id="choiceBoxGrupeAdministrate_ag" layoutX="389.0" layoutY="43.0" prefHeight="27.0" prefWidth="581.0" style="-fx-background-color: #dfdbd8; -fx-border-color: #000000; -fx-border-radius: 30; -fx-background-radius: 30;">
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </ChoiceBox>
+                                    <Text layoutX="123.0" layoutY="109.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Numar maxim de participanti:">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Text>
+                                    <TextField fx:id="textFieldNrMaxPart_ig" layoutX="377.0" layoutY="90.0" prefHeight="25.0" prefWidth="270.0" promptText="NUMAR natural nenul..." />
+                                    <Text layoutX="123.0" layoutY="148.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Profesori:">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Text>
+                                    <Button layoutX="425.0" layoutY="204.0" mnemonicParsing="false" onMouseClicked="#editareGrupa" style="-fx-background-color: #229956; -fx-background-radius: 15;" text="Salveaza modificarile!" textFill="WHITE">
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </Button>
+                                    <ChoiceBox fx:id="choiceBoxProfesori_ag" layoutX="210.0" layoutY="128.0" prefHeight="27.0" prefWidth="504.0" style="-fx-background-color: #dfdbd8; -fx-border-color: #000000; -fx-border-radius: 30; -fx-background-radius: 30;">
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </ChoiceBox>
+                                    <Text fx:id="mesajCorectitudine_ig" layoutX="220.0" layoutY="190.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*Modificarile au fost salvate / te rog sa introduci un numar corect sau sa stergi numarul!">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Text>
+                                 </children>
+                              </AnchorPane>
                           </content>
                         </Tab>
                     </tabs>
