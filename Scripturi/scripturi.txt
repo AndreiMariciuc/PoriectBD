@@ -483,7 +483,6 @@ FROM users u JOIN studenti s
                   ON u.id_user = s.id_student;
 
 
-
 DROP PROCEDURE IF EXISTS pInsertAdmin;
 DELIMITER %%
 CREATE PROCEDURE pInsertAdmin(IN p_id_rol INT, IN p_cnp CHAR(13), IN p_nume VARCHAR(64), IN p_prenume VARCHAR(64), IN p_adresa VARCHAR(128), IN p_nr_tel CHAR(10), IN p_email VARCHAR(64), IN p_iban VARCHAR(34), IN p_nr_contract INT)
@@ -1111,9 +1110,6 @@ begin
                                                          and s.id_student = idStud);
 end//
 
-call cursuriDisponibile(300);
-
-
 delete from curs_activitati;
 
 INSERT INTO curs_activitati (id_ca, id_curs, id_activ, id_prof_titular, durata) VALUES (1, 8, 1, 530, 2), (2, 8, 2, 530, 2), (3, 8, 2, 530, 2), (8, 8, 3, 530, 2), (9, 8, 3, 530, 2), (10, 8, 3, 530, 2);
@@ -1124,9 +1120,6 @@ delete from studenti_activitati;
 # Online Python compiler (interpreter) to run Python online.
 # Write Python 3 code in this online editor and run it.
 INSERT INTO studenti_activitati (id_student, id_activitate) VALUES (100, 20), (101, 22), (102, 1), (103, 21), (104, 17), (105, 20), (106, 1), (107, 17), (108, 1), (109, 17), (110, 20), (111, 17), (112, 22), (113, 22), (114, 21), (115, 21), (116, 22), (117, 20), (118, 1), (119, 17), (120, 1), (121, 1), (122, 20), (123, 22), (124, 20), (125, 21), (126, 20), (127, 18), (128, 1), (129, 22), (130, 1), (131, 18), (132, 1), (133, 19), (134, 20), (135, 18), (136, 20), (137, 18), (138, 17), (139, 19), (140, 19), (141, 22), (142, 17), (143, 18), (144, 22), (145, 21), (146, 22), (147, 22), (148, 19), (149, 1), (150, 18), (151, 21), (152, 19), (153, 19), (154, 1), (155, 18), (156, 22), (157, 17), (158, 19), (159, 21), (160, 18), (161, 18), (162, 18), (163, 18), (164, 17), (165, 19), (166, 19), (167, 17), (168, 19), (169, 21), (170, 1), (171, 22), (172, 17), (173, 20), (174, 19), (175, 22), (176, 20), (177, 19), (178, 18), (179, 20), (180, 22), (181, 21), (182, 1), (183, 21), (184, 1), (185, 17), (186, 20), (187, 21), (188, 19), (189, 21), (190, 18), (191, 18), (192, 20), (193, 22), (194, 21), (195, 22), (196, 1), (197, 21), (198, 21), (199, 21), (200, 18), (201, 18), (202, 18), (203, 22), (204, 22), (205, 20), (206, 17), (207, 21), (208, 20), (209, 1), (210, 22), (211, 20), (212, 18), (213, 17), (214, 22), (215, 1), (216, 17), (217, 21), (218, 17), (219, 20), (220, 18), (221, 20), (222, 21), (223, 18), (224, 1), (225, 22), (226, 21), (227, 17), (228, 1), (229, 22), (230, 21), (231, 21), (232, 17), (233, 19), (234, 17), (235, 21), (236, 18), (237, 18), (238, 1), (239, 1), (240, 1), (241, 20), (242, 19), (243, 22), (244, 21), (245, 17), (246, 19), (247, 1), (248, 20), (249, 19), (250, 17), (251, 1), (252, 1), (253, 21), (254, 1), (255, 17), (256, 20), (257, 17), (258, 20), (259, 20), (260, 18), (261, 17), (262, 17), (263, 21), (264, 19), (265, 1), (266, 22), (267, 18), (268, 22), (269, 21), (270, 22), (271, 20), (272, 19), (273, 17), (274, 19), (275, 19), (276, 17), (277, 19), (278, 20), (279, 1), (280, 22), (281, 21), (282, 22), (283, 21), (284, 22), (285, 18), (286, 21), (287, 19), (288, 20), (289, 22), (290, 18), (291, 20), (292, 20), (293, 21), (294, 21), (295, 17), (296, 20), (297, 21), (298, 19), (299, 20);
-SELECT * FROM studenti_activitati;
-
-
 
 UPDATE aplicatie.curs_activitati t
 SET t.perioada        = 1,
@@ -1228,10 +1221,6 @@ begin
 	having count(id_student)<(select nr_max_participanti from curs_activitati where id_curs = idCurs and id_prof_titular = idProf and id_activ = 1)
     order by nrStud;
 end//
--- test
-select perioada, nr_zi_sapt, ora_inceput, durata
-from vActivitatiStudent
-where id_student = 160;
 
 drop procedure if exists getActivitatiCurs;
 delimiter //
@@ -1560,7 +1549,6 @@ END %%
 DELIMITER ;
 
 
-DESCRIBE grupe;
 DROP PROCEDURE IF EXISTS pGetGrupeBune;
 DELIMITER %%
 CREATE PROCEDURE pGetGrupeBune(IN pid_student INT)
@@ -1574,7 +1562,6 @@ END %%
 DELIMITER ;
 
 
-DESCRIBE grupe;
 DROP PROCEDURE IF EXISTS pRenuntaLaGrupa;
 DELIMITER %%
 CREATE PROCEDURE pRenuntaLaGrupa (IN pid_student INT, IN pid_grupa INT)
@@ -1650,11 +1637,6 @@ begin
 end//
 
 
-call pGetRecomandariActivitati(2, 1);
-
-
-
-call cursuriStudent(300); -- vActivitatiStudenti
 delete from curs_activitati where true;
 
 
@@ -1683,11 +1665,6 @@ INSERT INTO studenti_activitati (id_student, id_activitate, nota, data_notare) V
 (300, 7, NULL, NULL);
 
 
-call pCreareGrupa(300, 8);
-call pCreareGrupa(300, 8);
--- call pJoinLaGrupa(250, 1);
-
-
 DELETE FROM studenti_activitati where true;
 INSERT INTO studenti_activitati VALUES (250, 1, NULL, NULL), (251, 1, NULL, NULL), (252, 1, NULL, NULL), (253, 1, NULL, NULL), (254, 1, NULL, NULL), (255, 1, NULL, NULL), (256, 1, NULL, NULL), (257, 1, NULL, NULL), (258, 1, NULL, NULL), (259, 1, NULL, NULL), (260, 1, NULL, NULL), (261, 1, NULL, NULL), (262, 1, NULL, NULL), (263, 1, NULL, NULL), (264, 1, NULL, NULL), (265, 1, NULL, NULL), (266, 1, NULL, NULL), (267, 1, NULL, NULL), (268, 1, NULL, NULL), (269, 1, NULL, NULL), (270, 1, NULL, NULL), (271, 1, NULL, NULL), (272, 1, NULL, NULL), (273, 1, NULL, NULL), (274, 1, NULL, NULL), (275, 1, NULL, NULL), (276, 1, NULL, NULL), (277, 1, NULL, NULL), (278, 1, NULL, NULL), (279, 1, NULL, NULL), (280, 1, NULL, NULL), (281, 1, NULL, NULL), (282, 1, NULL, NULL), (283, 1, NULL, NULL), (284, 1, NULL, NULL), (285, 1, NULL, NULL), (286, 1, NULL, NULL), (287, 1, NULL, NULL), (288, 1, NULL, NULL), (289, 1, NULL, NULL), (290, 1, NULL, NULL), (291, 1, NULL, NULL), (292, 1, NULL, NULL), (293, 1, NULL, NULL), (294, 1, NULL, NULL), (295, 1, NULL, NULL), (296, 1, NULL, NULL), (297, 1, NULL, NULL), (298, 1, NULL, NULL), (299, 1, NULL, NULL);
 
@@ -1713,47 +1690,17 @@ call pJoinLaGrupa(267, 2);
 call pJoinLaGrupa(268, 1);
 call pJoinLaGrupa(269, 2);
 call pJoinLaGrupa(270, 2);
-call pJoinLaGrupa(271, 2);
-call pJoinLaGrupa(272, 1);
-call pJoinLaGrupa(273, 1);
-call pJoinLaGrupa(274, 2);
-call pJoinLaGrupa(275, 1);
-call pJoinLaGrupa(276, 1);
-call pJoinLaGrupa(277, 2);
-call pJoinLaGrupa(278, 2);
-call pJoinLaGrupa(279, 2);
-call pJoinLaGrupa(280, 1);
-call pJoinLaGrupa(281, 1);
-call pJoinLaGrupa(282, 2);
-call pJoinLaGrupa(283, 1);
-call pJoinLaGrupa(284, 1);
-call pJoinLaGrupa(285, 2);
-call pJoinLaGrupa(286, 2);
-call pJoinLaGrupa(287, 2);
-call pJoinLaGrupa(288, 1);
-call pJoinLaGrupa(289, 2);
-call pJoinLaGrupa(290, 1);
-call pJoinLaGrupa(291, 2);
-call pJoinLaGrupa(292, 2);
-call pJoinLaGrupa(293, 1);
-call pJoinLaGrupa(294, 1);
-call pJoinLaGrupa(295, 1);
-call pJoinLaGrupa(296, 2);
-call pJoinLaGrupa(297, 1);
-call pJoinLaGrupa(298, 1);
-call pJoinLaGrupa(299, 1);
 
 
 UPDATE grupe SET id_profesor_raspunzator = 516 WHERE id_grupa = 1;
 
-call pTrimiteMesaj(1, 300, "sal", "cf dragi kolegy", 0);
+call pTrimiteMesaj(1, 300, "Buna Geo!", "Acesta e un mesaj direct catre Geo!", 0);
 
 -- pCreareActivitateGrupa(IN pid_grupa INT, IN pnr_min INT, IN pdata_activitate_grupa DATE, IN pora_activitate INT, IN pdurata_activitate INT, IN pdeadline INT)
 
 call pCreareActivitateGrupa(2, 5, '2020-11-11', 8, 2, 1, 300);
 
 
-
 call pAdaugaIncaUnul(1);
 call pAdaugaIncaUnul(1);
 call pAdaugaIncaUnul(2);
@@ -1763,13 +1710,6 @@ call pAdaugaIncaUnul(2);
 call pAdaugaIncaUnul(3);
 call pAdaugaIncaUnul(2);
 call pAdaugaIncaUnul(1);
-
-
-
-
-SELECT * FROM vGetDetaliiGrupe WHERE id_grupa IN (SELECT id_grupa FROM grupe WHERE id_admin_grupa = 300) and id_student = 300;
-SELECT * FROM vGetDetaliiGrupe WHERE id_grupa IN (SELECT id_grupa FROM grupe WHERE id_admin_grupa = 250) and id_student = 250;
-call pGetGrupeBune(250);
 
 insert into an_universitar value (1, 1, '2020-09-28','2021-09-27', 2020);
 
