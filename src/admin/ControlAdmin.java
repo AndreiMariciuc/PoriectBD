@@ -280,6 +280,7 @@ public class ControlAdmin implements Initializable {
         }
     }
     public void adaugareUser() {
+    // la adaugare user, singura diferenta consta in faptul ca la super-admin se poate vedea optiunea de admin, ceea ce face completarea mai usoara
         if (choiceRol_a.getValue() != null) {
             succesAdaugare_a.setText("");
             eroareLipsaRol_a.setText("");

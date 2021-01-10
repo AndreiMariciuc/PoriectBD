@@ -22,9 +22,16 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URL;
 import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import static bazaDate.Functii.*;
+
+
+//clasa de control a studentului, modelul de date se afla in clasa bazaDeDate
 public class ControlStudent implements Initializable {
     //Main Menu
     public Button datePersonaleButton, orarButton, carnetButton, inscriereCursuriButton, grupuriButton, deautentificareButton;
@@ -37,8 +44,9 @@ public class ControlStudent implements Initializable {
     //inscrieri cursuri
     public ComboBox<String> cursuriDisponibile;
     public Text profesorTitular;
-    public ComboBox<String> boxSeminar, boxCursuri, boxLaborator;
+    //public ComboBox<String> boxSeminar, boxCursuri, boxLaborator;
     public Button renuntaCursButton;
+    public Button inscriereCursButton;
     public ComboBox<String> cursurileStudentului;
     //orar
     public TableView<Calendar> tabelToateActivitatile;
@@ -73,9 +81,11 @@ public class ControlStudent implements Initializable {
     public TableColumn<Carnet, String> coloanaProfesorFinal;
     public TableColumn<Carnet, String> coloanaNotaFinal;
 
+    /**
+     * INITIALIZARE INAINTE DE AFISAREA SCENEI
+     **/
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        /** init DATE PERSONALE **/
         initDatePersonale();
         initInscrieriCursuri();
         initCalendar();
@@ -83,6 +93,7 @@ public class ControlStudent implements Initializable {
         refresh();
     }
 
+    // initializare carnet
     private void initCarnet() {
         coloanaDisciplinaPartial.setCellValueFactory(new PropertyValueFactory<Carnet, String>("disciplina"));
         coloanaActivitatePartial.setCellValueFactory(new PropertyValueFactory<Carnet, String>("activitate"));
@@ -98,12 +109,14 @@ public class ControlStudent implements Initializable {
         refreshCarnet();
     }
 
+    // reimprospatare datele din carnet
     private void refreshCarnet() {
         Conexiune.getConexiune().carnet();
         noteFinal.getItems().setAll(((Student) Conexiune.getUser()).getNoteFinale());
         notePartial.getItems().setAll(((Student) Conexiune.getUser()).getNotePartiale());
     }
 
+    // initializare date in calendarul studentului
     private void initCalendar() {
         coloanaDisciplinaToate.setCellValueFactory(new PropertyValueFactory<Calendar, String>("disciplina"));
         coloanaActivitateToate.setCellValueFactory(new PropertyValueFactory<Calendar, String>("activitate"));
@@ -124,12 +137,14 @@ public class ControlStudent implements Initializable {
         refreshCalendar();
     }
 
+    // reimprospatare datele din calendar
     private void refreshCalendar() {
         Conexiune.getConexiune().calendar();
         tabelToateActivitatile.getItems().setAll(((Student) Conexiune.getUser()).getToateActivitati());
         tabelAziActivitatile.getItems().setAll(((Student) Conexiune.getUser()).getAziActivitati());
     }
 
+    //initializare cursuri
     private void initInscrieriCursuri() {
         //lista cu toate cursurile disponibile!
         ((Student) (Conexiune.getUser())).setDenumireCursuri(Conexiune.getConexiune().getCursuriDisponibile(Conexiune.getUser().getIdUser()));
@@ -137,6 +152,7 @@ public class ControlStudent implements Initializable {
         cursurileStudentului.getItems().setAll((Conexiune.getConexiune()).getDenumireCursuriInscris(Conexiune.getUser().getIdUser()));
     }
 
+    //init date personale
     private void initDatePersonale() {
         welcome.setText("Bun venit, \n" + Conexiune.getUser().getNume() + " " + Conexiune.getUser().getPrenume());
         welcomeText.setText("\t\tBun venit, " + Conexiune.getUser().getNume() + " " + Conexiune.getUser().getPrenume()
@@ -170,6 +186,7 @@ public class ControlStudent implements Initializable {
         anStudiu.setText(((Student) Conexiune.getUser()).getAnStudiu());
     }
 
+    // se schimba starile odata ce dam click!
     public void schimbaStari(ActionEvent actionEvent) throws IOException {
         //de facut fiecare pane dupa preferinte si necesitati!
         if (actionEvent.getSource() == datePersonaleButton) {
@@ -190,84 +207,129 @@ public class ControlStudent implements Initializable {
         }
     }
 
-    public void seAlegeCursul(ActionEvent actionEvent) {
-        //System.out.println(cursuriDisponibile.getValue());
-        String profTitular = Conexiune.getConexiune().getProfesorTitular(cursuriDisponibile.getValue());
-        if (profTitular != null) {
-            profesorTitular.setText(profTitular);
-            //System.out.println(((Student) Conexiune.getUser()).getIdProfTitular());
-            ArrayList<String> listActiv = Conexiune.getConexiune().getActivitatiDisponibile(((Student) (Conexiune.getUser())).getIdProfTitular(), cursuriDisponibile.getValue(), Conexiune.getUser().getIdUser(), 1);
-            if (listActiv != null)
-                boxCursuri.getItems().setAll(listActiv);
-            else {
-                System.out.println("nu poti tine cursul!");
-            }
+    // listener pentru selectarea cursurului
+//    public void seAlegeCursul(ActionEvent actionEvent) {
+//        //System.out.println(cursuriDisponibile.getValue());
+//        String profTitular = Conexiune.getConexiune().getProfesorTitular(cursuriDisponibile.getValue());
+//        if (profTitular != null) {
+//            profesorTitular.setText(profTitular);
+//            //System.out.println(((Student) Conexiune.getUser()).getIdProfTitular());
+//            ArrayList<String> listActiv = Conexiune.getConexiune().getActivitatiDisponibile(((Student) (Conexiune.getUser())).getIdProfTitular(), cursuriDisponibile.getValue(), Conexiune.getUser().getIdUser(), 1);
+//            if (listActiv != null)
+//                boxCursuri.getItems().setAll(listActiv);
+//            else {
+//                System.out.println("nu poti tine cursul!");
+//            }
+//
+//            listActiv = Conexiune.getConexiune().getActivitatiDisponibile(((Student) (Conexiune.getUser())).getIdProfTitular(), cursuriDisponibile.getValue(), Conexiune.getUser().getIdUser(), 2);
+//
+//            if (listActiv != null)
+//                boxSeminar.getItems().setAll(listActiv);
+//            else {
+//                System.out.println("nu poti tine seminarul");
+//            }
+//
+//            listActiv = Conexiune.getConexiune().getActivitatiDisponibile(((Student) (Conexiune.getUser())).getIdProfTitular(), cursuriDisponibile.getValue(), Conexiune.getUser().getIdUser(), 3);
+//
+//            if (listActiv != null)
+//                boxLaborator.getItems().setAll(listActiv);
+//            else {
+//                System.out.println("nu poti tine labul!");
+//            }
+//
+//        } else {
+//            profesorTitular.setText("EROARE, NU GASIM NICIUN PROFESOR DISPONIBIL!");
+//            initFail();
+//            mesajSuccesInscriere.setText("");
+//        }
+//    }
 
-            listActiv = Conexiune.getConexiune().getActivitatiDisponibile(((Student) (Conexiune.getUser())).getIdProfTitular(), cursuriDisponibile.getValue(), Conexiune.getUser().getIdUser(), 2);
-
-            if (listActiv != null)
-                boxSeminar.getItems().setAll(listActiv);
-            else {
-                System.out.println("nu poti tine seminarul");
-            }
-
-            listActiv = Conexiune.getConexiune().getActivitatiDisponibile(((Student) (Conexiune.getUser())).getIdProfTitular(), cursuriDisponibile.getValue(), Conexiune.getUser().getIdUser(), 3);
-
-            if (listActiv != null)
-                boxLaborator.getItems().setAll(listActiv);
-            else {
-                System.out.println("nu poti tine labul!");
-            }
-
-        } else {
-            profesorTitular.setText("EROARE, NU GASIM NICIUN PROFESOR DISPONIBIL!");
-            initFail();
-            mesajSuccesInscriere.setText("");
-        }
-    }
-
+    // refesh in caz de fail in logare profesor
     private void initFail() {
-        boxLaborator.getItems().setAll(new ArrayList<String>());
-        boxSeminar.getItems().setAll(new ArrayList<String>());
-        boxCursuri.getItems().setAll(new ArrayList<String>());
+//        boxLaborator.getItems().setAll(new ArrayList<String>());
+//        boxSeminar.getItems().setAll(new ArrayList<String>());
+//        boxCursuri.getItems().setAll(new ArrayList<String>());
         ((Student) Conexiune.getUser()).clearMap();
     }
 
-    public void inscriereCurs(ActionEvent actionEvent) {
-        if (profesorTitular != null) {
-            int idStud = ((Student) Conexiune.getUser()).getIdUser();
-            Integer activ1, activ2, activ3;
-            activ1 = ((Student) Conexiune.getUser()).getActivitatiCurente().get(boxCursuri.getValue());
-            activ2 = ((Student) Conexiune.getUser()).getActivitatiCurente().get(boxSeminar.getValue());
-            activ3 = ((Student) Conexiune.getUser()).getActivitatiCurente().get(boxLaborator.getValue());
-            if (activ1 != null) {
-                if (activ3 != null)
-                    Conexiune.getConexiune().executeSQL("call insertActivitateStudent(" + idStud + ", " + activ3 + ");");
-                else if (boxLaborator.getItems().size() > 0) {
-                    mesajSuccesInscriere.setText("Alege un lab!");
-                    return;
-                }
+    // listener pentru inscrierea la un curs
+    public void inscriereCurs() throws SQLException {
+        String profTitular = Conexiune.getConexiune().getProfesorTitular(cursuriDisponibile.getValue());
+        if (profTitular == null){
+            profesorTitular.setText("EROARE, NU GASIM NICIUN PROFESOR DISPONIBIL!");
+            initFail();
+            mesajSuccesInscriere.setText("");
+            return;
+        }
+        int id_curs = denumireToIdCurs(cursuriDisponibile.getValue());
+        int id_stud = Conexiune.getUser().getIdUser();
+        PreparedStatement s = Conexiune.getConexiune().connection.prepareStatement("call profesorCuStudMin(?)");
+        s.setInt(1,id_curs);
+        ResultSet rs = s.executeQuery();
+        while(rs.next()){
+            int id_prof = rs.getInt("idProf");
+            PreparedStatement s1 = Conexiune.getConexiune().connection.prepareStatement("call getActivitatiCurs(?,?,?,1)");
+            s1.setInt(1,id_curs);
+            s1.setInt(2,id_stud);
+            s1.setInt(3,id_prof);
+            ResultSet rs1 = s1.executeQuery();
+            int id_ca1 = 0;
+            while(rs1.next())
+                id_ca1 = rs1.getInt("id_ca");
+            if (id_ca1 == 0)
+                continue;
 
-                if (activ2 != null)
-                    Conexiune.getConexiune().executeSQL("call insertActivitateStudent(" + idStud + ", " + activ2 + ");");
-                else if (boxSeminar.getItems().size() > 0) {
-                    mesajSuccesInscriere.setText("Alege un seminar!");
-                    return;
-                }
+            int id_ca2 = 0;
+            if (existaActivitate(id_curs,"seminar",id_prof)) {
+                PreparedStatement s2 = Conexiune.getConexiune().connection.prepareStatement("call getActivitatiCurs(?,?,?,2)");
+                s2.setInt(1, id_curs);
+                s2.setInt(2, id_stud);
+                s2.setInt(3, id_prof);
+                ResultSet rs2 = s2.executeQuery();
+                ArrayList<Integer> id_cas = new ArrayList<>();
+                while (rs2.next())
+                    id_cas.add(rs2.getInt("id_ca"));
+                if (id_cas.isEmpty())
+                    continue;
+                int k = (int)(Math.random()*id_cas.size());
+                id_ca2 = id_cas.get(k);
+            }
 
-                Conexiune.getConexiune().executeSQL("call insertActivitateStudent(" + idStud + ", " + activ1 + ");");
-                mesajSuccesInscriere.setText("Te-ai inscris cu succes!");
-                //reimprospatez conexiunile
-                initInscrieriCursuri();
-                initFail();
-                refreshCalendar();
-                refreshCarnet();
-            } else
-                mesajSuccesInscriere.setText("Nu ai selectat cursul!");
-        } else
-            mesajSuccesInscriere.setText("Nu gasim profesor disponibil, revio mai tarziu!!");
+            int id_ca3 = 0;
+            if (existaActivitate(id_curs,"laborator",id_prof)) {
+                PreparedStatement s3 = Conexiune.getConexiune().connection.prepareStatement("call getActivitatiCurs(?,?,?,3)");
+                s3.setInt(1, id_curs);
+                s3.setInt(2, id_stud);
+                s3.setInt(3, id_prof);
+                ResultSet rs3 = s3.executeQuery();
+                ArrayList<Integer> id_cas = new ArrayList<>();
+                while (rs3.next())
+                    id_cas.add(rs3.getInt("id_ca"));
+                if (id_cas.isEmpty())
+                    continue;
+                int k = (int)(Math.random()*id_cas.size());
+                id_ca3 = id_cas.get(k);
+            }
+            System.out.println(id_ca1+" "+id_ca2+" "+id_ca3);
+            if (id_ca1>0)
+                Conexiune.getConexiune().executeSQL("call insertActivitateStudent(" + id_stud + ", " + id_ca1 + ");");
+            if (id_ca2>0)
+                Conexiune.getConexiune().executeSQL("call insertActivitateStudent(" + id_stud + ", " + id_ca2 + ");");
+            if (id_ca3>0)
+                Conexiune.getConexiune().executeSQL("call insertActivitateStudent(" + id_stud + ", " + id_ca3 + ");");
+            profesorTitular.setText(idUserToNumeUser(id_prof));
+            mesajSuccesInscriere.setText("Te-ai inscris cu succes! Vezi activitatile la care te-ai inscris in orar");
+            //reimprospatez conexiunile
+            initInscrieriCursuri();
+            initFail();
+            refreshCalendar();
+            refreshCarnet();
+            return;
+        }
+        mesajSuccesInscriere.setText("Nu gasim profesor disponibil, revino mai tarziu!!");
     }
 
+    // listener pentru renuntarea la un curs
     public void renuntaCurs(ActionEvent actionEvent) {
         String descriere = cursurileStudentului.getValue();
         if (descriere != null) {
@@ -280,11 +342,13 @@ public class ControlStudent implements Initializable {
             mesajSuccesRenuntare.setText("Nu ai selectat nimic!");
     }
 
+    // necesar pentru implementarea descarcarii in fiser
     private FileChooser getFileChooser() {
         FileChooser fileChooser = new FileChooser();
         FileChooser.ExtensionFilter ext = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
         return fileChooser;
     }
+
 
     private void saveFile(String result, File file) {
         try {
@@ -320,20 +384,22 @@ public class ControlStudent implements Initializable {
                 System.out.println("nu am fisier");
         }
     }
-    
+
     /*
         Grupe
      */
     public ChoiceBox<Grupe> choiceBoxGrupur_vg, choiceBoxGrupuri_tmg, choiceBoxGrupuri_ag;
     public ChoiceBox<Mesaj> choiceBoxMesaje_vg;
     public TextArea textAreaGrupuri_vg;
+
     public void incarcareGrupe() {
         choiceBoxGrupur_vg.getItems().clear();
         choiceBoxGrupuri_tmg.getItems().clear();
         choiceBoxGrupuri_ag.getItems().clear();
         grupeLaCareEste_irg.getItems().clear();
         ArrayList<Grupe> grupe = Conexiune.getConexiune().getGrupeStudent();
-        for (Grupe grupa: grupe) {
+        System.out.println(grupe);
+        for (Grupe grupa : grupe) {
             choiceBoxGrupur_vg.getItems().add(grupa);
             choiceBoxGrupuri_ag.getItems().add(grupa);
             choiceBoxGrupuri_tmg.getItems().add(grupa);
@@ -345,15 +411,18 @@ public class ControlStudent implements Initializable {
         if (choiceBoxGrupur_vg.getValue() != null) {
             choiceBoxMesaje_vg.getItems().clear();
             ArrayList<Mesaj> mesaje = Conexiune.getConexiune().getMesaje(choiceBoxGrupur_vg.getValue().getIdGrupa());
-            for (Mesaj mesaj: mesaje) {
+            for (Mesaj mesaj : mesaje) {
                 choiceBoxMesaje_vg.getItems().add(mesaj);
             }
             butonParticipareActivitate_vg.setDisable(true);
         }
+        incarcaStudentiGrupe();
     }
+
     public Button butonParticipareActivitate_vg;
+
     public void vizualizareMesaj() {
-        if (choiceBoxMesaje_vg.getValue() != null){
+        if (choiceBoxMesaje_vg.getValue() != null) {
             textAreaGrupuri_vg.setText(choiceBoxMesaje_vg.getValue().getWholeMsg());
             if (choiceBoxMesaje_vg.getValue().getProgramare() != 0) {
                 butonParticipareActivitate_vg.setDisable(false);
@@ -362,6 +431,7 @@ public class ControlStudent implements Initializable {
             }
         }
     }
+
     public void incaUnul() {
         Conexiune.getConexiune().participare(choiceBoxMesaje_vg.getValue().getProgramare());
         butonParticipareActivitate_vg.setDisable(true);
@@ -370,6 +440,7 @@ public class ControlStudent implements Initializable {
     public TextField textFieldSubiect_tmg;
     public TextArea textFieldMesaj_tmg;
     public Text textSucces_tms;
+
     public void trimiteMesaj() {
         if (choiceBoxGrupuri_tmg.getValue() != null) {
             String subiect = textFieldSubiect_tmg.getText();
@@ -396,7 +467,7 @@ public class ControlStudent implements Initializable {
         textSuccesCreareGrupa.setText("");
         ArrayList<Cursuri> cursuri = Conexiune.getConexiune().getCursuri();
         choiceBoxMaterii_cg.getItems().clear();
-        for (Cursuri curs: cursuri) {
+        for (Cursuri curs : cursuri) {
             choiceBoxMaterii_cg.getItems().add(curs);
         }
     }
@@ -409,17 +480,19 @@ public class ControlStudent implements Initializable {
     }
 
     public ChoiceBox<Grupe> choiceBoxGrupuriBune_ig;
+
     public void adaugareGrupeBune() {
         textSuccesInscriereGrupa_ig.setText("");
         choiceBoxGrupuriBune_ig.getItems().clear();
         ArrayList<Grupe> grupe = Conexiune.getConexiune().getGrupeLaCareNuE();
         System.out.println(grupe);
-        for (Grupe grupa: grupe) {
+        for (Grupe grupa : grupe) {
             choiceBoxGrupuriBune_ig.getItems().add(grupa);
         }
     }
 
     public Text textSuccesInscriereGrupa_ig;
+
     public void inscriereInGrupa() {
         if (choiceBoxGrupuriBune_ig.getValue() != null) {
             if (Conexiune.getConexiune().inscriereInGrupa(choiceBoxGrupuriBune_ig.getValue().getIdGrupa())) {
@@ -449,7 +522,6 @@ public class ControlStudent implements Initializable {
         textSucces_tms.setText("");
         adaugareCursuri();
         adaugareGrupeBune();
-        adaugareGrupeBune();
         textOperatieSucces_sga.setText("");
     }
 
@@ -470,7 +542,7 @@ public class ControlStudent implements Initializable {
     private void incarcareProfesori() {
         choiceBoxProfesori_ag.getItems().clear();
         ArrayList<Profesor> profesori = Conexiune.getConexiune().getListaProfesori();
-        for(Profesor profesor: profesori) {
+        for (Profesor profesor : profesori) {
             choiceBoxProfesori_ag.getItems().add(profesor);
         }
     }
@@ -479,7 +551,7 @@ public class ControlStudent implements Initializable {
         ArrayList<Grupe> grupe = Conexiune.getConexiune().getGrupeLaCareEAdmin();
         System.out.println(grupe);
         choiceBoxGrupeAdministrate_ag.getItems().clear();
-        for(Grupe grupa: grupe) {
+        for (Grupe grupa : grupe) {
             choiceBoxGrupeAdministrate_ag.getItems().add(grupa);
         }
     }
@@ -512,7 +584,7 @@ public class ControlStudent implements Initializable {
     }
 
     public boolean isNumber(String n) {
-        try{
+        try {
             int nr = Integer.parseInt(n);
             if (nr > 0) {
                 return true;
@@ -528,7 +600,7 @@ public class ControlStudent implements Initializable {
     public ChoiceBox<Ore> choiceBoxOre_sag;
 
     public void incarcareOre() {
-        if (choiceBoxGrupuri_ag.getValue() != null &&  datePickerZiua_sag.getValue() != null) {
+        if (choiceBoxGrupuri_ag.getValue() != null && datePickerZiua_sag.getValue() != null) {
             choiceBoxOre_sag.getItems().clear();
             System.out.println(datePickerZiua_sag.getValue().getDayOfWeek().getValue());
             ArrayList<Ore> ore = Conexiune.getConexiune().getOreRecomandate(choiceBoxGrupuri_ag.getValue().getIdGrupa(), datePickerZiua_sag.getValue().getDayOfWeek().getValue());
@@ -540,6 +612,7 @@ public class ControlStudent implements Initializable {
 
     public TextField textFieldNrMinParticipActivitate_ag, textFieldNrOreValabilitate_ag, textFieldDurata_sga;
     public Text textOperatieSucces_sga;
+
     public void rezervaActivitate() {
         if (choiceBoxGrupuri_ag.getValue() != null && datePickerZiua_sag.getValue() != null && choiceBoxOre_sag.getValue() != null && isNumber(textFieldNrMinParticipActivitate_ag.getText()) && isNumber(textFieldNrOreValabilitate_ag.getText()) && isNumber(textFieldDurata_sga.getText())) {
             // creareActivitateNouaDeGrupa(int pidGrupa, int nrMinPart, LocalDate dataActivitate, int oraActivitate, int durata, int deadline)
@@ -549,6 +622,17 @@ public class ControlStudent implements Initializable {
         } else {
             textOperatieSucces_sga.fillProperty().setValue(Paint.valueOf("#CC1111"));
             textOperatieSucces_sga.setText("Te rog sa completezi toate campurile aferet!");
+        }
+    }
+
+    public ListView<Conexiune.StudentiPentruGrupe> listViewStudenti;
+    private void incarcaStudentiGrupe() {
+        if (choiceBoxGrupur_vg.getValue() != null) {
+            listViewStudenti.getItems().clear();
+//            listViewStudenti.getItems().addAll(Conexiune.getConexiune().getListaStudenti(choiceBoxGrupur_vg.getValue().getIdGrupa()));
+            for (Conexiune.StudentiPentruGrupe student : Conexiune.getConexiune().getListaStudenti(choiceBoxGrupur_vg.getValue().getIdGrupa())) {
+                listViewStudenti.getItems().add(student);
+            }
         }
     }
 }

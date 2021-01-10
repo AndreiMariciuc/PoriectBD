@@ -9,6 +9,8 @@ CREATE TABLE roluri (
   PRIMARY KEY (id_rol),
   UNIQUE INDEX id_rol_UNIQUE (id_rol ASC) VISIBLE);
 
+
+
 DROP TABLE IF EXISTS an_universitar;
 CREATE TABLE an_universitar (
   id_an_universitar INT NOT NULL,
@@ -19,6 +21,8 @@ CREATE TABLE an_universitar (
   PRIMARY KEY (id_an_universitar),
   UNIQUE INDEX id_an_universitar_UNIQUE (id_an_universitar ASC) VISIBLE);
 
+
+
 DROP TABLE IF EXISTS perioade;
 CREATE TABLE perioade (
   id_perioada INT NOT NULL,
@@ -26,12 +30,16 @@ CREATE TABLE perioade (
   PRIMARY KEY (id_perioada),
   UNIQUE INDEX id_perioada_UNIQUE (id_perioada ASC) VISIBLE);
 
+
+
 DROP TABLE IF EXISTS zile;
 CREATE TABLE zile (
   id_zi INT NOT NULL AUTO_INCREMENT,
   zi VARCHAR(16) NOT NULL,
   PRIMARY KEY (id_zi),
   UNIQUE INDEX id_zi_UNIQUE (id_zi ASC) VISIBLE);
+
+
 
   DROP TABLE IF EXISTS activitati;
   CREATE TABLE activitati (
@@ -41,6 +49,8 @@ CREATE TABLE zile (
   PRIMARY KEY (id_activitate),
   UNIQUE INDEX id_activitate_UNIQUE (id_activitate ASC) VISIBLE);
 
+
+
 DROP TABLE IF EXISTS departamente;
 CREATE TABLE departamente (
   id_departament INT NOT NULL,
@@ -48,12 +58,16 @@ CREATE TABLE departamente (
   descriere_departament VARCHAR(32) NOT NULL,
   PRIMARY KEY (id_departament));
 
+
+
 DROP TABLE IF EXISTS cursuri;
 CREATE TABLE cursuri (
   id_curs INT NOT NULL,
   denumire VARCHAR(32) NOT NULL,
   descriere VARCHAR(128) NOT NULL DEFAULT '',
   PRIMARY KEY (id_curs));
+
+
 
 DROP table IF EXISTS users;
 CREATE TABLE users (
@@ -77,14 +91,18 @@ CREATE TABLE users (
   CONSTRAINT id_rol
     FOREIGN KEY (id_rol)
     REFERENCES aplicatie.roluri (id_rol)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION);
+    ON DELETE CASCADE
+    ON UPDATE CASCADE);
+
+
 
 DROP TABLE IF EXISTS status_activ;
 CREATE TABLE status_activ (
   id_status INT NOT NULL,
   Descriere VARCHAR(16) NOT NULL,
   PRIMARY KEY (id_status));
+
+
 
 DROP TABLE IF EXISTS studenti;
 CREATE TABLE studenti (
@@ -98,13 +116,15 @@ CREATE TABLE studenti (
   CONSTRAINT id_status_activ
     FOREIGN KEY (id_status)
     REFERENCES aplicatie.status_activ (id_status)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT id_user_stud
     FOREIGN KEY (id_student)
     REFERENCES aplicatie.users (id_user)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION);
+    ON DELETE CASCADE
+    ON UPDATE CASCADE);
+
+
 
 DROP TABLE IF EXISTS profesori;
 CREATE TABLE profesori (
@@ -118,13 +138,15 @@ CREATE TABLE profesori (
   CONSTRAINT id_user_prof
     FOREIGN KEY (id_profesor)
     REFERENCES users (id_user)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT id_departament
     FOREIGN KEY (id_departament)
     REFERENCES departamente (id_departament)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION);
+    ON DELETE CASCADE
+    ON UPDATE CASCADE);
+
+
 
 DROP TABLE IF EXISTS curs_activitati;
 CREATE TABLE curs_activitati (
@@ -147,58 +169,62 @@ CREATE TABLE curs_activitati (
   INDEX nr_zi_saptamana_idx (nr_zi_sapt ASC) VISIBLE,
   INDEX id_prof_apartinator_idx (id_prof_titular ASC) VISIBLE,
   CONSTRAINT prof_delegat
-	FOREIGN KEY (id_prof_delegat)
+    FOREIGN KEY (id_prof_delegat)
     REFERENCES aplicatie.profesori (id_profesor)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT id_curs
     FOREIGN KEY (id_curs)
     REFERENCES aplicatie.cursuri (id_curs)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT id_activ
     FOREIGN KEY (id_activ)
     REFERENCES aplicatie.activitati (id_activitate)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT perioada
     FOREIGN KEY (perioada)
     REFERENCES aplicatie.perioade (id_perioada)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT nr_zi_saptamana
     FOREIGN KEY (nr_zi_sapt)
     REFERENCES aplicatie.zile (id_zi)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT id_profesor_titular
     FOREIGN KEY (id_prof_titular)
     REFERENCES aplicatie.profesori (id_profesor)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION);
+    ON DELETE CASCADE
+    ON UPDATE CASCADE);
+
+
 
 DROP TABLE IF EXISTS studenti_activitati;
 CREATE TABLE studenti_activitati (
   id_student INT UNSIGNED NOT NULL,
   id_activitate INT UNSIGNED NOT NULL,
   nota INT,
-  data_notare       date,
+  data_notare date,
   INDEX id_activitate_idx (id_activitate ASC) VISIBLE,
   INDEX id_student_idx (id_student ASC) VISIBLE,
   CONSTRAINT id_student
     FOREIGN KEY (id_student)
     REFERENCES aplicatie.studenti (id_student)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT id_activitate
     FOREIGN KEY (id_activitate)
     REFERENCES aplicatie.curs_activitati (id_ca)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION);
+    ON DELETE CASCADE
+    ON UPDATE CASCADE);
+
+
 
 DROP TABLE IF EXISTS grupe;
 CREATE TABLE grupe (
-  id_grupa INT NOT NULL,
+  id_grupa INT NOT NULL AUTO_INCREMENT,
   id_curs INT NULL,
   id_admin_grupa INT UNSIGNED NOT NULL,
   id_profesor_raspunzator INT UNSIGNED, -- poate fi null deoarece o grupa de aprofundare poate sa nu aiba profesor
@@ -209,22 +235,24 @@ CREATE TABLE grupe (
   CONSTRAINT id_cursG
     FOREIGN KEY (id_curs)
     REFERENCES cursuri (id_curs)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
 CONSTRAINT prof_raspunzator
     FOREIGN KEY (id_profesor_raspunzator)
     REFERENCES profesori (id_profesor)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT id_admin_grupa
     FOREIGN KEY (id_admin_grupa)
     REFERENCES studenti (id_student)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION);
+    ON DELETE CASCADE
+    ON UPDATE CASCADE);
+
+
 
 DROP TABLE IF EXISTS programari_activitati_grupe;
 CREATE TABLE programari_activitati_grupe (
-  id_activitate_grupa INT NOT NULL,
+  id_activitate_grupa INT NOT NULL AUTO_INCREMENT,
   id_grupa INT NOT NULL,
   nr_minim INT NOT NULL DEFAULT 5,
   numar_curent_participanti INT NOT NULL DEFAULT 0,
@@ -238,8 +266,10 @@ CREATE TABLE programari_activitati_grupe (
   CONSTRAINT id_grupa
     FOREIGN KEY (id_grupa)
     REFERENCES aplicatie.grupe (id_grupa)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION);
+    ON DELETE CASCADE
+    ON UPDATE CASCADE);
+
+
 
 DROP TABLE IF EXISTS studenti_grupe;
 CREATE TABLE studenti_grupe (
@@ -250,34 +280,33 @@ CREATE TABLE studenti_grupe (
   CONSTRAINT id_stud
     FOREIGN KEY (id_student)
     REFERENCES aplicatie.studenti (id_student)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT id_gr
     FOREIGN KEY (id_grupa)
     REFERENCES aplicatie.grupe (id_grupa)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION);
+    ON DELETE CASCADE
+    ON UPDATE CASCADE);
+
+
 
 DROP TABLE IF EXISTS mesaje_grupe;
-CREATE TABLE aplicatie.mesaje_grupe (
-  id_from INT UNSIGNED NOT NULL,
-  id_grupa INT NOT NULL,
-  subiect INT NOT NULL,
-  text INT NULL,
-  timp_primire TIMESTAMP NOT NULL DEFAULT NOW(),
-  programare TINYINT NOT NULL DEFAULT 0,
-  PRIMARY KEY (id_from),
-  INDEX id_gr_msg_idx (id_grupa ASC) VISIBLE,
-  CONSTRAINT id_gr_msg
-    FOREIGN KEY (id_grupa)
-    REFERENCES grupe (id_grupa)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT id_from
-    FOREIGN KEY (id_from)
-    REFERENCES studenti (id_student)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION);
+CREATE TABLE `mesaje_grupe` (
+    id_mesaj INT NOT NULL AUTO_INCREMENT,
+  `id_from` int unsigned NOT NULL,
+  `id_grupa` int NOT NULL,
+  `subiect` varchar(256) NOT NULL,
+  `continut_mesaj` text,
+  `timp_primire` timestamp NOT NULL,
+  `programare` INT NOT NULL,
+  PRIMARY KEY (id_mesaj),
+  KEY `id_from_idx` (`id_from`),
+  KEY `id_grupa_idx` (`id_grupa`),
+  CONSTRAINT `from` FOREIGN KEY (`id_from`) REFERENCES `users` (`id_user`),
+  CONSTRAINT `grupa` FOREIGN KEY (`id_grupa`) REFERENCES `grupe` (`id_grupa`)
+);
+
+
 
 DROP TABLE IF EXISTS mesaje;
 CREATE TABLE mesaje (
@@ -291,13 +320,15 @@ CREATE TABLE mesaje (
   CONSTRAINT id_from_msg
     FOREIGN KEY (id_from)
     REFERENCES users (id_user)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT id_to_msg
     FOREIGN KEY (id_to)
     REFERENCES users (id_user)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION);
+    ON DELETE CASCADE
+    ON UPDATE CASCADE);
+
+
 
 DROP TABLE IF EXISTS examinari;
 CREATE TABLE examinari (
@@ -312,39 +343,37 @@ CREATE TABLE examinari (
   CONSTRAINT tip_examinare
     FOREIGN KEY (id_tip_examinare)
     REFERENCES activitati (id_activitate)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT activitate_curs
     FOREIGN KEY (id_activ_curs)
     REFERENCES curs_activitati (id_ca)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION);
+    ON DELETE CASCADE
+    ON UPDATE CASCADE);
 
 
-USE aplicatie;
 
-DROP INDEX index_user ON users;
+
+-- DROP INDEX index_user ON users;
 CREATE INDEX index_user
 ON users (username, parola);
 
 
-USE aplicatie;
+
 INSERT INTO roluri VALUES (1, "super-admin"), (2, "admin"), (3, "profesor"), (4, "student");
 INSERT INTO status_activ VALUES (1, "BUGET"), (2, "TAXA");
 INSERT INTO perioade VALUES (0, "saptamana para"), (1, "saptamana impara"), (2, "saptamanal");
 INSERT INTO zile VALUES (1, "Luni"), (2, "Marti"), (3, "Miercuri"), (4, "Joi"), (5, "Vineri"), (6, "Sambata"), (7, "Duminica");
 INSERT INTO activitati VALUES (1, "curs", 150), (2, "seminar", 30), (3, "laborator", 15), (4, "examen", NULL), (5, "colocviu", NULL);
-SELECT * FROM roluri;
-SELECT * FROM status_activ;
-SELECT * FROM perioade;
-SELECT * FROM zile;
-SELECT * FROM activitati;
+
 INSERT INTO departamente VALUES (1, "CS", "Stiinta Calculatoarelor"), (2, "MATH", "Matematica"), (3, "PHYS", "Fizica"), (4, "PSHY", "Pshihologie si Stiinta Educatiei"), (5, "IE", "Inginerie Electrica");
 SELECT * FROM departamente;
 
 
-USE aplicatie;
-
+DROP VIEW IF EXISTS vGetListaSutdentiLaGrupe;
+CREATE VIEW vGetListaSutdentiLaGrupe AS
+SELECT u.nume as 'nume_student', u.prenume as 'prenume_student', vgdg.*
+    FROM vGetDetaliiGrupe vgdg JOIN users u ON u.id_user = vgdg.id_student;
 
 
 DROP VIEW IF EXISTS vStudenti;
@@ -353,19 +382,10 @@ SELECT u.id_user, s.id_student, u.CNP, r.descriere_rol, u.nume, u.prenume, u.adr
     FROM users u JOIN studenti s JOIN roluri r JOIN status_activ sa ON u.id_user = s.id_student AND u.id_rol = r.id_rol AND sa.id_status = s.id_status;
 
 
-
-SELECT * FROM vStudenti;
-
-
-
 DROP VIEW IF EXISTS vProfesori;
 CREATE VIEW vProfesori AS
 SELECT profesori.id_profesor, CNP, descriere_rol, nume, prenume, adresa, nr_tel, email, IBAN, nr_contract, nr_min_ore, nr_max_ore, cod_departament, descriere_departament, profesori.id_departament
     FROM users JOIN profesori JOIN roluri JOIN departamente ON users.id_user = profesori.id_profesor AND roluri.id_rol = users.id_rol AND departamente.id_departament = profesori.id_departament;
-
-
-
-SELECT * FROM vProfesori;
 
 
 
@@ -376,7 +396,6 @@ FROM studenti_activitati sa JOIN curs_activitati ca JOIN activitati a JOIN stude
 ON s.id_student = sa.id_student AND sa.id_activitate = a.id_activitate AND c.id_curs = ca.id_curs AND id_user = ca.id_prof_titular;
 -- util pentru notari daca ii dam cu un WHERE id_ca sa coincida cu cele ale profesorului de curs, ii pot filtra dupa curs si sa le dea note
 -- se mai poate folosi si la grupuri, cautam studentii inscrisi la denumire_materie = ... si ii sugeram pentru grupul format
-SELECT * FROM vNote;
 
 
 
@@ -390,10 +409,6 @@ WHERE a.id_activitate = 1; -- cautam dupa cursuri
 
 
 
-SELECT * FROM vCursuri;
-
-
-
 -- view studenti asignati la un anumit curs
 DROP VIEW IF EXISTS vStudentiLaCurs;
 CREATE VIEW vStudentiLaCurs AS
@@ -401,9 +416,7 @@ SELECT u.id_user, u.nume as 'nume_student', u.prenume as 'prenume_student', u.nr
 FROM users u JOIN studenti_activitati sa JOIN vCursuri v ON u.id_user = sa.id_student AND sa.id_activitate = v.id_ca
 ORDER BY id_ca;
 -- WHERE v.denumire_curs = ... SAU v.descriere_curs = ... SAU v.id_ca = ... (provenita de la faptul ca administratorul da click pe butonul de la o activitate de curs si vede toti studentii de acolo si doar luam id-ul de la cursul ales si afisam folosind acest view)
-SELECT * FROM vStudentiLaCurs;
-SELECT * FROM vStudentiLaCurs;
-DESCRIBE vStudentiLaCurs;
+
 -- select sa zicem: domn profesor, trebuie sa programati examene pentru ... sau la administrator cand cauta sau la profesor cand cauta cursul idk
 
 
@@ -420,7 +433,6 @@ HAVING count(ca.id_ca) < a.nr_max_participanti;
 -- Salutare, ai fost asignat la activitatea ... din data (deoarece ti se potriveste), la profesorul X (care are cei mai putini studenti si program perfect pentru tine)
 -- sau... Salutare, nu ai putut fi asignat la nicio activitate ...
 -- exista sansa sa gaseasca laborator in saptamana para iar in saptamana impara sa faca altceva
-SELECT * FROM vProfNrCursanti;
 
 
 
@@ -428,6 +440,48 @@ SELECT * FROM vProfNrCursanti;
 --                 -Se face un o interogare a membrilor grupei si se cauta la fiecare ora de la 8 la 20 cati studenti sunt liberi pentru fiecare zi din saptamana
 --                 -Se returneaza ferestrele potrivite cu un numar de posibil de participanti peste jumatate
 -- de asemenea, se poate proceda la fel si pentru profesori, se vor cauta profesori care sunt liberi in orele cu numar ridicat de studenti (atat prof titular cat si delegat)
+
+drop view if exists vActivitatiStudent;
+
+create view vActivitatiStudent as
+select ca.*, id_student
+from studenti_activitati
+         join curs_activitati ca on ca.id_ca = studenti_activitati.id_activitate;
+
+drop view if exists vAllCursuri;
+
+create view vAllCursuri as
+select cursuri.descriere
+from cursuri;
+
+
+
+DROP VIEW IF EXISTS vGetCursurileStudentului;
+CREATE VIEW vGetCursurileStudentului AS
+SELECT DISTINCT c.id_curs, c.denumire, c.descriere, sa.id_student
+FROM cursuri c JOIN curs_activitati ca JOIN studenti_activitati sa
+                                            ON c.id_curs = ca.id_curs AND sa.id_activitate = ca.id_ca;
+
+
+
+DROP VIEW IF EXISTS vGetDetaliiGrupe;
+CREATE VIEW vGetDetaliiGrupe AS -- detalii despre grupa: id_student (utilizat ulterior in aplicatie), id-ul grupei, administratorul, materia la care se leaga, eventual profesorul
+SELECT sg.id_student, g.id_grupa, us.nume, us.prenume, vgcs.denumire, vgcs.descriere, g.id_profesor_raspunzator
+FROM vGetCursurileStudentului vgcs JOIN studenti_grupe sg JOIN grupe g JOIN users us
+                                                                            ON vgcs.id_student = sg.id_student AND sg.id_grupa = g.id_grupa AND us.id_user = g.id_admin_grupa;
+
+DROP VIEW IF EXISTS vGetProfById;
+CREATE VIEW vGetProfById AS
+SELECT p.id_profesor, u.nume, u.prenume
+FROM users u JOIN profesori p ON u.id_user = p.id_profesor;
+
+
+DROP VIEW IF EXISTS vGetStudById;
+CREATE VIEW vGetStudById AS
+SELECT s.id_student, u.nume, u.prenume
+FROM users u JOIN studenti s
+                  ON u.id_user = s.id_student;
+
 
 
 DROP PROCEDURE IF EXISTS pInsertAdmin;
@@ -1029,27 +1083,17 @@ CALL pInsertProfesor(3, '3987232591952', 'Elijah', 'Richard', 'Farm Juicy  Nr. 5
 CALL pInsertProfesor(3, '1777801302251', 'Myles', 'Dominick', 'Reward  Nr. 164', '8968009393', 'Myles._Dominick17778@prof_PHYS_uni.com', 'RO729416336658374961507153554503', 31777836, 19, 39, 3);
 CALL pInsertProfesor(3, '3895160396689', 'Peter', 'Emilio', 'Melted Cruel  Nr. 180', '7794342867', 'Peter_Emilio38951@prof_IE_uni.com', 'RO013576518956456972592944191688', 33895167, 23, 39, 1);
 
+
 UPDATE users SET users.nume = 'Saulea', users.prenume = 'Alessandro', users.username = 'aless', users.parola = '123' WHERE users.id_user = 530;
 UPDATE users SET users.nume = 'Blidea', users.prenume = 'Tudorel Alexandru', users.username = 'tuddi', users.parola = '123' WHERE users.id_user = 1;
 UPDATE users SET users.nume = 'Mariciuc', users.prenume = 'Andrei', users.username = 'andrei', users.parola = '123' WHERE users.id_user = 300;
-
-SELECT * FROM users;
-SELECT * FROM studenti;
-SELECT * FROM profesori;
+UPDATE users SET users.nume = 'Blidea', users.prenume = 'Tudorel Alexandru', id_rol = 1, users.username = 'tuddi2', users.parola = '123' WHERE users.id_user = 7;
 
 
-USE aplicatie;
+
 INSERT INTO cursuri VALUES (1, "BD", "Baze de Date"), (2, "AF", "Algoritmi Fundamentali"), (3, "AF", "Android fundamentals"), (4, "ENG", "Engleza"),
 	(5, "MES", "Masurari Electronice si Senzori"), (6, "PC", "Programarea Calculatoarelor"), (7, "PL", "Proiectare logica"), (8, "POO", "Programare Orientata pe Obiect"),
     (9, "A1", "Analiza 1"), (10, "MSI", "Matematici speciale in Inginerie");
-
-
-
-drop view if exists vAllCursuri;
-
-create view vAllCursuri as
-select cursuri.descriere
-from cursuri;
 
 drop procedure if exists cursuriDisponibile;
 delimiter //
@@ -1069,7 +1113,7 @@ end//
 
 call cursuriDisponibile(300);
 
-use aplicatie;
+
 delete from curs_activitati;
 
 INSERT INTO curs_activitati (id_ca, id_curs, id_activ, id_prof_titular, durata) VALUES (1, 8, 1, 530, 2), (2, 8, 2, 530, 2), (3, 8, 2, 530, 2), (8, 8, 3, 530, 2), (9, 8, 3, 530, 2), (10, 8, 3, 530, 2);
@@ -1168,30 +1212,22 @@ SET t.perioada        = 2,
     t.ora_inceput     = 18
 WHERE t.id_ca = 17;
 
+INSERT INTO aplicatie.an_universitar (id_an_universitar, semestru, data_inceput, data_sfarsit, an_inceput)
+VALUES (1, 1, '2020-09-27', '2021-06-30', 2020);
 
 drop procedure if exists profesorCuStudMin;
 
 delimiter //
 create procedure profesorCuStudMin(in idCurs int)
 begin
-    select id_prof_titular, count(id_student) nrStud
+    select id_prof_titular as idProf, count(distinct id_student) as nrStud
     from curs_activitati ca
-             join studenti_activitati sa on ca.id_ca = sa.id_activitate
+	left join studenti_activitati sa on ca.id_ca = sa.id_activitate
     where id_curs = idCurs
     group by id_prof_titular
-    order by nrStud
-    limit 1;
+	having count(id_student)<(select nr_max_participanti from curs_activitati where id_curs = idCurs and id_prof_titular = idProf and id_activ = 1)
+    order by nrStud;
 end//
-
--- 0 sp, 1 si 2 ss
-# sa-mi selectez toate activitatile studentului si sa le aleg pe alea ale cursului care nu se suprapun!
-drop view if exists vActivitatiStudent;
-
-create view vActivitatiStudent as
-select ca.*, id_student
-from studenti_activitati
-         join curs_activitati ca on ca.id_ca = studenti_activitati.id_activitate;
-
 -- test
 select perioada, nr_zi_sapt, ora_inceput, durata
 from vActivitatiStudent
@@ -1377,6 +1413,12 @@ WHERE t.id_student = 300
   AND t.nota IS NULL
   AND t.data_notare IS NULL;
 
+
+-- 0 sp, 1 si 2 ss
+# sa-mi selectez toate activitatile studentului si sa le aleg pe alea ale cursului care nu se suprapun!
+
+
+
 drop procedure if exists notePartiale;
 
 delimiter //
@@ -1447,6 +1489,302 @@ BEGIN
     set @new_id = if ((select count(*) from examinari)>0,(select max(id_examinari) from examinari),0);
     insert into examinari value(@new_id+1,tip_exam,data_desf,durata,activ_curs);
 END//
+
+
+
+
+
+DROP PROCEDURE IF EXISTS pCreareGrupa;
+DELIMITER %%
+CREATE PROCEDURE pCreareGrupa(IN pid_student INT, IN pid_curs INT)
+BEGIN
+    -- putea sa fie si trigger
+    INSERT INTO grupe (id_curs, id_admin_grupa, id_profesor_raspunzator) VALUES (pid_curs, pid_student, NULL);
+    SET @id_grupa_creata = (SELECT max(id_grupa) FROM grupe);
+    INSERT INTO studenti_grupe VALUES (pid_student, @id_grupa_creata);
+END %%
+DELIMITER ;
+
+
+DROP PROCEDURE IF EXISTS pJoinLaGrupa;
+DELIMITER %%
+CREATE PROCEDURE pJoinLaGrupa(IN pid_student INT, IN pid_grupa INT)
+BEGIN
+    SET @nr_actual_participanti = (SELECT count(*) FROM studenti_grupe WHERE id_grupa = pid_grupa);
+    SET @result = 0;
+    IF @nr_actual_participanti <= (SELECT nr_max_particip FROM grupe WHERE id_grupa = pid_grupa) THEN
+        INSERT INTO studenti_grupe VALUES (pid_student, pid_grupa);
+        SET @result = 1;
+    END IF;
+    SELECT @result;
+END %%
+DELIMITER ;
+
+
+DROP PROCEDURE IF EXISTS pTrimiteMesaj;
+DELIMITER %%
+CREATE PROCEDURE pTrimiteMesaj(IN pid_grupa INT, IN pid_from INT, IN psubiect VARCHAR(32), IN ptext TEXT, IN pprogramare TINYINT)
+BEGIN
+    INSERT INTO mesaje_grupe (id_from, id_grupa, subiect, continut_mesaj, timp_primire, programare) VALUES (pid_from, pid_grupa, psubiect, ptext, NOW(), pprogramare);
+END %%
+DELIMITER ;
+
+
+DESCRIBE programari_activitati_grupe;
+DROP PROCEDURE IF EXISTS pCreareActivitateGrupa;
+DELIMITER %%
+CREATE PROCEDURE pCreareActivitateGrupa(IN pid_grupa INT, IN pnr_min INT, IN pdata_activitate_grupa DATE, IN pora_activitate INT, IN pdurata_activitate INT, IN pdeadline INT, IN pid_student INT)
+BEGIN
+    INSERT INTO programari_activitati_grupe
+    (id_grupa, nr_minim, numar_curent_participanti, data_activitate_grupa, ora_activitate, durata_activitate, start_programare, deadline) VALUES
+    (pid_grupa, pnr_min, 0, pdata_activitate_grupa, pora_activitate, pdurata_activitate, NOW(), NOW() + INTERVAL pdeadline HOUR);
+    -- call pTrimiteMesaj(IN pid_grupa INT, IN pid_from INT, IN psubiect VARCHAR(32), IN ptext TEXT, IN pprogramare TINYINT);
+    SET @nume_student = (SELECT nume FROM vGetStudById WHERE id_student = pid_student);
+    SET @prenume_student = (SELECT prenume FROM vGetStudById WHERE id_student = pid_student);
+    SET @descriere_materie = (SELECT c.descriere FROM grupe g JOIN cursuri c ON g.id_curs = c.id_curs WHERE g.id_grupa = pid_grupa);
+    SET @subiect_mesaj = concat("Programare activitate pentru aprofundare, grupa @", pid_grupa);
+    SET @continut_mesaj = concat("Salutare dragi colegi, eu, ", @nume_student, " ", @prenume_student, ", va propun sa aprofundam la materia ", @descriere_materie, ", in data de: ", pdata_activitate_grupa, ", la ora: ", pora_activitate, ", cu o durata de: ", pdurata_activitate, " ore. Sa nu uitati sa acceptati invtatia!");
+    SET @id_activitate = (SELECT max(id_activitate_grupa) FROM programari_activitati_grupe);
+    INSERT INTO mesaje_grupe (id_from, id_grupa, subiect, continut_mesaj, timp_primire, programare)
+    VALUES (pid_student, pid_grupa, @subiect_mesaj, @continut_mesaj, NOW(), @id_activitate);
+END %%
+DELIMITER ;
+
+
+DROP PROCEDURE IF EXISTS pAdaugaIncaUnul;
+DELIMITER %%
+CREATE PROCEDURE pAdaugaIncaUnul(IN pid_activitate_grupa INT)
+BEGIN
+    UPDATE programari_activitati_grupe SET numar_curent_participanti = numar_curent_participanti + 1 WHERE id_activitate_grupa = pid_activitate_grupa;
+END %%
+DELIMITER ;
+
+
+DESCRIBE grupe;
+DROP PROCEDURE IF EXISTS pGetGrupeBune;
+DELIMITER %%
+CREATE PROCEDURE pGetGrupeBune(IN pid_student INT)
+BEGIN
+    SELECT DISTINCT id_grupa, nume, prenume, denumire, descriere, id_profesor_raspunzator FROM vGetDetaliiGrupe WHERE id_grupa IN (SELECT id_grupa
+                                                                                                                                   FROM grupe
+                                                                                                                                   WHERE id_grupa NOT IN (SELECT id_grupa FROM studenti_grupe WHERE id_student = pid_student)
+                                                                                                                                     AND id_curs IN (SELECT DISTINCT id_curs FROM studenti_activitati sa JOIN curs_activitati ca ON sa.id_activitate = ca.id_ca WHERE sa.id_student = pid_student));
+
+END %%
+DELIMITER ;
+
+
+DESCRIBE grupe;
+DROP PROCEDURE IF EXISTS pRenuntaLaGrupa;
+DELIMITER %%
+CREATE PROCEDURE pRenuntaLaGrupa (IN pid_student INT, IN pid_grupa INT)
+BEGIN
+    SELECT id_admin_grupa INTO @id_administrator FROM grupe WHERE id_grupa = pid_grupa;
+    IF @id_administrator != pid_student THEN -- Ce se intampla cu grupa ?? :O
+        DELETE FROM studenti_grupe WHERE id_student = pid_student AND id_grupa = pid_grupa;
+    END IF;
+END %%
+
+
+# Intrari: parametruZi, paramatruIdGrupa;
+# vectorIdstudenti = SELECT id_student FROM studenti_grupe WHERE id_grupa = paramatruIdGrupa;
+# vectorIdActiv = SELECT id_activitate FROM studentiActivitati id_student IN vectorIdstudenti;
+# vectorOreInceput = SELECT count(ora_inceput), ora_inceput FROM curs_activitati WHERE id_ca IN vectorIdActiv AND nr_zi_sapt = parametruZi GROUP BY ora_inceput;
+# (8, 5), (9, 10), (11, 0) etc..
+
+
+drop procedure if exists pGetRecomandariActivitati;
+
+
+delimiter //
+create procedure pGetRecomandariActivitati(idGrupa int, nrZi int)
+begin
+    drop temporary table if exists ore_disponibile;
+    create temporary table ore_disponibile
+    (
+        ora_inceput int
+    );
+
+
+    insert into ore_disponibile(ora_inceput)
+    values (8),
+           (9),
+           (10),
+           (11),
+           (12),
+           (13),
+           (14),
+           (15),
+           (16),
+           (17),
+           (18),
+           (19),
+           (20);
+
+
+    select id_curs into @idCurs from grupe where id_grupa = idGrupa;
+
+
+    select ora_inceput,
+           (case
+                when studActiv.`Numarul de colegi care au treaba` is null then
+                    0
+                else
+                    studActiv.`Numarul de colegi care au treaba`
+               end) as nrStudenti
+    from (select* from ore_disponibile) as initOre
+             left join
+         (select ora_inceput        as "Ora de inceput",
+                 count(ora_inceput) as "Numarul de colegi care au treaba"
+          from curs_activitati
+                   join studenti_activitati sa on curs_activitati.id_ca = sa.id_activitate
+          where id_curs = @idCurs
+            and nr_zi_sapt = nrZi
+            and sa.id_student in (SELECT id_student FROM studenti_grupe WHERE id_grupa = idGrupa)
+          group by ora_inceput) as studActiv
+         on initOre.ora_inceput = studActiv.`Ora de inceput`
+    order by nrStudenti;
+
+
+    drop temporary table ore_disponibile;
+end//
+
+
+call pGetRecomandariActivitati(2, 1);
+
+
+
+call cursuriStudent(300); -- vActivitatiStudenti
+delete from curs_activitati where true;
+
+
+insert into curs_activitati(id_ca, id_curs, id_activ, perioada, nr_zi_sapt, procent, id_prof_titular, id_prof_delegat, ora_inceput, durata, nr_max_participanti) values
+('1', '8', '1', '2', '1', '40', '530', '530', '10', '2', '150'),
+('2', '8', '2', '1', '2', '20', '530', '530', '12', '2', '30'),
+('3', '8', '2', '0', '2', '20', '530', '530', '12', '2', '30'),
+('4', '8', '2', '1', '3', '20', '530', '530', '14', '2', '30'),
+('5', '8', '2', '0', '3', '20', '530', '530', '14', '2', '30'),
+('6', '8', '2', '1', '3', '20', '530', '530', '12', '2', '30'),
+('7', '8', '3', '2', '1', '40', '530', '517', '16', '2', '15'),
+('8', '8', '3', '2', '1', '40', '530', '517', '18', '2', '15'),
+('9', '8', '3', '2', '1', '40', '530', '539', '16', '2', '15'),
+('10', '8', '3', '2', '1', '40', '530', '539', '18', '2', '15'),
+('11', '8', '3', '2', '3', '40', '530', '547', '18', '2', '15'),
+('12', '8', '3', '2', '3', '40', '530', '547', '16', '2', '15'),
+('13', '8', '3', '2', '3', '40', '530', '528', '18', '2', '15'),
+('14', '8', '3', '2', '3', '40', '530', '528', '16', '2', '15'),
+('15', '8', '3', '2', '1', '40', '530', '546', '14', '2', '15'),
+('16', '8', '3', '2', '1', '40', '530', '546', '12', '2', '15');
+
+
+INSERT INTO studenti_activitati (id_student, id_activitate, nota, data_notare) VALUES
+(300, 1, NULL, NULL),
+(300, 2, NULL, NULL),
+(300, 7, NULL, NULL);
+
+
+call pCreareGrupa(300, 8);
+call pCreareGrupa(300, 8);
+-- call pJoinLaGrupa(250, 1);
+
+
+DELETE FROM studenti_activitati where true;
+INSERT INTO studenti_activitati VALUES (250, 1, NULL, NULL), (251, 1, NULL, NULL), (252, 1, NULL, NULL), (253, 1, NULL, NULL), (254, 1, NULL, NULL), (255, 1, NULL, NULL), (256, 1, NULL, NULL), (257, 1, NULL, NULL), (258, 1, NULL, NULL), (259, 1, NULL, NULL), (260, 1, NULL, NULL), (261, 1, NULL, NULL), (262, 1, NULL, NULL), (263, 1, NULL, NULL), (264, 1, NULL, NULL), (265, 1, NULL, NULL), (266, 1, NULL, NULL), (267, 1, NULL, NULL), (268, 1, NULL, NULL), (269, 1, NULL, NULL), (270, 1, NULL, NULL), (271, 1, NULL, NULL), (272, 1, NULL, NULL), (273, 1, NULL, NULL), (274, 1, NULL, NULL), (275, 1, NULL, NULL), (276, 1, NULL, NULL), (277, 1, NULL, NULL), (278, 1, NULL, NULL), (279, 1, NULL, NULL), (280, 1, NULL, NULL), (281, 1, NULL, NULL), (282, 1, NULL, NULL), (283, 1, NULL, NULL), (284, 1, NULL, NULL), (285, 1, NULL, NULL), (286, 1, NULL, NULL), (287, 1, NULL, NULL), (288, 1, NULL, NULL), (289, 1, NULL, NULL), (290, 1, NULL, NULL), (291, 1, NULL, NULL), (292, 1, NULL, NULL), (293, 1, NULL, NULL), (294, 1, NULL, NULL), (295, 1, NULL, NULL), (296, 1, NULL, NULL), (297, 1, NULL, NULL), (298, 1, NULL, NULL), (299, 1, NULL, NULL);
+
+
+call pJoinLaGrupa(250, 1);
+call pJoinLaGrupa(251, 1);
+call pJoinLaGrupa(252, 1);
+call pJoinLaGrupa(253, 2);
+call pJoinLaGrupa(254, 2);
+call pJoinLaGrupa(255, 1);
+call pJoinLaGrupa(256, 1);
+call pJoinLaGrupa(257, 2);
+call pJoinLaGrupa(258, 1);
+call pJoinLaGrupa(259, 2);
+call pJoinLaGrupa(260, 2);
+call pJoinLaGrupa(261, 2);
+call pJoinLaGrupa(262, 1);
+call pJoinLaGrupa(263, 1);
+call pJoinLaGrupa(264, 1);
+call pJoinLaGrupa(265, 1);
+call pJoinLaGrupa(266, 2);
+call pJoinLaGrupa(267, 2);
+call pJoinLaGrupa(268, 1);
+call pJoinLaGrupa(269, 2);
+call pJoinLaGrupa(270, 2);
+call pJoinLaGrupa(271, 2);
+call pJoinLaGrupa(272, 1);
+call pJoinLaGrupa(273, 1);
+call pJoinLaGrupa(274, 2);
+call pJoinLaGrupa(275, 1);
+call pJoinLaGrupa(276, 1);
+call pJoinLaGrupa(277, 2);
+call pJoinLaGrupa(278, 2);
+call pJoinLaGrupa(279, 2);
+call pJoinLaGrupa(280, 1);
+call pJoinLaGrupa(281, 1);
+call pJoinLaGrupa(282, 2);
+call pJoinLaGrupa(283, 1);
+call pJoinLaGrupa(284, 1);
+call pJoinLaGrupa(285, 2);
+call pJoinLaGrupa(286, 2);
+call pJoinLaGrupa(287, 2);
+call pJoinLaGrupa(288, 1);
+call pJoinLaGrupa(289, 2);
+call pJoinLaGrupa(290, 1);
+call pJoinLaGrupa(291, 2);
+call pJoinLaGrupa(292, 2);
+call pJoinLaGrupa(293, 1);
+call pJoinLaGrupa(294, 1);
+call pJoinLaGrupa(295, 1);
+call pJoinLaGrupa(296, 2);
+call pJoinLaGrupa(297, 1);
+call pJoinLaGrupa(298, 1);
+call pJoinLaGrupa(299, 1);
+
+
+UPDATE grupe SET id_profesor_raspunzator = 516 WHERE id_grupa = 1;
+
+call pTrimiteMesaj(1, 300, "sal", "cf dragi kolegy", 0);
+
+-- pCreareActivitateGrupa(IN pid_grupa INT, IN pnr_min INT, IN pdata_activitate_grupa DATE, IN pora_activitate INT, IN pdurata_activitate INT, IN pdeadline INT)
+
+call pCreareActivitateGrupa(2, 5, '2020-11-11', 8, 2, 1, 300);
+
+
+
+call pAdaugaIncaUnul(1);
+call pAdaugaIncaUnul(1);
+call pAdaugaIncaUnul(2);
+call pAdaugaIncaUnul(2);
+call pAdaugaIncaUnul(3);
+call pAdaugaIncaUnul(2);
+call pAdaugaIncaUnul(3);
+call pAdaugaIncaUnul(2);
+call pAdaugaIncaUnul(1);
+
+
+
+
+SELECT * FROM vGetDetaliiGrupe WHERE id_grupa IN (SELECT id_grupa FROM grupe WHERE id_admin_grupa = 300) and id_student = 300;
+SELECT * FROM vGetDetaliiGrupe WHERE id_grupa IN (SELECT id_grupa FROM grupe WHERE id_admin_grupa = 250) and id_student = 250;
+call pGetGrupeBune(250);
+
+insert into an_universitar value (1, 1, '2020-09-28','2021-09-27', 2020);
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

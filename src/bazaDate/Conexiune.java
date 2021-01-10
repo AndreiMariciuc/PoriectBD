@@ -10,9 +10,11 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Conexiune {
-    static final String urlAless = null;
-    static final String urlTuddi = null;
-    static final String urlAndrei = null;
+    /***********************datele conexiunii***************************************/
+    private final String url = "jdbc:mysql://localhost:3306/aplicatie";
+    private final String user = "root";
+    private final String password = "5001127";
+    /*******************************************************************************/
     static User curent;
     public static Connection connection = null;
     Statement selectStatement = null, interrogationStatement = null;
@@ -28,7 +30,7 @@ public class Conexiune {
             System.out.println("Negasit!");
         }
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/aplicatie", "root", "tuddiroot");
+            connection = DriverManager.getConnection(url, user, password);
             selectStatement = connection.createStatement();
         } catch (Exception e) {
             System.out.println("Erori in interogarea bazei de date!");
@@ -549,7 +551,7 @@ public class Conexiune {
         ArrayList<Mesaj> mesaje = new ArrayList<Mesaj>();
         try {
             rs = selectStatement.executeQuery("SELECT * FROM mesaje_grupe WHERE id_grupa = " + idGrupa + ";");
-            while(rs.next()) {
+            while (rs.next()) {
                 Mesaj mesaj = new Mesaj();
                 mesaj.setIdGrupa(rs.getInt(3));
                 mesaj.setSubiect(rs.getString(4));
@@ -650,7 +652,7 @@ public class Conexiune {
     }
 
     public void participare(int id) {
-        try{
+        try {
             selectStatement.executeQuery("call pAdaugaIncaUnul(" + id + ");");
         } catch (SQLException throwables) {
             System.out.println(throwables.getMessage());
@@ -700,7 +702,7 @@ public class Conexiune {
 
     public boolean inscriereInGrupa(int pid_grupa) {
         String statement = new String("call pJoinLaGrupa(" + curent.getIdUser() + ", " + pid_grupa + ");");
-        try{
+        try {
             rs = selectStatement.executeQuery(statement);
             rs.next();
             return rs.getBoolean(1);
@@ -712,7 +714,7 @@ public class Conexiune {
     }
 
     public void renuntareLaGrupa(int pid_grupa) {
-        try{
+        try {
             // pRenuntaLaGrupa (IN pid_student INT, IN pid_grupa INT)
             selectStatement.executeUpdate("call pRenuntaLaGrupa(" + curent.getIdUser() + ", " + pid_grupa + ");");
         } catch (SQLException throwables) {
@@ -722,7 +724,7 @@ public class Conexiune {
     }
 
     public void updateNrMaxPart(int id_grupa, int nrMaxNouParticip) {
-        try{
+        try {
             selectStatement.executeUpdate("UPDATE grupe SET nr_max_particip = " + nrMaxNouParticip + " WHERE id_grupa = " + id_grupa + ";");
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -772,9 +774,9 @@ public class Conexiune {
 
     public ArrayList<Zile> getZile() {
         ArrayList<Zile> result = new ArrayList<>();
-        try{
+        try {
             rs = selectStatement.executeQuery("SELECT * FROM zile");
-            while(rs.next()) {
+            while (rs.next()) {
                 Zile zi = new Zile();
                 zi.setIdZi(rs.getInt(1));
                 zi.setZi(rs.getString(2));
@@ -789,9 +791,9 @@ public class Conexiune {
 
     public ArrayList<Ore> getOreRecomandate(int idGrupa, int nrZi) {
         ArrayList<Ore> result = new ArrayList<>();
-        try{
+        try {
             rs = selectStatement.executeQuery("call pGetRecomandariActivitati(" + idGrupa + ", " + nrZi + ");");
-            while(rs.next()) {
+            while (rs.next()) {
                 Ore ora = new Ore();
                 ora.setOra(rs.getInt(1));
                 ora.setNrStudentiOcupati(rs.getInt(2));
@@ -805,13 +807,48 @@ public class Conexiune {
     }
 
     public void creareActivitateNouaDeGrupa(int pidGrupa, int nrMinPart, LocalDate dataActivitate, int oraActivitate, int durata, int deadline) {
-        try{
+        try {
             // (IN pid_grupa INT, IN pnr_min INT, IN pdata_activitate_grupa DATE, IN pora_activitate INT, IN pdurata_activitate INT, IN pdeadline INT, IN pid_student INT)
-            String statement = new String("call pCreareActivitateGrupa(" + pidGrupa + ", " + nrMinPart + ", '" + dataActivitate.toString() + "', " + oraActivitate + ", " + durata + ", " + deadline + ", " + curent.getIdUser() +  ")");
+            String statement = new String("call pCreareActivitateGrupa(" + pidGrupa + ", " + nrMinPart + ", '" + dataActivitate.toString() + "', " + oraActivitate + ", " + durata + ", " + deadline + ", " + curent.getIdUser() + ")");
             selectStatement.executeQuery(statement);
         } catch (SQLException throwables) {
             System.out.println(throwables.getMessage());
             //throwables.printStackTrace();
         }
+    }
+
+    public static class StudentiPentruGrupe {
+        protected int id;
+        protected String nume, prenume;
+
+        protected StudentiPentruGrupe(int id, String nume, String prenume) {
+            this.id = id;
+            this.nume = nume;
+            this.prenume = prenume;
+        }
+
+        @Override
+        public String toString() {
+            return id + ". " + nume + " " + prenume;
+        }
+    }
+
+    public ArrayList<StudentiPentruGrupe> getListaStudenti(int idGrupa) {
+        ArrayList<StudentiPentruGrupe> result = new ArrayList<>();
+        System.out.println("idGrupa " + idGrupa);
+        try {
+            PreparedStatement statement = connection.prepareStatement("SELECT id_user, u.nume, u.prenume FROM users u JOIN studenti_grupe sg ON sg.id_student = u.id_user WHERE id_grupa = ?;");
+            statement.setInt(1, idGrupa);
+            rs = statement.executeQuery();
+            while (rs.next()) {
+                StudentiPentruGrupe s = new StudentiPentruGrupe(rs.getInt(1), rs.getString(2), rs.getString(3));
+                System.out.println(s);
+                result.add(s);
+            }
+        } catch (SQLException throwables) {
+            System.out.println(throwables.getMessage());
+            //throwables.printStackTrace();
+        }
+        return result;
     }
 }

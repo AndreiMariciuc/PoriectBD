@@ -91,6 +91,15 @@ public class Functii {
         return id_user;
     }
 
+    public static String idUserToNumeUser (int id_user) throws SQLException{
+        PreparedStatement s = conexiune.prepareStatement("select concat(nume,' ',prenume) from users where id_user = "+id_user);
+        ResultSet rs=s.executeQuery();
+        String nume="";
+        while(rs.next())
+            nume=rs.getString(1);
+        return nume;
+    }
+
     public static int cnpUserToIdUser (String cnpUser) throws SQLException{
         PreparedStatement s = conexiune.prepareStatement("select id_user from users where cnp = '"+cnpUser+"'");
         ResultSet rs=s.executeQuery();
@@ -100,10 +109,10 @@ public class Functii {
         return id_user;
     }
 
-    public static float pondereActiv(int id_curs,int id_activitate) throws SQLException {
-        PreparedStatement s = conexiune.prepareStatement("select procent from curs_activitati where id_curs = "+id_curs+" and id_activ = "+id_activitate);
+    public static float pondereActiv(int id_curs,int id_activitate,int id_prof) throws SQLException {
+        PreparedStatement s = conexiune.prepareStatement("select procent from curs_activitati where id_curs = "+id_curs+" and id_activ = "+id_activitate+" and id_prof_titular = "+id_prof);
         ResultSet rs=s.executeQuery();
-        int pondere = -1;
+        int pondere = 0;
         while(rs.next())
             pondere = rs.getInt("procent");
         return (float)pondere;
@@ -119,18 +128,19 @@ public class Functii {
         return capacitate;
     }
 
-    public static boolean existaActivitate(int id_curs, String activitate) throws SQLException{
-        PreparedStatement s = conexiune.prepareStatement("select * from curs_activitati where id_curs = ? and id_activ = ? limit 1");
+    public static boolean existaActivitate(int id_curs, String activitate,int id_prof) throws SQLException{
+        PreparedStatement s = conexiune.prepareStatement("select * from curs_activitati where id_curs = ? and id_activ = ? and id_prof_titular = ? limit 1");
         s.setInt(1,id_curs);
         s.setInt(2,denumireActivtoIdActiv(activitate));
+        s.setInt(3,id_prof);
         ResultSet rs=s.executeQuery();
         return rs.next();
     }
 
-    public static boolean cautaProfesor(String numeUser) throws SQLException{
+    public static boolean cautaProfesor(String cnp) throws SQLException{
         PreparedStatement s = conexiune.prepareStatement
-        ("select * from users where concat(nume,' ',prenume) = ? and id_rol = 3");
-        s.setString(1,numeUser);
+                ("select * from users where cnp = ? and id_rol = 3");
+        s.setString(1,cnp);
         ResultSet rs = s.executeQuery();
         return (rs.next());
     }

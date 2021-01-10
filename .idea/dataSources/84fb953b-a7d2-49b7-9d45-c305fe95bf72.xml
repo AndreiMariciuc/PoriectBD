@@ -980,1576 +980,1908 @@ SELECT|sys.sys_config
       <SourceTextLength>596</SourceTextLength>
       <Definer>root@localhost</Definer>
     </view>
-    <view id="320" parent="3" name="vnote">
+    <view id="320" parent="3" name="vgetcursurilestudentului">
+      <SourceTextLength>336</SourceTextLength>
+      <Definer>root@localhost</Definer>
+    </view>
+    <view id="321" parent="3" name="vgetdetaliigrupe">
+      <SourceTextLength>530</SourceTextLength>
+      <Definer>root@localhost</Definer>
+    </view>
+    <view id="322" parent="3" name="vgetlistasutdentilagrupe">
+      <SourceTextLength>436</SourceTextLength>
+      <Definer>root@localhost</Definer>
+    </view>
+    <view id="323" parent="3" name="vgetprofbyid">
+      <SourceTextLength>193</SourceTextLength>
+      <Definer>root@localhost</Definer>
+    </view>
+    <view id="324" parent="3" name="vgetstudbyid">
+      <SourceTextLength>189</SourceTextLength>
+      <Definer>root@localhost</Definer>
+    </view>
+    <view id="325" parent="3" name="vnote">
       <SourceTextLength>678</SourceTextLength>
       <Definer>root@localhost</Definer>
     </view>
-    <view id="321" parent="3" name="vprofesori">
+    <view id="326" parent="3" name="vprofesori">
       <SourceTextLength>1108</SourceTextLength>
       <Definer>root@localhost</Definer>
     </view>
-    <view id="322" parent="3" name="vprofnrcursanti">
+    <view id="327" parent="3" name="vprofnrcursanti">
       <SourceTextLength>731</SourceTextLength>
       <Definer>root@localhost</Definer>
     </view>
-    <view id="323" parent="3" name="vstudenti">
+    <view id="328" parent="3" name="vstudenti">
       <SourceTextLength>639</SourceTextLength>
       <Definer>root@localhost</Definer>
     </view>
-    <view id="324" parent="3" name="vstudentilacurs">
+    <view id="329" parent="3" name="vstudentilacurs">
       <SourceTextLength>527</SourceTextLength>
       <Definer>root@localhost</Definer>
     </view>
-    <routine id="325" parent="3" name="calendar">
-      <SourceTextLength>944</SourceTextLength>
+    <routine id="330" parent="3" name="calendar">
+      <SourceTextLength>1106</SourceTextLength>
       <Definer>root@localhost</Definer>
       <RoutineKind>procedure</RoutineKind>
     </routine>
-    <routine id="326" parent="3" name="calendarToate">
+    <routine id="331" parent="3" name="calendarToate">
       <SourceTextLength>898</SourceTextLength>
       <Definer>root@localhost</Definer>
       <RoutineKind>procedure</RoutineKind>
     </routine>
-    <routine id="327" parent="3" name="cursuriDisponibile">
+    <routine id="332" parent="3" name="cursuriDisponibile">
       <SourceTextLength>652</SourceTextLength>
       <Definer>root@localhost</Definer>
       <RoutineKind>procedure</RoutineKind>
     </routine>
-    <routine id="328" parent="3" name="cursuriStudent">
+    <routine id="333" parent="3" name="cursuriStudent">
       <SourceTextLength>161</SourceTextLength>
       <Definer>root@localhost</Definer>
       <RoutineKind>procedure</RoutineKind>
     </routine>
-    <routine id="329" parent="3" name="getActivitatiCurs">
+    <routine id="334" parent="3" name="getActivitatiCurs">
       <SourceTextLength>1842</SourceTextLength>
       <Definer>root@localhost</Definer>
       <RoutineKind>procedure</RoutineKind>
     </routine>
-    <routine id="330" parent="3" name="insertActivitateStudent">
+    <routine id="335" parent="3" name="insertActivitateStudent">
       <SourceTextLength>93</SourceTextLength>
       <Definer>root@localhost</Definer>
       <RoutineKind>procedure</RoutineKind>
     </routine>
-    <routine id="331" parent="3" name="noteFinale">
+    <routine id="336" parent="3" name="noteFinale">
       <SourceTextLength>588</SourceTextLength>
       <Definer>root@localhost</Definer>
       <RoutineKind>procedure</RoutineKind>
     </routine>
-    <routine id="332" parent="3" name="notePartiale">
-      <SourceTextLength>688</SourceTextLength>
+    <routine id="337" parent="3" name="notePartiale">
+      <SourceTextLength>744</SourceTextLength>
       <Definer>root@localhost</Definer>
       <RoutineKind>procedure</RoutineKind>
     </routine>
-    <routine id="333" parent="3" name="pDeleteActivitate">
+    <routine id="338" parent="3" name="pAdaugaIncaUnul">
+      <SourceTextLength>160</SourceTextLength>
+      <Definer>root@localhost</Definer>
+      <RoutineKind>procedure</RoutineKind>
+    </routine>
+    <routine id="339" parent="3" name="pCreareActivitateGrupa">
+      <SourceTextLength>1490</SourceTextLength>
+      <Definer>root@localhost</Definer>
+      <RoutineKind>procedure</RoutineKind>
+    </routine>
+    <routine id="340" parent="3" name="pCreareGrupa">
+      <SourceTextLength>279</SourceTextLength>
+      <Definer>root@localhost</Definer>
+      <RoutineKind>procedure</RoutineKind>
+    </routine>
+    <routine id="341" parent="3" name="pDeleteActivitate">
       <SourceTextLength>232</SourceTextLength>
       <Definer>root@localhost</Definer>
       <RoutineKind>procedure</RoutineKind>
     </routine>
-    <routine id="334" parent="3" name="pInsertActivitate">
+    <routine id="342" parent="3" name="pGetGrupeBune">
+      <SourceTextLength>441</SourceTextLength>
+      <Definer>root@localhost</Definer>
+      <RoutineKind>procedure</RoutineKind>
+    </routine>
+    <routine id="343" parent="3" name="pGetRecomandariActivitati">
+      <SourceTextLength>1410</SourceTextLength>
+      <Definer>root@localhost</Definer>
+      <RoutineKind>procedure</RoutineKind>
+    </routine>
+    <routine id="344" parent="3" name="pInsertActivitate">
       <SourceTextLength>273</SourceTextLength>
       <Definer>root@localhost</Definer>
       <RoutineKind>procedure</RoutineKind>
     </routine>
-    <routine id="335" parent="3" name="pInsertAdmin">
+    <routine id="345" parent="3" name="pInsertAdmin">
       <SourceTextLength>359</SourceTextLength>
       <Definer>root@localhost</Definer>
       <RoutineKind>procedure</RoutineKind>
     </routine>
-    <routine id="336" parent="3" name="pInsertExamen">
+    <routine id="346" parent="3" name="pInsertExamen">
       <SourceTextLength>193</SourceTextLength>
       <Definer>root@localhost</Definer>
       <RoutineKind>procedure</RoutineKind>
     </routine>
-    <routine id="337" parent="3" name="pInsertProfesor">
+    <routine id="347" parent="3" name="pInsertProfesor">
       <SourceTextLength>493</SourceTextLength>
       <Definer>root@localhost</Definer>
       <RoutineKind>procedure</RoutineKind>
     </routine>
-    <routine id="338" parent="3" name="pInsertStudent">
+    <routine id="348" parent="3" name="pInsertStudent">
       <SourceTextLength>525</SourceTextLength>
       <Definer>root@localhost</Definer>
       <RoutineKind>procedure</RoutineKind>
     </routine>
-    <routine id="339" parent="3" name="profesorCuStudMin">
-      <SourceTextLength>251</SourceTextLength>
+    <routine id="349" parent="3" name="pJoinLaGrupa">
+      <SourceTextLength>70</SourceTextLength>
       <Definer>root@localhost</Definer>
       <RoutineKind>procedure</RoutineKind>
     </routine>
-    <routine id="340" parent="3" name="renuntaCurs">
-      <SourceTextLength>251</SourceTextLength>
+    <routine id="350" parent="3" name="pRenuntaLaGrupa">
+      <SourceTextLength>280</SourceTextLength>
       <Definer>root@localhost</Definer>
       <RoutineKind>procedure</RoutineKind>
     </routine>
-    <column id="341" parent="298" name="id_activitate">
+    <routine id="351" parent="3" name="pTrimiteMesaj">
+      <SourceTextLength>176</SourceTextLength>
+      <Definer>root@localhost</Definer>
+      <RoutineKind>procedure</RoutineKind>
+    </routine>
+    <routine id="352" parent="3" name="profesorCuStudMin">
+      <SourceTextLength>414</SourceTextLength>
+      <Definer>root@localhost</Definer>
+      <RoutineKind>procedure</RoutineKind>
+    </routine>
+    <routine id="353" parent="3" name="renuntaCurs">
+      <SourceTextLength>247</SourceTextLength>
+      <Definer>root@localhost</Definer>
+      <RoutineKind>procedure</RoutineKind>
+    </routine>
+    <column id="354" parent="298" name="id_activitate">
       <Position>1</Position>
       <DataType>int unsigned|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="342" parent="298" name="denumire_activitate">
+    <column id="355" parent="298" name="denumire_activitate">
       <Position>2</Position>
       <DataType>varchar(32)|0s</DataType>
     </column>
-    <column id="343" parent="298" name="nr_max_participanti">
+    <column id="356" parent="298" name="nr_max_participanti">
       <Position>3</Position>
       <DataType>int|0s</DataType>
     </column>
-    <index id="344" parent="298" name="id_activitate_UNIQUE">
+    <index id="357" parent="298" name="id_activitate_UNIQUE">
       <ColNames>id_activitate</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <key id="345" parent="298" name="PRIMARY">
+    <key id="358" parent="298" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id_activitate</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="346" parent="298" name="id_activitate_UNIQUE">
+    <key id="359" parent="298" name="id_activitate_UNIQUE">
       <ColNames>id_activitate</ColNames>
       <UnderlyingIndexName>id_activitate_UNIQUE</UnderlyingIndexName>
     </key>
-    <column id="347" parent="299" name="id_an_universitar">
+    <column id="360" parent="299" name="id_an_universitar">
       <Position>1</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="348" parent="299" name="semestru">
+    <column id="361" parent="299" name="semestru">
       <Position>2</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="349" parent="299" name="data_inceput">
+    <column id="362" parent="299" name="data_inceput">
       <Position>3</Position>
       <DataType>date|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="350" parent="299" name="data_sfarsit">
+    <column id="363" parent="299" name="data_sfarsit">
       <Position>4</Position>
       <DataType>date|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="351" parent="299" name="an_inceput">
+    <column id="364" parent="299" name="an_inceput">
       <Position>5</Position>
       <DataType>year|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="352" parent="299" name="id_an_universitar_UNIQUE">
+    <index id="365" parent="299" name="id_an_universitar_UNIQUE">
       <ColNames>id_an_universitar</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <key id="353" parent="299" name="PRIMARY">
+    <key id="366" parent="299" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id_an_universitar</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="354" parent="299" name="id_an_universitar_UNIQUE">
+    <key id="367" parent="299" name="id_an_universitar_UNIQUE">
       <ColNames>id_an_universitar</ColNames>
       <UnderlyingIndexName>id_an_universitar_UNIQUE</UnderlyingIndexName>
     </key>
-    <column id="355" parent="300" name="id_ca">
+    <column id="368" parent="300" name="id_ca">
       <Position>1</Position>
       <DataType>int unsigned|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="356" parent="300" name="id_curs">
+    <column id="369" parent="300" name="id_curs">
       <Position>2</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="357" parent="300" name="id_activ">
+    <column id="370" parent="300" name="id_activ">
       <Position>3</Position>
       <DataType>int unsigned|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="358" parent="300" name="perioada">
+    <column id="371" parent="300" name="perioada">
       <Position>4</Position>
       <DataType>int|0s</DataType>
     </column>
-    <column id="359" parent="300" name="nr_zi_sapt">
+    <column id="372" parent="300" name="nr_zi_sapt">
       <Position>5</Position>
       <DataType>int|0s</DataType>
     </column>
-    <column id="360" parent="300" name="procent">
+    <column id="373" parent="300" name="procent">
       <Position>6</Position>
       <DataType>int|0s</DataType>
     </column>
-    <column id="361" parent="300" name="id_prof_titular">
+    <column id="374" parent="300" name="id_prof_titular">
       <Position>7</Position>
       <DataType>int unsigned|0s</DataType>
     </column>
-    <column id="362" parent="300" name="id_prof_delegat">
+    <column id="375" parent="300" name="id_prof_delegat">
       <Position>8</Position>
       <DataType>int unsigned|0s</DataType>
     </column>
-    <column id="363" parent="300" name="ora_inceput">
+    <column id="376" parent="300" name="ora_inceput">
       <Position>9</Position>
       <DataType>int|0s</DataType>
     </column>
-    <column id="364" parent="300" name="durata">
+    <column id="377" parent="300" name="durata">
       <Position>10</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>1</DefaultExpression>
     </column>
-    <column id="365" parent="300" name="nr_max_participanti">
+    <column id="378" parent="300" name="nr_max_participanti">
       <Position>11</Position>
       <DataType>int|0s</DataType>
     </column>
-    <index id="366" parent="300" name="id_ca_UNIQUE">
+    <index id="379" parent="300" name="id_ca_UNIQUE">
       <ColNames>id_ca</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <index id="367" parent="300" name="id_curs_idx">
+    <index id="380" parent="300" name="id_curs_idx">
       <ColNames>id_curs</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="368" parent="300" name="id_activ_idx">
+    <index id="381" parent="300" name="id_activ_idx">
       <ColNames>id_activ</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="369" parent="300" name="perioada_idx">
+    <index id="382" parent="300" name="perioada_idx">
       <ColNames>perioada</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="370" parent="300" name="nr_zi_saptamana_idx">
+    <index id="383" parent="300" name="nr_zi_saptamana_idx">
       <ColNames>nr_zi_sapt</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="371" parent="300" name="id_prof_apartinator_idx">
+    <index id="384" parent="300" name="id_prof_apartinator_idx">
       <ColNames>id_prof_titular</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="372" parent="300" name="prof_delegat">
+    <index id="385" parent="300" name="prof_delegat">
       <ColNames>id_prof_delegat</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="373" parent="300" name="PRIMARY">
+    <key id="386" parent="300" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id_ca</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="374" parent="300" name="id_ca_UNIQUE">
+    <key id="387" parent="300" name="id_ca_UNIQUE">
       <ColNames>id_ca</ColNames>
       <UnderlyingIndexName>id_ca_UNIQUE</UnderlyingIndexName>
     </key>
-    <foreign-key id="375" parent="300" name="id_curs">
+    <foreign-key id="388" parent="300" name="id_curs">
       <ColNames>id_curs</ColNames>
       <RefTableName>cursuri</RefTableName>
       <RefColNames>id_curs</RefColNames>
+      <OnUpdate>cascade</OnUpdate>
+      <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <foreign-key id="376" parent="300" name="id_activ">
+    <foreign-key id="389" parent="300" name="id_activ">
       <ColNames>id_activ</ColNames>
       <RefTableName>activitati</RefTableName>
       <RefColNames>id_activitate</RefColNames>
+      <OnUpdate>cascade</OnUpdate>
+      <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <foreign-key id="377" parent="300" name="perioada">
+    <foreign-key id="390" parent="300" name="perioada">
       <ColNames>perioada</ColNames>
       <RefTableName>perioade</RefTableName>
       <RefColNames>id_perioada</RefColNames>
+      <OnUpdate>cascade</OnUpdate>
+      <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <foreign-key id="378" parent="300" name="nr_zi_saptamana">
+    <foreign-key id="391" parent="300" name="nr_zi_saptamana">
       <ColNames>nr_zi_sapt</ColNames>
       <RefTableName>zile</RefTableName>
       <RefColNames>id_zi</RefColNames>
+      <OnUpdate>cascade</OnUpdate>
+      <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <foreign-key id="379" parent="300" name="id_profesor_titular">
+    <foreign-key id="392" parent="300" name="id_profesor_titular">
       <ColNames>id_prof_titular</ColNames>
       <RefTableName>profesori</RefTableName>
       <RefColNames>id_profesor</RefColNames>
+      <OnUpdate>cascade</OnUpdate>
+      <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <foreign-key id="380" parent="300" name="prof_delegat">
+    <foreign-key id="393" parent="300" name="prof_delegat">
       <ColNames>id_prof_delegat</ColNames>
       <RefTableName>profesori</RefTableName>
       <RefColNames>id_profesor</RefColNames>
+      <OnUpdate>cascade</OnUpdate>
+      <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <column id="381" parent="301" name="id_curs">
+    <column id="394" parent="301" name="id_curs">
       <Position>1</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="382" parent="301" name="denumire">
+    <column id="395" parent="301" name="denumire">
       <Position>2</Position>
       <DataType>varchar(32)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="383" parent="301" name="descriere">
+    <column id="396" parent="301" name="descriere">
       <Position>3</Position>
       <DataType>varchar(128)|0s</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>&apos;&apos;</DefaultExpression>
     </column>
-    <key id="384" parent="301" name="PRIMARY">
+    <key id="397" parent="301" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id_curs</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="385" parent="302" name="id_departament">
+    <column id="398" parent="302" name="id_departament">
       <Position>1</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="386" parent="302" name="cod_departament">
+    <column id="399" parent="302" name="cod_departament">
       <Position>2</Position>
       <DataType>varchar(8)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="387" parent="302" name="descriere_departament">
+    <column id="400" parent="302" name="descriere_departament">
       <Position>3</Position>
       <DataType>varchar(32)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <key id="388" parent="302" name="PRIMARY">
+    <key id="401" parent="302" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id_departament</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="389" parent="303" name="id_examinari">
+    <column id="402" parent="303" name="id_examinari">
       <Position>1</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="390" parent="303" name="id_tip_examinare">
+    <column id="403" parent="303" name="id_tip_examinare">
       <Position>2</Position>
       <DataType>int unsigned|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="391" parent="303" name="data_desfasurare">
+    <column id="404" parent="303" name="data_desfasurare">
       <Position>3</Position>
       <DataType>datetime|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="392" parent="303" name="durata">
+    <column id="405" parent="303" name="durata">
       <Position>4</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>1</DefaultExpression>
     </column>
-    <column id="393" parent="303" name="id_activ_curs">
+    <column id="406" parent="303" name="id_activ_curs">
       <Position>5</Position>
       <DataType>int unsigned|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="394" parent="303" name="tip_examinare_idx">
+    <index id="407" parent="303" name="tip_examinare_idx">
       <ColNames>id_tip_examinare</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="395" parent="303" name="activitate_curs_idx">
+    <index id="408" parent="303" name="activitate_curs_idx">
       <ColNames>id_activ_curs</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="396" parent="303" name="PRIMARY">
+    <key id="409" parent="303" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id_examinari</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="397" parent="303" name="tip_examinare">
+    <foreign-key id="410" parent="303" name="tip_examinare">
       <ColNames>id_tip_examinare</ColNames>
       <RefTableName>activitati</RefTableName>
       <RefColNames>id_activitate</RefColNames>
+      <OnUpdate>cascade</OnUpdate>
+      <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <foreign-key id="398" parent="303" name="activitate_curs">
+    <foreign-key id="411" parent="303" name="activitate_curs">
       <ColNames>id_activ_curs</ColNames>
       <RefTableName>curs_activitati</RefTableName>
       <RefColNames>id_ca</RefColNames>
+      <OnUpdate>cascade</OnUpdate>
+      <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <column id="399" parent="304" name="id_grupa">
+    <column id="412" parent="304" name="id_grupa">
       <Position>1</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
+      <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="400" parent="304" name="id_curs">
+    <column id="413" parent="304" name="id_curs">
       <Position>2</Position>
       <DataType>int|0s</DataType>
     </column>
-    <column id="401" parent="304" name="id_admin_grupa">
+    <column id="414" parent="304" name="id_admin_grupa">
       <Position>3</Position>
       <DataType>int unsigned|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="402" parent="304" name="id_profesor_raspunzator">
+    <column id="415" parent="304" name="id_profesor_raspunzator">
       <Position>4</Position>
       <DataType>int unsigned|0s</DataType>
     </column>
-    <column id="403" parent="304" name="nr_max_particip">
+    <column id="416" parent="304" name="nr_max_particip">
       <Position>5</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>30</DefaultExpression>
     </column>
-    <index id="404" parent="304" name="id_curs_idx">
+    <index id="417" parent="304" name="id_curs_idx">
       <ColNames>id_curs</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="405" parent="304" name="id_admin_grupa_idx">
+    <index id="418" parent="304" name="id_admin_grupa_idx">
       <ColNames>id_admin_grupa</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="406" parent="304" name="prof_raspunzator">
+    <index id="419" parent="304" name="prof_raspunzator">
       <ColNames>id_profesor_raspunzator</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="407" parent="304" name="PRIMARY">
+    <key id="420" parent="304" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id_grupa</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="408" parent="304" name="id_cursG">
+    <foreign-key id="421" parent="304" name="id_cursG">
       <ColNames>id_curs</ColNames>
       <RefTableName>cursuri</RefTableName>
       <RefColNames>id_curs</RefColNames>
+      <OnUpdate>cascade</OnUpdate>
+      <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <foreign-key id="409" parent="304" name="id_admin_grupa">
+    <foreign-key id="422" parent="304" name="id_admin_grupa">
       <ColNames>id_admin_grupa</ColNames>
       <RefTableName>studenti</RefTableName>
       <RefColNames>id_student</RefColNames>
+      <OnUpdate>cascade</OnUpdate>
+      <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <foreign-key id="410" parent="304" name="prof_raspunzator">
+    <foreign-key id="423" parent="304" name="prof_raspunzator">
       <ColNames>id_profesor_raspunzator</ColNames>
       <RefTableName>profesori</RefTableName>
       <RefColNames>id_profesor</RefColNames>
+      <OnUpdate>cascade</OnUpdate>
+      <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <column id="411" parent="305" name="id_from">
+    <column id="424" parent="305" name="id_from">
       <Position>1</Position>
       <DataType>int unsigned|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="412" parent="305" name="id_to">
+    <column id="425" parent="305" name="id_to">
       <Position>2</Position>
       <DataType>int unsigned|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="413" parent="305" name="subiect">
+    <column id="426" parent="305" name="subiect">
       <Position>3</Position>
       <DataType>varchar(32)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="414" parent="305" name="mesaj">
+    <column id="427" parent="305" name="mesaj">
       <Position>4</Position>
       <DataType>text|0s</DataType>
     </column>
-    <column id="415" parent="305" name="timp_primire">
+    <column id="428" parent="305" name="timp_primire">
       <Position>5</Position>
       <DataType>timestamp|0s</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
     </column>
-    <index id="416" parent="305" name="id_from_msg_idx">
+    <index id="429" parent="305" name="id_from_msg_idx">
       <ColNames>id_from</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="417" parent="305" name="id_to_msg_idx">
+    <index id="430" parent="305" name="id_to_msg_idx">
       <ColNames>id_to</ColNames>
       <Type>btree</Type>
     </index>
-    <foreign-key id="418" parent="305" name="id_from_msg">
+    <foreign-key id="431" parent="305" name="id_from_msg">
       <ColNames>id_from</ColNames>
       <RefTableName>users</RefTableName>
       <RefColNames>id_user</RefColNames>
+      <OnUpdate>cascade</OnUpdate>
+      <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <foreign-key id="419" parent="305" name="id_to_msg">
+    <foreign-key id="432" parent="305" name="id_to_msg">
       <ColNames>id_to</ColNames>
       <RefTableName>users</RefTableName>
       <RefColNames>id_user</RefColNames>
+      <OnUpdate>cascade</OnUpdate>
+      <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <column id="420" parent="306" name="id_from">
+    <column id="433" parent="306" name="id_mesaj">
       <Position>1</Position>
+      <DataType>int|0s</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>null</SequenceIdentity>
+    </column>
+    <column id="434" parent="306" name="id_from">
+      <Position>2</Position>
       <DataType>int unsigned|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="421" parent="306" name="id_grupa">
-      <Position>2</Position>
-      <DataType>int|0s</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <column id="422" parent="306" name="subiect">
+    <column id="435" parent="306" name="id_grupa">
       <Position>3</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="423" parent="306" name="text">
+    <column id="436" parent="306" name="subiect">
       <Position>4</Position>
-      <DataType>int|0s</DataType>
+      <DataType>varchar(256)|0s</DataType>
+      <NotNull>1</NotNull>
     </column>
-    <column id="424" parent="306" name="timp_primire">
+    <column id="437" parent="306" name="continut_mesaj">
       <Position>5</Position>
+      <DataType>text|0s</DataType>
+    </column>
+    <column id="438" parent="306" name="timp_primire">
+      <Position>6</Position>
       <DataType>timestamp|0s</DataType>
       <NotNull>1</NotNull>
-      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
     </column>
-    <column id="425" parent="306" name="programare">
-      <Position>6</Position>
-      <DataType>tinyint|0s</DataType>
+    <column id="439" parent="306" name="programare">
+      <Position>7</Position>
+      <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
-      <DefaultExpression>0</DefaultExpression>
     </column>
-    <index id="426" parent="306" name="id_gr_msg_idx">
+    <index id="440" parent="306" name="id_from_idx">
+      <ColNames>id_from</ColNames>
+      <Type>btree</Type>
+    </index>
+    <index id="441" parent="306" name="id_grupa_idx">
       <ColNames>id_grupa</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="427" parent="306" name="PRIMARY">
+    <key id="442" parent="306" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
-      <ColNames>id_from</ColNames>
+      <ColNames>id_mesaj</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="428" parent="306" name="id_from">
+    <foreign-key id="443" parent="306" name="from">
       <ColNames>id_from</ColNames>
-      <RefTableName>studenti</RefTableName>
-      <RefColNames>id_student</RefColNames>
+      <RefTableName>users</RefTableName>
+      <RefColNames>id_user</RefColNames>
     </foreign-key>
-    <foreign-key id="429" parent="306" name="id_gr_msg">
+    <foreign-key id="444" parent="306" name="grupa">
       <ColNames>id_grupa</ColNames>
       <RefTableName>grupe</RefTableName>
       <RefColNames>id_grupa</RefColNames>
     </foreign-key>
-    <column id="430" parent="307" name="id_perioada">
+    <column id="445" parent="307" name="id_perioada">
       <Position>1</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="431" parent="307" name="descriere">
+    <column id="446" parent="307" name="descriere">
       <Position>2</Position>
       <DataType>varchar(32)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="432" parent="307" name="id_perioada_UNIQUE">
+    <index id="447" parent="307" name="id_perioada_UNIQUE">
       <ColNames>id_perioada</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <key id="433" parent="307" name="PRIMARY">
+    <key id="448" parent="307" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id_perioada</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="434" parent="307" name="id_perioada_UNIQUE">
+    <key id="449" parent="307" name="id_perioada_UNIQUE">
       <ColNames>id_perioada</ColNames>
       <UnderlyingIndexName>id_perioada_UNIQUE</UnderlyingIndexName>
     </key>
-    <column id="435" parent="308" name="id_profesor">
+    <column id="450" parent="308" name="id_profesor">
       <Position>1</Position>
       <DataType>int unsigned|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="436" parent="308" name="nr_min_ore">
+    <column id="451" parent="308" name="nr_min_ore">
       <Position>2</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>8</DefaultExpression>
     </column>
-    <column id="437" parent="308" name="nr_max_ore">
+    <column id="452" parent="308" name="nr_max_ore">
       <Position>3</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>32</DefaultExpression>
     </column>
-    <column id="438" parent="308" name="id_departament">
+    <column id="453" parent="308" name="id_departament">
       <Position>4</Position>
       <DataType>int|0s</DataType>
     </column>
-    <index id="439" parent="308" name="id_profesor_UNIQUE">
+    <index id="454" parent="308" name="id_profesor_UNIQUE">
       <ColNames>id_profesor</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <index id="440" parent="308" name="id_departament_idx">
+    <index id="455" parent="308" name="id_departament_idx">
       <ColNames>id_departament</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="441" parent="308" name="PRIMARY">
+    <key id="456" parent="308" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id_profesor</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="442" parent="308" name="id_profesor_UNIQUE">
+    <key id="457" parent="308" name="id_profesor_UNIQUE">
       <ColNames>id_profesor</ColNames>
       <UnderlyingIndexName>id_profesor_UNIQUE</UnderlyingIndexName>
     </key>
-    <foreign-key id="443" parent="308" name="id_user_prof">
+    <foreign-key id="458" parent="308" name="id_user_prof">
       <ColNames>id_profesor</ColNames>
       <RefTableName>users</RefTableName>
       <RefColNames>id_user</RefColNames>
+      <OnUpdate>cascade</OnUpdate>
+      <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <foreign-key id="444" parent="308" name="id_departament">
+    <foreign-key id="459" parent="308" name="id_departament">
       <ColNames>id_departament</ColNames>
       <RefTableName>departamente</RefTableName>
       <RefColNames>id_departament</RefColNames>
+      <OnUpdate>cascade</OnUpdate>
+      <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <column id="445" parent="309" name="id_activitate_grupa">
+    <column id="460" parent="309" name="id_activitate_grupa">
       <Position>1</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
+      <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="446" parent="309" name="id_grupa">
+    <column id="461" parent="309" name="id_grupa">
       <Position>2</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="447" parent="309" name="nr_minim">
+    <column id="462" parent="309" name="nr_minim">
       <Position>3</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>5</DefaultExpression>
     </column>
-    <column id="448" parent="309" name="numar_curent_participanti">
+    <column id="463" parent="309" name="numar_curent_participanti">
       <Position>4</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>0</DefaultExpression>
     </column>
-    <column id="449" parent="309" name="data_activitate_grupa">
+    <column id="464" parent="309" name="data_activitate_grupa">
       <Position>5</Position>
       <DataType>date|0s</DataType>
     </column>
-    <column id="450" parent="309" name="ora_activitate">
+    <column id="465" parent="309" name="ora_activitate">
       <Position>6</Position>
       <DataType>int|0s</DataType>
     </column>
-    <column id="451" parent="309" name="durata_activitate">
+    <column id="466" parent="309" name="durata_activitate">
       <Position>7</Position>
       <DataType>int|0s</DataType>
     </column>
-    <column id="452" parent="309" name="start_programare">
+    <column id="467" parent="309" name="start_programare">
       <Position>8</Position>
       <DataType>datetime|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="453" parent="309" name="deadline">
+    <column id="468" parent="309" name="deadline">
       <Position>9</Position>
       <DataType>datetime|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="454" parent="309" name="id_grupa_idx">
+    <index id="469" parent="309" name="id_grupa_idx">
       <ColNames>id_grupa</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="455" parent="309" name="PRIMARY">
+    <key id="470" parent="309" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id_activitate_grupa</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="456" parent="309" name="id_grupa">
+    <foreign-key id="471" parent="309" name="id_grupa">
       <ColNames>id_grupa</ColNames>
       <RefTableName>grupe</RefTableName>
       <RefColNames>id_grupa</RefColNames>
+      <OnUpdate>cascade</OnUpdate>
+      <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <column id="457" parent="310" name="id_rol">
+    <column id="472" parent="310" name="id_rol">
       <Position>1</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="458" parent="310" name="descriere_rol">
+    <column id="473" parent="310" name="descriere_rol">
       <Position>2</Position>
       <DataType>varchar(16)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="459" parent="310" name="id_rol_UNIQUE">
+    <index id="474" parent="310" name="id_rol_UNIQUE">
       <ColNames>id_rol</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <key id="460" parent="310" name="PRIMARY">
+    <key id="475" parent="310" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id_rol</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="461" parent="310" name="id_rol_UNIQUE">
+    <key id="476" parent="310" name="id_rol_UNIQUE">
       <ColNames>id_rol</ColNames>
       <UnderlyingIndexName>id_rol_UNIQUE</UnderlyingIndexName>
     </key>
-    <column id="462" parent="311" name="id_status">
+    <column id="477" parent="311" name="id_status">
       <Position>1</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="463" parent="311" name="Descriere">
+    <column id="478" parent="311" name="Descriere">
       <Position>2</Position>
       <DataType>varchar(16)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <key id="464" parent="311" name="PRIMARY">
+    <key id="479" parent="311" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id_status</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="465" parent="312" name="id_student">
+    <column id="480" parent="312" name="id_student">
       <Position>1</Position>
       <DataType>int unsigned|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="466" parent="312" name="nr_ore">
+    <column id="481" parent="312" name="nr_ore">
       <Position>2</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>6</DefaultExpression>
     </column>
-    <column id="467" parent="312" name="an_studiu">
+    <column id="482" parent="312" name="an_studiu">
       <Position>3</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>1</DefaultExpression>
     </column>
-    <column id="468" parent="312" name="id_status">
+    <column id="483" parent="312" name="id_status">
       <Position>4</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>0</DefaultExpression>
     </column>
-    <index id="469" parent="312" name="id_student_UNIQUE">
+    <index id="484" parent="312" name="id_student_UNIQUE">
       <ColNames>id_student</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <index id="470" parent="312" name="id_status_activ_idx">
+    <index id="485" parent="312" name="id_status_activ_idx">
       <ColNames>id_status</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="471" parent="312" name="PRIMARY">
+    <key id="486" parent="312" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id_student</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="472" parent="312" name="id_student_UNIQUE">
+    <key id="487" parent="312" name="id_student_UNIQUE">
       <ColNames>id_student</ColNames>
       <UnderlyingIndexName>id_student_UNIQUE</UnderlyingIndexName>
     </key>
-    <foreign-key id="473" parent="312" name="id_user_stud">
+    <foreign-key id="488" parent="312" name="id_user_stud">
       <ColNames>id_student</ColNames>
       <RefTableName>users</RefTableName>
       <RefColNames>id_user</RefColNames>
+      <OnUpdate>cascade</OnUpdate>
+      <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <foreign-key id="474" parent="312" name="id_status_activ">
+    <foreign-key id="489" parent="312" name="id_status_activ">
       <ColNames>id_status</ColNames>
       <RefTableName>status_activ</RefTableName>
       <RefColNames>id_status</RefColNames>
+      <OnUpdate>cascade</OnUpdate>
+      <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <column id="475" parent="313" name="id_student">
+    <column id="490" parent="313" name="id_student">
       <Position>1</Position>
       <DataType>int unsigned|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="476" parent="313" name="id_activitate">
+    <column id="491" parent="313" name="id_activitate">
       <Position>2</Position>
       <DataType>int unsigned|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="477" parent="313" name="nota">
+    <column id="492" parent="313" name="nota">
       <Position>3</Position>
       <DataType>int|0s</DataType>
     </column>
-    <column id="478" parent="313" name="data_notare">
+    <column id="493" parent="313" name="data_notare">
       <Position>4</Position>
       <DataType>date|0s</DataType>
     </column>
-    <index id="479" parent="313" name="id_student_idx">
+    <index id="494" parent="313" name="id_student_idx">
       <ColNames>id_student</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="480" parent="313" name="id_activitate_idx">
+    <index id="495" parent="313" name="id_activitate_idx">
       <ColNames>id_activitate</ColNames>
       <Type>btree</Type>
     </index>
-    <foreign-key id="481" parent="313" name="id_student">
+    <foreign-key id="496" parent="313" name="id_student">
       <ColNames>id_student</ColNames>
       <RefTableName>studenti</RefTableName>
       <RefColNames>id_student</RefColNames>
+      <OnUpdate>cascade</OnUpdate>
+      <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <foreign-key id="482" parent="313" name="id_activitate">
+    <foreign-key id="497" parent="313" name="id_activitate">
       <ColNames>id_activitate</ColNames>
       <RefTableName>curs_activitati</RefTableName>
       <RefColNames>id_ca</RefColNames>
+      <OnUpdate>cascade</OnUpdate>
+      <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <column id="483" parent="314" name="id_student">
+    <column id="498" parent="314" name="id_student">
       <Position>1</Position>
       <DataType>int unsigned|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="484" parent="314" name="id_grupa">
+    <column id="499" parent="314" name="id_grupa">
       <Position>2</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="485" parent="314" name="id_stud_idx">
+    <index id="500" parent="314" name="id_stud_idx">
       <ColNames>id_student</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="486" parent="314" name="id_gr_idx">
+    <index id="501" parent="314" name="id_gr_idx">
       <ColNames>id_grupa</ColNames>
       <Type>btree</Type>
     </index>
-    <foreign-key id="487" parent="314" name="id_stud">
+    <foreign-key id="502" parent="314" name="id_stud">
       <ColNames>id_student</ColNames>
       <RefTableName>studenti</RefTableName>
       <RefColNames>id_student</RefColNames>
+      <OnUpdate>cascade</OnUpdate>
+      <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <foreign-key id="488" parent="314" name="id_gr">
+    <foreign-key id="503" parent="314" name="id_gr">
       <ColNames>id_grupa</ColNames>
       <RefTableName>grupe</RefTableName>
       <RefColNames>id_grupa</RefColNames>
+      <OnUpdate>cascade</OnUpdate>
+      <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <column id="489" parent="315" name="id_user">
+    <column id="504" parent="315" name="id_user">
       <Position>1</Position>
       <DataType>int unsigned|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="490" parent="315" name="id_rol">
+    <column id="505" parent="315" name="id_rol">
       <Position>2</Position>
       <DataType>int|0s</DataType>
     </column>
-    <column id="491" parent="315" name="CNP">
+    <column id="506" parent="315" name="CNP">
       <Position>3</Position>
       <DataType>char(13)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="492" parent="315" name="nume">
+    <column id="507" parent="315" name="nume">
       <Position>4</Position>
       <DataType>varchar(64)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="493" parent="315" name="prenume">
+    <column id="508" parent="315" name="prenume">
       <Position>5</Position>
       <DataType>varchar(64)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="494" parent="315" name="adresa">
+    <column id="509" parent="315" name="adresa">
       <Position>6</Position>
       <DataType>varchar(128)|0s</DataType>
     </column>
-    <column id="495" parent="315" name="nr_tel">
+    <column id="510" parent="315" name="nr_tel">
       <Position>7</Position>
       <DataType>char(10)|0s</DataType>
     </column>
-    <column id="496" parent="315" name="email">
+    <column id="511" parent="315" name="email">
       <Position>8</Position>
       <DataType>varchar(64)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="497" parent="315" name="IBAN">
+    <column id="512" parent="315" name="IBAN">
       <Position>9</Position>
       <DataType>varchar(34)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="498" parent="315" name="nr_contract">
+    <column id="513" parent="315" name="nr_contract">
       <Position>10</Position>
       <DataType>int|0s</DataType>
     </column>
-    <column id="499" parent="315" name="username">
+    <column id="514" parent="315" name="username">
       <Position>11</Position>
       <DataType>varchar(32)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="500" parent="315" name="parola">
+    <column id="515" parent="315" name="parola">
       <Position>12</Position>
       <DataType>varchar(32)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="501" parent="315" name="id_user_UNIQUE">
+    <index id="516" parent="315" name="id_user_UNIQUE">
       <ColNames>id_user</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <index id="502" parent="315" name="CNP_UNIQUE">
+    <index id="517" parent="315" name="CNP_UNIQUE">
       <ColNames>CNP</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <index id="503" parent="315" name="username_UNIQUE">
+    <index id="518" parent="315" name="username_UNIQUE">
       <ColNames>username</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <index id="504" parent="315" name="id_rol_idx">
+    <index id="519" parent="315" name="id_rol_idx">
       <ColNames>id_rol</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="505" parent="315" name="index_user">
+    <index id="520" parent="315" name="index_user">
       <ColNames>username
 parola</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="506" parent="315" name="PRIMARY">
+    <key id="521" parent="315" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id_user</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="507" parent="315" name="id_user_UNIQUE">
+    <key id="522" parent="315" name="id_user_UNIQUE">
       <ColNames>id_user</ColNames>
       <UnderlyingIndexName>id_user_UNIQUE</UnderlyingIndexName>
     </key>
-    <key id="508" parent="315" name="CNP_UNIQUE">
+    <key id="523" parent="315" name="CNP_UNIQUE">
       <ColNames>CNP</ColNames>
       <UnderlyingIndexName>CNP_UNIQUE</UnderlyingIndexName>
     </key>
-    <key id="509" parent="315" name="username_UNIQUE">
+    <key id="524" parent="315" name="username_UNIQUE">
       <ColNames>username</ColNames>
       <UnderlyingIndexName>username_UNIQUE</UnderlyingIndexName>
     </key>
-    <foreign-key id="510" parent="315" name="id_rol">
+    <foreign-key id="525" parent="315" name="id_rol">
       <ColNames>id_rol</ColNames>
       <RefTableName>roluri</RefTableName>
       <RefColNames>id_rol</RefColNames>
+      <OnUpdate>cascade</OnUpdate>
+      <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <column id="511" parent="316" name="id_zi">
+    <column id="526" parent="316" name="id_zi">
       <Position>1</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="512" parent="316" name="zi">
+    <column id="527" parent="316" name="zi">
       <Position>2</Position>
       <DataType>varchar(16)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="513" parent="316" name="id_zi_UNIQUE">
+    <index id="528" parent="316" name="id_zi_UNIQUE">
       <ColNames>id_zi</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <key id="514" parent="316" name="PRIMARY">
+    <key id="529" parent="316" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id_zi</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="515" parent="316" name="id_zi_UNIQUE">
+    <key id="530" parent="316" name="id_zi_UNIQUE">
       <ColNames>id_zi</ColNames>
       <UnderlyingIndexName>id_zi_UNIQUE</UnderlyingIndexName>
     </key>
-    <column id="516" parent="317" name="id_ca">
+    <column id="531" parent="317" name="id_ca">
       <Position>1</Position>
       <DataType>int unsigned|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="517" parent="317" name="id_curs">
+    <column id="532" parent="317" name="id_curs">
       <Position>2</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="518" parent="317" name="id_activ">
+    <column id="533" parent="317" name="id_activ">
       <Position>3</Position>
       <DataType>int unsigned|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="519" parent="317" name="perioada">
+    <column id="534" parent="317" name="perioada">
       <Position>4</Position>
       <DataType>int|0s</DataType>
     </column>
-    <column id="520" parent="317" name="nr_zi_sapt">
+    <column id="535" parent="317" name="nr_zi_sapt">
       <Position>5</Position>
       <DataType>int|0s</DataType>
     </column>
-    <column id="521" parent="317" name="procent">
+    <column id="536" parent="317" name="procent">
       <Position>6</Position>
       <DataType>int|0s</DataType>
     </column>
-    <column id="522" parent="317" name="id_prof_titular">
+    <column id="537" parent="317" name="id_prof_titular">
       <Position>7</Position>
       <DataType>int unsigned|0s</DataType>
     </column>
-    <column id="523" parent="317" name="id_prof_delegat">
+    <column id="538" parent="317" name="id_prof_delegat">
       <Position>8</Position>
       <DataType>int unsigned|0s</DataType>
     </column>
-    <column id="524" parent="317" name="ora_inceput">
+    <column id="539" parent="317" name="ora_inceput">
       <Position>9</Position>
       <DataType>int|0s</DataType>
     </column>
-    <column id="525" parent="317" name="durata">
+    <column id="540" parent="317" name="durata">
       <Position>10</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="526" parent="317" name="nr_max_participanti">
+    <column id="541" parent="317" name="nr_max_participanti">
       <Position>11</Position>
       <DataType>int|0s</DataType>
     </column>
-    <column id="527" parent="317" name="id_student">
+    <column id="542" parent="317" name="id_student">
       <Position>12</Position>
       <DataType>int unsigned|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="528" parent="318" name="descriere">
+    <column id="543" parent="318" name="descriere">
       <Position>1</Position>
       <DataType>varchar(128)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="529" parent="319" name="id_curs">
+    <column id="544" parent="319" name="id_curs">
       <Position>1</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="530" parent="319" name="id_ca">
+    <column id="545" parent="319" name="id_ca">
       <Position>2</Position>
       <DataType>int unsigned|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="531" parent="319" name="denumire_curs">
+    <column id="546" parent="319" name="denumire_curs">
       <Position>3</Position>
       <DataType>varchar(32)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="532" parent="319" name="descriere_curs">
+    <column id="547" parent="319" name="descriere_curs">
       <Position>4</Position>
       <DataType>varchar(128)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="533" parent="319" name="nr_zi_sapt">
+    <column id="548" parent="319" name="nr_zi_sapt">
       <Position>5</Position>
       <DataType>int|0s</DataType>
     </column>
-    <column id="534" parent="319" name="ora_inceput">
+    <column id="549" parent="319" name="ora_inceput">
       <Position>6</Position>
       <DataType>int|0s</DataType>
     </column>
-    <column id="535" parent="319" name="nr_max_participanti">
+    <column id="550" parent="319" name="nr_max_participanti">
       <Position>7</Position>
       <DataType>int|0s</DataType>
     </column>
-    <column id="536" parent="319" name="nume">
+    <column id="551" parent="319" name="nume">
       <Position>8</Position>
       <DataType>varchar(64)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="537" parent="319" name="prenume">
+    <column id="552" parent="319" name="prenume">
       <Position>9</Position>
       <DataType>varchar(64)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="538" parent="320" name="id_ca">
+    <column id="553" parent="320" name="id_curs">
+      <Position>1</Position>
+      <DataType>int|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="554" parent="320" name="denumire">
+      <Position>2</Position>
+      <DataType>varchar(32)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="555" parent="320" name="descriere">
+      <Position>3</Position>
+      <DataType>varchar(128)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="556" parent="320" name="id_student">
+      <Position>4</Position>
+      <DataType>int unsigned|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="557" parent="321" name="id_student">
       <Position>1</Position>
       <DataType>int unsigned|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="539" parent="320" name="id_curs">
+    <column id="558" parent="321" name="id_grupa">
       <Position>2</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="540" parent="320" name="id_student">
+    <column id="559" parent="321" name="nume">
       <Position>3</Position>
-      <DataType>int unsigned|0s</DataType>
+      <DataType>varchar(64)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="541" parent="320" name="nota">
+    <column id="560" parent="321" name="prenume">
       <Position>4</Position>
-      <DataType>int|0s</DataType>
+      <DataType>varchar(64)|0s</DataType>
+      <NotNull>1</NotNull>
     </column>
-    <column id="542" parent="320" name="denumire_materie">
+    <column id="561" parent="321" name="denumire">
       <Position>5</Position>
       <DataType>varchar(32)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="543" parent="320" name="procent">
+    <column id="562" parent="321" name="descriere">
       <Position>6</Position>
-      <DataType>int|0s</DataType>
+      <DataType>varchar(128)|0s</DataType>
+      <NotNull>1</NotNull>
     </column>
-    <column id="544" parent="320" name="tip_activitate">
+    <column id="563" parent="321" name="id_profesor_raspunzator">
+      <Position>7</Position>
+      <DataType>int unsigned|0s</DataType>
+    </column>
+    <column id="564" parent="322" name="nume_student">
+      <Position>1</Position>
+      <DataType>varchar(64)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="565" parent="322" name="prenume_student">
+      <Position>2</Position>
+      <DataType>varchar(64)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="566" parent="322" name="id_student">
+      <Position>3</Position>
+      <DataType>int unsigned|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="567" parent="322" name="id_grupa">
+      <Position>4</Position>
+      <DataType>int|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="568" parent="322" name="nume">
+      <Position>5</Position>
+      <DataType>varchar(64)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="569" parent="322" name="prenume">
+      <Position>6</Position>
+      <DataType>varchar(64)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="570" parent="322" name="denumire">
       <Position>7</Position>
       <DataType>varchar(32)|0s</DataType>
+      <NotNull>1</NotNull>
     </column>
-    <column id="545" parent="320" name="nume_prof">
+    <column id="571" parent="322" name="descriere">
       <Position>8</Position>
-      <DataType>varchar(64)|0s</DataType>
+      <DataType>varchar(128)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="546" parent="320" name="prenume_prof">
+    <column id="572" parent="322" name="id_profesor_raspunzator">
       <Position>9</Position>
-      <DataType>varchar(64)|0s</DataType>
-      <NotNull>1</NotNull>
+      <DataType>int unsigned|0s</DataType>
     </column>
-    <column id="547" parent="321" name="id_profesor">
+    <column id="573" parent="323" name="id_profesor">
       <Position>1</Position>
       <DataType>int unsigned|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="548" parent="321" name="CNP">
+    <column id="574" parent="323" name="nume">
+      <Position>2</Position>
+      <DataType>varchar(64)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="575" parent="323" name="prenume">
+      <Position>3</Position>
+      <DataType>varchar(64)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="576" parent="324" name="id_student">
+      <Position>1</Position>
+      <DataType>int unsigned|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="577" parent="324" name="nume">
+      <Position>2</Position>
+      <DataType>varchar(64)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="578" parent="324" name="prenume">
+      <Position>3</Position>
+      <DataType>varchar(64)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="579" parent="325" name="id_ca">
+      <Position>1</Position>
+      <DataType>int unsigned|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="580" parent="325" name="id_curs">
+      <Position>2</Position>
+      <DataType>int|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="581" parent="325" name="id_student">
+      <Position>3</Position>
+      <DataType>int unsigned|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="582" parent="325" name="nota">
+      <Position>4</Position>
+      <DataType>int|0s</DataType>
+    </column>
+    <column id="583" parent="325" name="denumire_materie">
+      <Position>5</Position>
+      <DataType>varchar(32)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="584" parent="325" name="procent">
+      <Position>6</Position>
+      <DataType>int|0s</DataType>
+    </column>
+    <column id="585" parent="325" name="tip_activitate">
+      <Position>7</Position>
+      <DataType>varchar(32)|0s</DataType>
+    </column>
+    <column id="586" parent="325" name="nume_prof">
+      <Position>8</Position>
+      <DataType>varchar(64)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="587" parent="325" name="prenume_prof">
+      <Position>9</Position>
+      <DataType>varchar(64)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="588" parent="326" name="id_profesor">
+      <Position>1</Position>
+      <DataType>int unsigned|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="589" parent="326" name="CNP">
       <Position>2</Position>
       <DataType>char(13)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="549" parent="321" name="descriere_rol">
+    <column id="590" parent="326" name="descriere_rol">
       <Position>3</Position>
       <DataType>varchar(16)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="550" parent="321" name="nume">
+    <column id="591" parent="326" name="nume">
       <Position>4</Position>
       <DataType>varchar(64)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="551" parent="321" name="prenume">
+    <column id="592" parent="326" name="prenume">
       <Position>5</Position>
       <DataType>varchar(64)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="552" parent="321" name="adresa">
+    <column id="593" parent="326" name="adresa">
       <Position>6</Position>
       <DataType>varchar(128)|0s</DataType>
     </column>
-    <column id="553" parent="321" name="nr_tel">
+    <column id="594" parent="326" name="nr_tel">
       <Position>7</Position>
       <DataType>char(10)|0s</DataType>
     </column>
-    <column id="554" parent="321" name="email">
+    <column id="595" parent="326" name="email">
       <Position>8</Position>
       <DataType>varchar(64)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="555" parent="321" name="IBAN">
+    <column id="596" parent="326" name="IBAN">
       <Position>9</Position>
       <DataType>varchar(34)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="556" parent="321" name="nr_contract">
+    <column id="597" parent="326" name="nr_contract">
       <Position>10</Position>
       <DataType>int|0s</DataType>
     </column>
-    <column id="557" parent="321" name="nr_min_ore">
+    <column id="598" parent="326" name="nr_min_ore">
       <Position>11</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="558" parent="321" name="nr_max_ore">
+    <column id="599" parent="326" name="nr_max_ore">
       <Position>12</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="559" parent="321" name="cod_departament">
+    <column id="600" parent="326" name="cod_departament">
       <Position>13</Position>
       <DataType>varchar(8)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="560" parent="321" name="descriere_departament">
+    <column id="601" parent="326" name="descriere_departament">
       <Position>14</Position>
       <DataType>varchar(32)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="561" parent="321" name="id_departament">
+    <column id="602" parent="326" name="id_departament">
       <Position>15</Position>
       <DataType>int|0s</DataType>
     </column>
-    <column id="562" parent="322" name="id_ca">
+    <column id="603" parent="327" name="id_ca">
       <Position>1</Position>
       <DataType>int unsigned|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="563" parent="322" name="id_curs">
+    <column id="604" parent="327" name="id_curs">
       <Position>2</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="564" parent="322" name="id_prof_titular">
+    <column id="605" parent="327" name="id_prof_titular">
       <Position>3</Position>
       <DataType>int unsigned|0s</DataType>
     </column>
-    <column id="565" parent="322" name="denumire">
+    <column id="606" parent="327" name="denumire">
       <Position>4</Position>
       <DataType>varchar(32)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="566" parent="322" name="descriere">
+    <column id="607" parent="327" name="descriere">
       <Position>5</Position>
       <DataType>varchar(128)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="567" parent="322" name="nr_actual_participanti">
+    <column id="608" parent="327" name="nr_actual_participanti">
       <Position>6</Position>
       <DataType>bigint|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="568" parent="322" name="numar_maxim">
+    <column id="609" parent="327" name="numar_maxim">
       <Position>7</Position>
       <DataType>int|0s</DataType>
     </column>
-    <column id="569" parent="322" name="ziua">
+    <column id="610" parent="327" name="ziua">
       <Position>8</Position>
       <DataType>int|0s</DataType>
     </column>
-    <column id="570" parent="322" name="ora_inceput">
+    <column id="611" parent="327" name="ora_inceput">
       <Position>9</Position>
       <DataType>int|0s</DataType>
     </column>
-    <column id="571" parent="322" name="durata">
+    <column id="612" parent="327" name="durata">
       <Position>10</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="572" parent="322" name="perioada">
+    <column id="613" parent="327" name="perioada">
       <Position>11</Position>
       <DataType>int|0s</DataType>
     </column>
-    <column id="573" parent="323" name="id_user">
+    <column id="614" parent="328" name="id_user">
       <Position>1</Position>
       <DataType>int unsigned|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="574" parent="323" name="id_student">
+    <column id="615" parent="328" name="id_student">
       <Position>2</Position>
       <DataType>int unsigned|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="575" parent="323" name="CNP">
+    <column id="616" parent="328" name="CNP">
       <Position>3</Position>
       <DataType>char(13)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="576" parent="323" name="descriere_rol">
+    <column id="617" parent="328" name="descriere_rol">
       <Position>4</Position>
       <DataType>varchar(16)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="577" parent="323" name="nume">
+    <column id="618" parent="328" name="nume">
       <Position>5</Position>
       <DataType>varchar(64)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="578" parent="323" name="prenume">
+    <column id="619" parent="328" name="prenume">
       <Position>6</Position>
       <DataType>varchar(64)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="579" parent="323" name="adresa">
+    <column id="620" parent="328" name="adresa">
       <Position>7</Position>
       <DataType>varchar(128)|0s</DataType>
     </column>
-    <column id="580" parent="323" name="nr_tel">
+    <column id="621" parent="328" name="nr_tel">
       <Position>8</Position>
       <DataType>char(10)|0s</DataType>
     </column>
-    <column id="581" parent="323" name="email">
+    <column id="622" parent="328" name="email">
       <Position>9</Position>
       <DataType>varchar(64)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="582" parent="323" name="IBAN">
+    <column id="623" parent="328" name="IBAN">
       <Position>10</Position>
       <DataType>varchar(34)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="583" parent="323" name="nr_contract">
+    <column id="624" parent="328" name="nr_contract">
       <Position>11</Position>
       <DataType>int|0s</DataType>
     </column>
-    <column id="584" parent="323" name="an_studiu">
+    <column id="625" parent="328" name="an_studiu">
       <Position>12</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="585" parent="323" name="nr_ore">
+    <column id="626" parent="328" name="nr_ore">
       <Position>13</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="586" parent="323" name="descriere">
+    <column id="627" parent="328" name="descriere">
       <Position>14</Position>
       <DataType>varchar(16)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="587" parent="324" name="id_user">
+    <column id="628" parent="329" name="id_user">
       <Position>1</Position>
       <DataType>int unsigned|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="588" parent="324" name="nume_student">
+    <column id="629" parent="329" name="nume_student">
       <Position>2</Position>
       <DataType>varchar(64)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="589" parent="324" name="prenume_student">
+    <column id="630" parent="329" name="prenume_student">
       <Position>3</Position>
       <DataType>varchar(64)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="590" parent="324" name="nr_tel">
+    <column id="631" parent="329" name="nr_tel">
       <Position>4</Position>
       <DataType>char(10)|0s</DataType>
     </column>
-    <column id="591" parent="324" name="email">
+    <column id="632" parent="329" name="email">
       <Position>5</Position>
       <DataType>varchar(64)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="592" parent="324" name="denumire_curs">
+    <column id="633" parent="329" name="denumire_curs">
       <Position>6</Position>
       <DataType>varchar(32)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="593" parent="324" name="descriere_curs">
+    <column id="634" parent="329" name="descriere_curs">
       <Position>7</Position>
       <DataType>varchar(128)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="594" parent="324" name="nume_profesor">
+    <column id="635" parent="329" name="nume_profesor">
       <Position>8</Position>
       <DataType>varchar(64)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="595" parent="324" name="prenume profesor">
+    <column id="636" parent="329" name="prenume profesor">
       <Position>9</Position>
       <DataType>varchar(64)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="596" parent="324" name="id_ca">
+    <column id="637" parent="329" name="id_ca">
       <Position>10</Position>
       <DataType>int unsigned|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <argument id="597" parent="325" name="idStud">
+    <argument id="638" parent="330" name="idStud">
       <Position>1</Position>
       <DataType>int|0s</DataType>
     </argument>
-    <argument id="598" parent="326" name="idStud">
+    <argument id="639" parent="331" name="idStud">
       <Position>1</Position>
       <DataType>int|0s</DataType>
     </argument>
-    <argument id="599" parent="327" name="idStud">
+    <argument id="640" parent="332" name="idStud">
       <Position>1</Position>
       <DataType>int|0s</DataType>
     </argument>
-    <argument id="600" parent="328" name="id_student">
+    <argument id="641" parent="333" name="id_student">
       <Position>1</Position>
       <DataType>int|0s</DataType>
     </argument>
-    <argument id="601" parent="329" name="idCurs">
+    <argument id="642" parent="334" name="idCurs">
       <Position>1</Position>
       <DataType>int|0s</DataType>
     </argument>
-    <argument id="602" parent="329" name="idStudent">
+    <argument id="643" parent="334" name="idStudent">
       <Position>2</Position>
       <DataType>int|0s</DataType>
     </argument>
-    <argument id="603" parent="329" name="idProfTitular">
+    <argument id="644" parent="334" name="idProfTitular">
       <Position>3</Position>
       <DataType>int|0s</DataType>
     </argument>
-    <argument id="604" parent="329" name="idActivitate">
+    <argument id="645" parent="334" name="idActivitate">
       <Position>4</Position>
       <DataType>int|0s</DataType>
     </argument>
-    <argument id="605" parent="330" name="idStud">
+    <argument id="646" parent="335" name="idStud">
       <Position>1</Position>
       <DataType>int|0s</DataType>
     </argument>
-    <argument id="606" parent="330" name="activ">
+    <argument id="647" parent="335" name="activ">
       <Position>2</Position>
       <DataType>int|0s</DataType>
     </argument>
-    <argument id="607" parent="331" name="idStud">
+    <argument id="648" parent="336" name="idStud">
       <Position>1</Position>
       <DataType>int|0s</DataType>
     </argument>
-    <argument id="608" parent="332" name="idStud">
+    <argument id="649" parent="337" name="idStud">
       <Position>1</Position>
       <DataType>int|0s</DataType>
     </argument>
-    <argument id="609" parent="333" name="curs">
+    <argument id="650" parent="338" name="pid_activitate_grupa">
       <Position>1</Position>
       <DataType>int|0s</DataType>
     </argument>
-    <argument id="610" parent="333" name="activitate">
+    <argument id="651" parent="339" name="pid_grupa">
+      <Position>1</Position>
+      <DataType>int|0s</DataType>
+    </argument>
+    <argument id="652" parent="339" name="pnr_min">
       <Position>2</Position>
       <DataType>int|0s</DataType>
     </argument>
-    <argument id="611" parent="334" name="id_curs">
-      <Position>1</Position>
-      <DataType>int|0s</DataType>
-    </argument>
-    <argument id="612" parent="334" name="id_activ">
-      <Position>2</Position>
-      <DataType>int|0s</DataType>
-    </argument>
-    <argument id="613" parent="334" name="perioada">
+    <argument id="653" parent="339" name="pdata_activitate_grupa">
       <Position>3</Position>
-      <DataType>int|0s</DataType>
+      <DataType>date|0s</DataType>
     </argument>
-    <argument id="614" parent="334" name="nr_zi_sapt">
+    <argument id="654" parent="339" name="pora_activitate">
       <Position>4</Position>
       <DataType>int|0s</DataType>
     </argument>
-    <argument id="615" parent="334" name="procent">
+    <argument id="655" parent="339" name="pdurata_activitate">
       <Position>5</Position>
       <DataType>int|0s</DataType>
     </argument>
-    <argument id="616" parent="334" name="id_prof_titular">
+    <argument id="656" parent="339" name="pdeadline">
       <Position>6</Position>
       <DataType>int|0s</DataType>
     </argument>
-    <argument id="617" parent="334" name="id_prof_delegat">
+    <argument id="657" parent="339" name="pid_student">
       <Position>7</Position>
       <DataType>int|0s</DataType>
     </argument>
-    <argument id="618" parent="334" name="ora">
+    <argument id="658" parent="340" name="pid_student">
+      <Position>1</Position>
+      <DataType>int|0s</DataType>
+    </argument>
+    <argument id="659" parent="340" name="pid_curs">
+      <Position>2</Position>
+      <DataType>int|0s</DataType>
+    </argument>
+    <argument id="660" parent="341" name="curs">
+      <Position>1</Position>
+      <DataType>int|0s</DataType>
+    </argument>
+    <argument id="661" parent="341" name="activitate">
+      <Position>2</Position>
+      <DataType>int|0s</DataType>
+    </argument>
+    <argument id="662" parent="342" name="pid_student">
+      <Position>1</Position>
+      <DataType>int|0s</DataType>
+    </argument>
+    <argument id="663" parent="343" name="idGrupa">
+      <Position>1</Position>
+      <DataType>int|0s</DataType>
+    </argument>
+    <argument id="664" parent="343" name="nrZi">
+      <Position>2</Position>
+      <DataType>int|0s</DataType>
+    </argument>
+    <argument id="665" parent="344" name="id_curs">
+      <Position>1</Position>
+      <DataType>int|0s</DataType>
+    </argument>
+    <argument id="666" parent="344" name="id_activ">
+      <Position>2</Position>
+      <DataType>int|0s</DataType>
+    </argument>
+    <argument id="667" parent="344" name="perioada">
+      <Position>3</Position>
+      <DataType>int|0s</DataType>
+    </argument>
+    <argument id="668" parent="344" name="nr_zi_sapt">
+      <Position>4</Position>
+      <DataType>int|0s</DataType>
+    </argument>
+    <argument id="669" parent="344" name="procent">
+      <Position>5</Position>
+      <DataType>int|0s</DataType>
+    </argument>
+    <argument id="670" parent="344" name="id_prof_titular">
+      <Position>6</Position>
+      <DataType>int|0s</DataType>
+    </argument>
+    <argument id="671" parent="344" name="id_prof_delegat">
+      <Position>7</Position>
+      <DataType>int|0s</DataType>
+    </argument>
+    <argument id="672" parent="344" name="ora">
       <Position>8</Position>
       <DataType>int|0s</DataType>
     </argument>
-    <argument id="619" parent="334" name="durata">
+    <argument id="673" parent="344" name="durata">
       <Position>9</Position>
       <DataType>int|0s</DataType>
     </argument>
-    <argument id="620" parent="334" name="max_participanti">
+    <argument id="674" parent="344" name="max_participanti">
       <Position>10</Position>
       <DataType>int|0s</DataType>
     </argument>
-    <argument id="621" parent="335" name="p_id_rol">
+    <argument id="675" parent="345" name="p_id_rol">
       <Position>1</Position>
       <DataType>int|0s</DataType>
     </argument>
-    <argument id="622" parent="335" name="p_cnp">
+    <argument id="676" parent="345" name="p_cnp">
       <Position>2</Position>
       <DataType>char(13)|0s</DataType>
     </argument>
-    <argument id="623" parent="335" name="p_nume">
+    <argument id="677" parent="345" name="p_nume">
       <Position>3</Position>
       <DataType>varchar(64)|0s</DataType>
     </argument>
-    <argument id="624" parent="335" name="p_prenume">
+    <argument id="678" parent="345" name="p_prenume">
       <Position>4</Position>
       <DataType>varchar(64)|0s</DataType>
     </argument>
-    <argument id="625" parent="335" name="p_adresa">
+    <argument id="679" parent="345" name="p_adresa">
       <Position>5</Position>
       <DataType>varchar(128)|0s</DataType>
     </argument>
-    <argument id="626" parent="335" name="p_nr_tel">
+    <argument id="680" parent="345" name="p_nr_tel">
       <Position>6</Position>
       <DataType>char(10)|0s</DataType>
     </argument>
-    <argument id="627" parent="335" name="p_email">
+    <argument id="681" parent="345" name="p_email">
       <Position>7</Position>
       <DataType>varchar(64)|0s</DataType>
     </argument>
-    <argument id="628" parent="335" name="p_iban">
+    <argument id="682" parent="345" name="p_iban">
       <Position>8</Position>
       <DataType>varchar(34)|0s</DataType>
     </argument>
-    <argument id="629" parent="335" name="p_nr_contract">
+    <argument id="683" parent="345" name="p_nr_contract">
       <Position>9</Position>
       <DataType>int|0s</DataType>
     </argument>
-    <argument id="630" parent="336" name="tip_exam">
+    <argument id="684" parent="346" name="tip_exam">
       <Position>1</Position>
       <DataType>int|0s</DataType>
     </argument>
-    <argument id="631" parent="336" name="data_desf">
+    <argument id="685" parent="346" name="data_desf">
       <Position>2</Position>
       <DataType>datetime|0s</DataType>
     </argument>
-    <argument id="632" parent="336" name="durata">
+    <argument id="686" parent="346" name="durata">
       <Position>3</Position>
       <DataType>int|0s</DataType>
     </argument>
-    <argument id="633" parent="336" name="activ_curs">
+    <argument id="687" parent="346" name="activ_curs">
       <Position>4</Position>
       <DataType>int|0s</DataType>
     </argument>
-    <argument id="634" parent="337" name="p_id_rol">
+    <argument id="688" parent="347" name="p_id_rol">
       <Position>1</Position>
       <DataType>int|0s</DataType>
     </argument>
-    <argument id="635" parent="337" name="p_cnp">
+    <argument id="689" parent="347" name="p_cnp">
       <Position>2</Position>
       <DataType>char(13)|0s</DataType>
     </argument>
-    <argument id="636" parent="337" name="p_nume">
+    <argument id="690" parent="347" name="p_nume">
       <Position>3</Position>
       <DataType>varchar(64)|0s</DataType>
     </argument>
-    <argument id="637" parent="337" name="p_prenume">
+    <argument id="691" parent="347" name="p_prenume">
       <Position>4</Position>
       <DataType>varchar(64)|0s</DataType>
     </argument>
-    <argument id="638" parent="337" name="p_adresa">
+    <argument id="692" parent="347" name="p_adresa">
       <Position>5</Position>
       <DataType>varchar(128)|0s</DataType>
     </argument>
-    <argument id="639" parent="337" name="p_nr_tel">
+    <argument id="693" parent="347" name="p_nr_tel">
       <Position>6</Position>
       <DataType>char(10)|0s</DataType>
     </argument>
-    <argument id="640" parent="337" name="p_email">
+    <argument id="694" parent="347" name="p_email">
       <Position>7</Position>
       <DataType>varchar(64)|0s</DataType>
     </argument>
-    <argument id="641" parent="337" name="p_iban">
+    <argument id="695" parent="347" name="p_iban">
       <Position>8</Position>
       <DataType>varchar(34)|0s</DataType>
     </argument>
-    <argument id="642" parent="337" name="p_nr_contract">
+    <argument id="696" parent="347" name="p_nr_contract">
       <Position>9</Position>
       <DataType>int|0s</DataType>
     </argument>
-    <argument id="643" parent="337" name="p_nr_min_ore">
+    <argument id="697" parent="347" name="p_nr_min_ore">
       <Position>10</Position>
       <DataType>int|0s</DataType>
     </argument>
-    <argument id="644" parent="337" name="p_nr_max_ore">
+    <argument id="698" parent="347" name="p_nr_max_ore">
       <Position>11</Position>
       <DataType>int|0s</DataType>
     </argument>
-    <argument id="645" parent="337" name="p_id_departament">
+    <argument id="699" parent="347" name="p_id_departament">
       <Position>12</Position>
       <DataType>int|0s</DataType>
     </argument>
-    <argument id="646" parent="338" name="p_id_rol">
+    <argument id="700" parent="348" name="p_id_rol">
       <Position>1</Position>
       <DataType>int|0s</DataType>
     </argument>
-    <argument id="647" parent="338" name="p_cnp">
+    <argument id="701" parent="348" name="p_cnp">
       <Position>2</Position>
       <DataType>char(13)|0s</DataType>
     </argument>
-    <argument id="648" parent="338" name="p_nume">
+    <argument id="702" parent="348" name="p_nume">
       <Position>3</Position>
       <DataType>varchar(64)|0s</DataType>
     </argument>
-    <argument id="649" parent="338" name="p_prenume">
+    <argument id="703" parent="348" name="p_prenume">
       <Position>4</Position>
       <DataType>varchar(64)|0s</DataType>
     </argument>
-    <argument id="650" parent="338" name="p_adresa">
+    <argument id="704" parent="348" name="p_adresa">
       <Position>5</Position>
       <DataType>varchar(128)|0s</DataType>
     </argument>
-    <argument id="651" parent="338" name="p_nr_tel">
+    <argument id="705" parent="348" name="p_nr_tel">
       <Position>6</Position>
       <DataType>char(10)|0s</DataType>
     </argument>
-    <argument id="652" parent="338" name="p_email">
+    <argument id="706" parent="348" name="p_email">
       <Position>7</Position>
       <DataType>varchar(64)|0s</DataType>
     </argument>
-    <argument id="653" parent="338" name="p_iban">
+    <argument id="707" parent="348" name="p_iban">
       <Position>8</Position>
       <DataType>varchar(34)|0s</DataType>
     </argument>
-    <argument id="654" parent="338" name="p_nr_contract">
+    <argument id="708" parent="348" name="p_nr_contract">
       <Position>9</Position>
       <DataType>int|0s</DataType>
     </argument>
-    <argument id="655" parent="338" name="p_nr_ore">
+    <argument id="709" parent="348" name="p_nr_ore">
       <Position>10</Position>
       <DataType>int|0s</DataType>
     </argument>
-    <argument id="656" parent="338" name="p_an_studiu">
+    <argument id="710" parent="348" name="p_an_studiu">
       <Position>11</Position>
       <DataType>int|0s</DataType>
     </argument>
-    <argument id="657" parent="338" name="p_id_status">
+    <argument id="711" parent="348" name="p_id_status">
       <Position>12</Position>
       <DataType>int|0s</DataType>
     </argument>
-    <argument id="658" parent="339" name="idCurs">
+    <argument id="712" parent="349" name="pid_student">
       <Position>1</Position>
       <DataType>int|0s</DataType>
     </argument>
-    <argument id="659" parent="340" name="id_student">
+    <argument id="713" parent="349" name="pid_grupa">
+      <Position>2</Position>
+      <DataType>int|0s</DataType>
+    </argument>
+    <argument id="714" parent="350" name="pid_student">
       <Position>1</Position>
       <DataType>int|0s</DataType>
     </argument>
-    <argument id="660" parent="340" name="descriereCurs">
+    <argument id="715" parent="350" name="pid_grupa">
+      <Position>2</Position>
+      <DataType>int|0s</DataType>
+    </argument>
+    <argument id="716" parent="351" name="pid_grupa">
+      <Position>1</Position>
+      <DataType>int|0s</DataType>
+    </argument>
+    <argument id="717" parent="351" name="pid_from">
+      <Position>2</Position>
+      <DataType>int|0s</DataType>
+    </argument>
+    <argument id="718" parent="351" name="psubiect">
+      <Position>3</Position>
+      <DataType>varchar(32)|0s</DataType>
+    </argument>
+    <argument id="719" parent="351" name="ptext">
+      <Position>4</Position>
+      <DataType>text|0s</DataType>
+    </argument>
+    <argument id="720" parent="351" name="pprogramare">
+      <Position>5</Position>
+      <DataType>tinyint|0s</DataType>
+    </argument>
+    <argument id="721" parent="352" name="idCurs">
+      <Position>1</Position>
+      <DataType>int|0s</DataType>
+    </argument>
+    <argument id="722" parent="353" name="id_student">
+      <Position>1</Position>
+      <DataType>int|0s</DataType>
+    </argument>
+    <argument id="723" parent="353" name="descriereCurs">
       <Position>2</Position>
       <DataType>varchar(128)|0s</DataType>
     </argument>

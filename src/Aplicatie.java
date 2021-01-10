@@ -15,7 +15,7 @@ public class Aplicatie extends Application {
         primaryStage.setScene(new Scene(root, Ecran.WIDTH, (int)(Ecran.HEIGHT/1.5f)));
         primaryStage.show();
     }
-
+    // lansam aplicatia
     public static void main(String[] args) {
         launch(args);
     }

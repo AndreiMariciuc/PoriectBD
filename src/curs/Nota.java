@@ -2,9 +2,7 @@ package curs;
 
 import bazaDate.Conexiune;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 
 import static bazaDate.Functii.*;
 import static java.lang.Math.round;
@@ -82,49 +80,61 @@ public class Nota {
         this.disciplina = disciplina;
     }
 
-    public void setNotaSeminar(int notaSeminar) throws SQLException{
+    public void setNotaSeminar(int notaSeminar) throws SQLException {
         this.notaSeminar = notaSeminar;
         PreparedStatement s = conexiune.prepareStatement
-        ("update studenti_activitati set nota = ?, data_nota = ? where id_student = ? and id_activitate in " +
-        "(select id_ca from curs_activitati where id_curs = ? and id_activ = ?)");
-        s.setInt(1,notaSeminar);
-        s.setDate(2, new java.sql.Date(System.currentTimeMillis()));
-        s.setInt(3,numeUserToIdUser(numeStudent));
-        s.setInt(4,denumireToIdCurs(disciplina));
-        s.setInt(5,denumireActivtoIdActiv("seminar"));
+                ("update studenti_activitati set nota = ?, data_notare = curdate() where id_student = ? and id_activitate in " +
+                        "(select id_ca from curs_activitati where id_curs = ? and id_activ = ?)");
+        s.setInt(1, notaSeminar);
+        s.setInt(2, numeUserToIdUser(numeStudent));
+        s.setInt(3, denumireToIdCurs(disciplina));
+        s.setInt(4, denumireActivtoIdActiv("seminar"));
         s.executeUpdate();
+        setNotaFinala();
     }
 
     public void setNotaLab(int notaLab) throws SQLException {
         this.notaLab = notaLab;
         PreparedStatement s = conexiune.prepareStatement
-                ("update studenti_activitati set nota = ?, data_nota = ? where id_student = ? and id_activitate in " +
+                ("update studenti_activitati set nota = ?, data_notare = curdate() where id_student = ? and id_activitate in " +
                         "(select id_ca from curs_activitati where id_curs = ? and id_activ = ?)");
-        s.setInt(1,notaLab);
-        s.setDate(2, new java.sql.Date(System.currentTimeMillis()));
-        s.setInt(3,numeUserToIdUser(numeStudent));
-        s.setInt(4,denumireToIdCurs(disciplina));
-        s.setInt(5,denumireActivtoIdActiv("laborator"));
+        s.setInt(1, notaLab);
+        s.setInt(2, numeUserToIdUser(numeStudent));
+        s.setInt(3, denumireToIdCurs(disciplina));
+        s.setInt(4, denumireActivtoIdActiv("laborator"));
         s.executeUpdate();
+        setNotaFinala();
     }
 
     public void setNotaExamen(int notaExamen) throws SQLException {
         this.notaExamen = notaExamen;
         PreparedStatement s = conexiune.prepareStatement
-                ("update studenti_activitati set nota = ?, data_nota = ? where id_student = ? and id_activitate in " +
+                ("update studenti_activitati set nota = ?, data_notare = curdate() where id_student = ? and id_activitate in " +
                         "(select id_ca from curs_activitati where id_curs = ? and id_activ = ?)");
-        s.setInt(1,notaExamen);
-        s.setDate(2, new java.sql.Date(System.currentTimeMillis()));
-        s.setInt(3,numeUserToIdUser(numeStudent));
-        s.setInt(4,denumireToIdCurs(disciplina));
-        s.setInt(5,denumireActivtoIdActiv("curs"));
+        s.setInt(1, notaExamen);
+        s.setInt(2, numeUserToIdUser(numeStudent));
+        s.setInt(3, denumireToIdCurs(disciplina));
+        s.setInt(4, denumireActivtoIdActiv("curs"));
         s.executeUpdate();
+        setNotaFinala();
     }
 
     public void setNotaFinala() throws SQLException {
         int id_curs = denumireToIdCurs(disciplina);
-        notaFinala = round(((float)notaExamen * pondereActiv(id_curs,denumireActivtoIdActiv("curs"))
-                + (float)notaSeminar * pondereActiv(id_curs,denumireActivtoIdActiv("seminar"))
-                + (float)notaLab * pondereActiv(id_curs,denumireActivtoIdActiv("laborator")))/100);
+        int id_prof = -1;
+        PreparedStatement s = conexiune.prepareStatement
+                ("select id_prof_titular from vactivitatistudent where id_student = " + numeUserToIdUser(numeStudent)+" group by id_prof_titular");
+        ResultSet rs = s.executeQuery();
+        while (rs.next())
+            id_prof = rs.getInt("id_prof_titular");
+        System.out.println(notaExamen);
+        System.out.println(pondereActiv(id_curs, denumireActivtoIdActiv("curs"), id_prof));
+        System.out.println(notaSeminar);
+        System.out.println(pondereActiv(id_curs, denumireActivtoIdActiv("seminar"), id_prof));
+        System.out.println(notaLab);
+        System.out.println(pondereActiv(id_curs, denumireActivtoIdActiv("laborator"), id_prof));
+        notaFinala = round((1.0f * notaExamen * pondereActiv(id_curs, denumireActivtoIdActiv("curs"), id_prof)
+                + 1.0f * notaSeminar * pondereActiv(id_curs, denumireActivtoIdActiv("seminar"), id_prof)
+                + 1.0f * notaLab * pondereActiv(id_curs, denumireActivtoIdActiv("laborator"), id_prof)) / 100);
     }
 }

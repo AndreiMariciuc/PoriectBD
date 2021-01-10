@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement />
+  <nodes>
+    <node x="84.75" y="0.0">bazaDate.User</node>
+    <node x="0.0" y="81.0">bazaDate.Profesor</node>
+    <node x="294.0" y="0.0">bazaDate.VedereStudentiLaCurs</node>
+    <node x="0.0" y="385.0">bazaDate.Conexiune</node>
+    <node x="510.0" y="385.0">bazaDate.Functii</node>
+    <node x="155.0" y="461.0">bazaDate.Status</node>
+    <node x="301.0" y="461.0">curs.Examen</node>
+    <node x="443.0" y="233.0">curs.StudentGrupa</node>
+    <node x="0.0" y="537.0">bazaDate.Grupe</node>
+    <node x="0.0" y="157.0">autentificare.ControlAutentificare</node>
+    <node x="398.0" y="309.0">bazaDate.VedereCurs</node>
+    <node x="447.0" y="461.0">bazaDate.Carnet</node>
+    <node x="411.0" y="537.0">curs.Curs</node>
+    <node x="0.0" y="309.0">admin.ControlAdmin</node>
+    <node x="540.0" y="537.0">bazaDate.Zile</node>
+    <node x="137.0" y="537.0">constante.Ecran</node>
+    <node x="199.0" y="309.0">bazaDate.Departamente</node>
+    <node x="226.0" y="233.0">student.ControlStudent</node>
+    <node x="129.0" y="613.0">bazaDate.Ore</node>
+    <node x="173.0" y="385.0">Aplicatie</node>
+    <node x="0.0" y="461.0">bazaDate.Cursuri</node>
+    <node x="270.0" y="157.0">curs.ActivitateGrupa</node>
+    <node x="0.0" y="613.0">curs.Nota</node>
+    <node x="346.0" y="385.0">bazaDate.Calendar</node>
+    <node x="139.0" y="81.0">bazaDate.Student</node>
+    <node x="274.0" y="537.0">bazaDate.Mesaj</node>
+    <node x="0.0" y="233.0">profesor.ControlProfesor</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="bazaDate.Student" target="bazaDate.User">
+      <point x="0.0" y="-15.5" />
+      <point x="194.0" y="56.0" />
+      <point x="147.75" y="56.0" />
+      <point x="21.0" y="15.5" />
+    </edge>
+    <edge source="bazaDate.Profesor" target="bazaDate.User">
+      <point x="0.0" y="-15.5" />
+      <point x="59.5" y="56.0" />
+      <point x="105.75" y="56.0" />
+      <point x="-21.0" y="15.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.5" x="1361.25" y="538.0" />
+  <SelectedNodes>
+    <node>bazaDate.User</node>
+  </SelectedNodes>
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

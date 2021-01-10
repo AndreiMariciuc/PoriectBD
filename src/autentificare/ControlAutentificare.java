@@ -25,12 +25,10 @@ public class ControlAutentificare {
     int state = 0;
 
     public void autentificare(ActionEvent actionEvent) throws IOException {
-        String pass = "123";//username.getText()
-        String userName = "andrei2"; //password.getText()
-        Conexiune c = Conexiune.getConexiune();
-        int rol = c.getUserType(userName, pass);//(username.getText(), password.getText());
-        System.out.println(rol);
-        System.out.println(Conexiune.getUser().getNume());
+        Conexiune conexiune = Conexiune.getConexiune();
+
+        int rol = conexiune.getUserType(username.getText(), password.getText());
+        
         if (rol == 2 || rol == 1) {
             incorect.setText("Admin");
             if (state == 1) {
