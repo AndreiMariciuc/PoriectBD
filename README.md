@@ -4,8 +4,8 @@ Aplicatia va folosi un sistem de gestiune pentru baze de date MySQL, iar interac
 realizata doar prin interfata grafica. Functionalitatile pe care le va oferi programul vizeaza operatii ce tin de 
 gestiunea studentilor, profesorilor si administrarea operatiilor curente din cadrul unor programe de studiu.
 
-gestiunea utilizatorilor 
-• autentificare, deautentificare
+gestiunea utilizatorilor\n 
+• autentificare, deautentificare\n
 • operaţii utilizator de tip administrator / super-administrator
 • implementare sistem de control al drepturilor de acces al utilizatorilor în cadrul sistemului 
 informatic pe baza rolurilor
